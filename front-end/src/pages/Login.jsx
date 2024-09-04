@@ -1,6 +1,6 @@
 import React,{ useState} from "react";
 import { usePageTitle } from "../components/nombrePag";
-
+import '../styles/Login.css'
 function Login(){
 
     const [username, setUsername] = useState('');
@@ -15,9 +15,9 @@ function Login(){
 
     return(
         <div className="login-container">
-            <h2>Iniciar sesión</h2>
-            <form onSubmit={handleSubmit}>
-                <div class="input-group">
+            
+            <form className="form-login" onSubmit={handleSubmit}>
+                <h2>Iniciar sesión</h2>
                     <label  htmlFor="username">Usuario:</label>
                     <input 
                         type="text" 
@@ -26,8 +26,6 @@ function Login(){
                         onChange={(e)=> setUsername(e.target.value)} 
                         required
                     />
-                </div>
-                <div class="input-group">
                     <label htmlFor="password">Contraseña:</label>
                     <input 
                         type="password" 
@@ -36,7 +34,7 @@ function Login(){
                         onChange={(e)=>setPassword(e.target.value)}
                         required
                     />
-                </div>
+                
                 <button type="submit">Entrar</button>
             </form>
         </div>
