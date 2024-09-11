@@ -40,8 +40,6 @@ function NuevoUsuario(){
 }
     return (
       <div className="form-container">
-        
-
             <form className="form-agregar" onSubmit={handleSubmit(onSubmit)}>
                 <h1 className="titulo">Agregar nuevo usuario</h1>
                 <div className="contenedor-input">
@@ -63,10 +61,7 @@ function NuevoUsuario(){
                     <label>Area</label>
                     <input type="text" className="input-text" {...register('area')}></input>
                 </div>
-
-              
                 
-
                 <div className="contenedor-input">
                     <label>Correo electronico<b>**</b></label>
                     <input type="email" className="input-text" {...register('correo',{autoComplete:"off"})}></input>
