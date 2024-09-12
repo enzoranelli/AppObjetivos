@@ -8,6 +8,7 @@ function Home(){
     const [texto, setTexto] = useState("");
     const [opcionSeleccionada, setOpcionSeleccionada] = useState("");
     const [puntuacion, setPuntuacion] = useState(0);
+    const [titulo, setTitulo] = useState("");
 
     const [opcionEmpleado, setOpcionEmpleado] = useState("");
 
@@ -18,6 +19,8 @@ function Home(){
     const manejarEnvio = (e) => {
         e.preventDefault();
         // Aquí puedes procesar los valores del formulario
+
+        console.log("Titulo", titulo);
         console.log("Texto:", texto);
         console.log("Opción seleccionada:", opcionSeleccionada);
         console.log("Empleado:" , opcionEmpleado);
@@ -49,20 +52,24 @@ function Home(){
     return (
         <div className="objetivo-container">
         
-        <form className="form-objetivo" onSubmit={manejarEnvio}>
-        <h1>Agregar objetivo</h1>
-        <div className="contenedor-input">
-            <label className="descripcion-label" htmlFor="texto">Descripcion del objetivo: (Máximo de caracteres: {texto.length}/{2500})</label>
-            <textarea
-            type="text"
-            id="texto"
-            className="text-area"
-            value={texto}
-            onChange={(e) => setTexto(e.target.value)}
-            maxLength={2500}
-            
-            />
-        </div>
+            <form className="form-objetivo" onSubmit={manejarEnvio}>
+                <h1>Agregar objetivo</h1>
+                <div className="contenedor-input">
+                    <label className="label-form">Título</label>
+                    <input type="text" className="input-text" value={titulo} onChange={(e)=> setTitulo(e.target.value)}></input>
+                </div>
+
+                <div className="contenedor-input">
+                    <label className="descripcion-label" htmlFor="texto">Descripcion del objetivo: (Máximo de caracteres: {texto.length}/{2500})</label>
+                    <textarea
+                        type="text"
+                        id="texto"
+                        className="text-area"
+                        value={texto}
+                        onChange={(e) => setTexto(e.target.value)}
+                        maxLength={2500}    
+                    />
+                </div>
 
         <div className="contenedor-input">
             <h3>Asigne el objetivo a un area o a un empleado</h3>
