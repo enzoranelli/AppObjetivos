@@ -22,6 +22,7 @@ CREATE TABLE Usuario(
 
 CREATE TABLE Objetivo(
 	idObjetivo INT NOT NULL AUTO_INCREMENT,
+    titulo VARCHAR(100) NOT NULL,
     descripcion VARCHAR(2500) NOT NULL,
     fechaCreacion DATE,
     usuario INT NOT NULL,

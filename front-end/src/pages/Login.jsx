@@ -15,9 +15,11 @@ function Login(){
 
     return(
         <div className="login-container">
-            
+            <img className="logo" src="https://americagroupit.com/wp-content/uploads/2024/06/cropped-Logo_AG_Color_VF2024-01.png"
+                alt="Logo AG"/>
             <form className="form-login" onSubmit={handleSubmit}>
-                <h2>Iniciar sesión</h2>
+                
+                <h2 className="titulo-login">Iniciar sesión</h2>
                     <label  htmlFor="username">Usuario:</label>
                     <input 
                         type="text" 

@@ -9,6 +9,7 @@ const Navegacion = () => {
           <li><Link to="/">Home</Link></li>
           <li><Link to="/login">Login</Link></li>
           <li><Link to="/nuevoUsuario">Crear Usuario</Link></li>
+          <li><Link to="/feed">Feed</Link></li>
         </ul>
       </nav>
     </header>
