@@ -5,8 +5,6 @@ import Login from './pages/Login';
 import NuevoUsuario from './pages/NuevoUsuario.jsx';
 
 function App() {
-  
-
   return (
     <Router>
       <div className='App'>
