@@ -10,6 +10,7 @@ const Navegacion = () => {
           <li><Link to="/login">Login</Link></li>
           <li><Link to="/nuevoUsuario">Crear Usuario</Link></li>
           <li><Link to="/feed">Feed</Link></li>
+          <li><Link to="/panel">Panel</Link></li>
         </ul>
       </nav>
     </header>

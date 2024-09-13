@@ -1,3 +1,7 @@
 .contenedor-objetivo{
-    background-color: beige;
+    background-color: rgb(255, 227, 167);
+    border-radius: 10px;
+    border: 2px;
+    padding: 10px;
+    margin: 10px;
 }

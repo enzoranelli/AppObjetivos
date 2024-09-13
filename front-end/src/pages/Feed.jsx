@@ -1,19 +1,32 @@
 import Objetivo from "../components/Objetivo";
-
+import "../styles/Feed.css";
 
 function Feed(){
 
-    const objetivo = {
+    const objetivos = [{
         titulo: "Certificaciones",
         fecha: "12/09/2024",
         descripcion: "El proposito de este objetivo es plasmar si el usuario completo certificaciones.",
         valor: "50"
-
-    }
+    },
+    {
+        titulo: "Programación",
+        fecha: "13/09/2024",
+        descripcion: "Desarrollar aplicación.",
+        valor: "13"
+    }]
     return(
         <div>
             <h1>Objetivos asignados</h1>
-            <Objetivo objetivo={objetivo}/>
+            <ul className="lista">
+                { objetivos.map((objetivo,index)=>(
+                    <li key={index}>
+                        {console.log(objetivo)}
+                        <Objetivo objetivo={objetivo}/>
+                    </li>
+                ))}
+            </ul>
+            
         </div>
          
 

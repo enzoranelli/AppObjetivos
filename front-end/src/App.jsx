@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import NuevoUsuario from './pages/NuevoUsuario.jsx';
 import Feed from './pages/Feed.jsx';
+import Panel from './pages/Panel.jsx';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />}/>
           <Route path="/nuevoUsuario" element={<NuevoUsuario />}/>
           <Route path='/feed' element={<Feed />}/>
+          <Route path='/panel' element={<Panel />}/>
         </Routes>
       </div>
     </Router>
