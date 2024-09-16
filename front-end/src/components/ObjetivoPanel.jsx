@@ -17,6 +17,11 @@ function ObjetivoPanel(props){
                 <li><a>Juan Perez</a></li>
                 <li><a>John Doe</a></li>
             </ul>
+            <button>Modificar</button>
+            {/**
+             * Modificar: titulo, descripcion, fecha, y personas asignadas
+             * 
+             */}
         </div>
     );
 

@@ -17,7 +17,7 @@ function Feed(){
     }]
     return(
         <div>
-            <h1>Objetivos asignados</h1>
+            <h1>Objetivos asignados ((de 'Juan Perez'))</h1>
             <ul className="lista">
                 { objetivos.map((objetivo,index)=>(
                     <li key={index}>

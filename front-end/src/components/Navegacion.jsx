@@ -11,6 +11,7 @@ const Navegacion = () => {
           <li><Link to="/nuevoUsuario">Crear Usuario</Link></li>
           <li><Link to="/feed">Feed</Link></li>
           <li><Link to="/panel">Panel</Link></li>
+          <li><Link to="/usuarios">Usuarios</Link></li>
         </ul>
       </nav>
     </header>
