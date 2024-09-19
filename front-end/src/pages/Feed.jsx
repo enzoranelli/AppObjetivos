@@ -1,8 +1,11 @@
 import Objetivo from "../components/Objetivo";
 import "../styles/Feed.css";
-
+import { useUserContext, useUserToggleContext } from "../UserProvider";
+import { useEffect } from "react";
 function Feed(){
 
+    const user = useUserContext();
+ 
     const objetivos = [{
         titulo: "Certificaciones",
         fecha: "12/09/2024",
@@ -15,9 +18,15 @@ function Feed(){
         descripcion: "Desarrollar aplicación.",
         valor: "13"
     }]
+
+   
     return(
         <div>
-            <h1>Objetivos asignados ((de 'Juan Perez'))</h1>
+            {user && user.rol === 'admin' ? (
+            <h1>Objetivos asignados de {user.name}</h1>
+            ) : (
+            <h1>Tus objetivos asignados</h1>
+            )}
             <ul className="lista">
                 { objetivos.map((objetivo,index)=>(
                     <li key={index}>

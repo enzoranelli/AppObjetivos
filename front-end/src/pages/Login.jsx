@@ -1,8 +1,11 @@
 import React,{ useState} from "react";
 import { usePageTitle } from "../components/nombrePag";
 import '../styles/Login.css'
+import { useUserContext, useUserToggleContext } from "../UserProvider";
+import { Navigate } from "react-router-dom";
 function Login(){
-
+    const user = useUserContext();
+    const cambiaLogin = useUserToggleContext();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     usePageTitle('Login | Medicion de objetos')
@@ -11,6 +14,17 @@ function Login(){
         e.preventDefault();
         console.log('Usuario: ', username);
         console.log('Contraseña: ', password);
+        cambiaLogin();
+    }
+    if(user){
+        var ruta = '';
+        if(user.rol==='admin'){
+            ruta= '/panel';
+        }else{
+            ruta = '/feed';
+        }
+        console.log(ruta);
+        return <Navigate to={ruta}/>
     }
 
     return(

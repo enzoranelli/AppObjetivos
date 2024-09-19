@@ -7,21 +7,40 @@ import Feed from './pages/Feed.jsx';
 import Panel from './pages/Panel.jsx';
 import Usuarios from './pages/Usuarios.jsx';
 
+import { ProtectedRoute } from './components/ProtectedRoute.jsx';
+import { useUserContext } from './UserProvider.jsx';
 function App() {
+
+  const user = useUserContext();
+ 
   return (
     <Router>
       <div className='App'>
-        <Navegacion />
+        {
+          user ? <Navegacion /> : <>
+          </>
+        }
+      
+       
         <Routes>
-          <Route path="/" element={<Home />}/>
-          <Route path="/login" element={<Login />}/>
-          <Route path="/nuevoUsuario" element={<NuevoUsuario />}/>
-          <Route path='/feed' element={<Feed />}/>
-          <Route path='/panel' element={<Panel />}/>
-          <Route path='/usuarios' element={<Usuarios />}/>
-        </Routes>
+          <Route path="/" element={<Login />}/>
+          
+          <Route element={<ProtectedRoute isAllowed={user}/>}>
+            
+            <Route path='/feed' element={<Feed />}/>
+            
+          </Route>
+          <Route element={<ProtectedRoute isAllowed={!!user && user.rol === 'admin'}/>}>
+            <Route path='/panel' element={<Panel />}/>
+            <Route path='/usuarios' element={<Usuarios />}/>
+            <Route path="/home" element={<Home />}/>
+            <Route path="/nuevoUsuario" element={<NuevoUsuario />}/>
+          </Route>
+          </Routes>
       </div>
+      
     </Router>
+    
   );
 }
 

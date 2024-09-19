@@ -9,7 +9,8 @@ function Home(){
     const [opcionSeleccionada, setOpcionSeleccionada] = useState("");
     const [puntuacion, setPuntuacion] = useState(0);
     const [titulo, setTitulo] = useState("");
-
+    const [fechaInicio, setFechaInicio] = useState("");
+    const [fechaFinal, setFechaFinal] = useState("");
     const [opcionEmpleado, setOpcionEmpleado] = useState("");
 
     const [deshabilitarOp1, setDeshabilitarOp1] = useState(false);
@@ -70,7 +71,29 @@ function Home(){
                         maxLength={2500}    
                     />
                 </div>
-
+        <div className="contenedor-input">
+            <label htmlFor="fechaInicio"> Fecha de inicio: </label>
+            <input
+                type="date"
+                id="fechaInicio"
+                name="fechaInicio"
+                value={fechaInicio}
+                onChange={(e) => setFechaInicio(e.target.value)}
+                required
+            />
+        </div>
+        <div className="contenedor-input">
+            <label htmlFor="fechaFinal"> Fecha de final: </label>
+            <input
+                type="date"
+                id="fechaFinal"
+                name="fechaFinal"
+                value={fechaFinal}
+                min={fechaInicio}
+                onChange={(e) => setFechaFinal(e.target.value)}
+                required
+            />
+        </div>
         <div className="contenedor-input">
             <h3>Asigne el objetivo a un area o a un empleado</h3>
             <label className="descripcion-label" htmlFor="opcion">Selecciona una seccion:</label>
@@ -87,8 +110,9 @@ function Home(){
             <option value="opcion3">Contabilidad</option>
             </select>
         </div>
+       
         <div className="contenedor-input" >
-        <label htmlFor="opcion" className="descripcion-label">Selecciona un empleado:</label>
+            <label htmlFor="opcion" className="descripcion-label">Selecciona un empleado:</label>
             <select
             className="select-form"
             id="opcion"
