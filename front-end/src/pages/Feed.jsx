@@ -1,31 +1,29 @@
 import Objetivo from "../components/Objetivo";
+import { obtenerEmpleadoID, obtenerObjetivosID } from "../data/MockData";
 import "../styles/Feed.css";
 import { useUserContext, useUserToggleContext } from "../UserProvider";
-import { useEffect } from "react";
+import { useParams } from 'react-router-dom';
+
 function Feed(){
 
     const user = useUserContext();
- 
-    const objetivos = [{
-        titulo: "Certificaciones",
-        fecha: "12/09/2024",
-        descripcion: "El proposito de este objetivo es plasmar si el usuario completo certificaciones.",
-        valor: "50"
-    },
-    {
-        titulo: "Programación",
-        fecha: "13/09/2024",
-        descripcion: "Desarrollar aplicación.",
-        valor: "13"
-    }]
+    
+    const {id} = useParams();
+    
 
-   
+
+    const objetivos = obtenerObjetivosID(id);
+    const empleado = obtenerEmpleadoID(id);
+    
     return(
         <div>
             {user && user.rol === 'admin' ? (
-            <h1>Objetivos asignados de {user.name}</h1>
+            <h1>Objetivos asignados de {empleado[0].Nombre}</h1>
             ) : (
-            <h1>Tus objetivos asignados</h1>
+                <>
+                    <h1>Bienvenido, {empleado[0].Nombre}</h1>
+                    <h2>Tus objetivos asignados</h2>
+                </>
             )}
             <ul className="lista">
                 { objetivos.map((objetivo,index)=>(

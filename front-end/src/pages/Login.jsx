@@ -21,7 +21,7 @@ function Login(){
         if(user.rol==='admin'){
             ruta= '/panel';
         }else{
-            ruta = '/feed';
+            ruta = `/feed/${user.empleado}`;
         }
         console.log(ruta);
         return <Navigate to={ruta}/>

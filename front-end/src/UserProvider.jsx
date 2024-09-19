@@ -1,5 +1,5 @@
 import React, {useState, useContext} from "react";
-
+import { obtenerUsario } from "./data/MockData";
 const userContext = React.createContext();
 const userToggleContext = React.createContext();
 export function useUserContext(){
@@ -9,6 +9,10 @@ export function useUserContext(){
 export function useUserToggleContext(){
     return useContext(userToggleContext);
 }
+function getUsuario(){
+    //Logica para la api 
+    return obtenerUsario();
+}
 export function UserProvider(props){
     const [user, setUser] = useState(null);
 
@@ -16,11 +20,7 @@ export function UserProvider(props){
         if(user){
             setUser(null);
         }else {
-            setUser({
-                name: 'Enzo',
-                email: 'Enzo@email.com',
-                rol:'admin'
-            })
+            setUser(getUsuario());
         }
     }
 

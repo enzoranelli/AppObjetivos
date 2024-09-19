@@ -1,6 +1,7 @@
 import DataTable from "react-data-table-component";
 import { Link } from 'react-router-dom';
-function Usuarios(){
+import { obtenerEmpleados } from "../data/MockData";
+function Empleados(){
     const colums = [{
         name: "Nombre",
         selector: row => row.Nombre
@@ -13,7 +14,7 @@ function Usuarios(){
     {
         name: "",
         cell:(row)=>(
-            <Link to="/feed">Ver objetivos</Link>
+            <Link to={`/feed/${row.idEmpleado}`}>Ver objetivos</Link>
         ),
     },
     {
@@ -23,23 +24,12 @@ function Usuarios(){
         ),
     }]
 
-    const data = [
-        {
-            Nombre:"Enzo Ranelli",
-            Area:"Banco BICE",
-
-        },
-        {
-            Nombre:"Juan Perez",
-            Area:"Soporte Tecnico",
-
-        }
-    ]
+    const data = obtenerEmpleados();
 
     return (
 
         <div>
-            <h1>Lista de usuarios</h1>
+            <h1>Lista de Empleados</h1>
             <DataTable
             columns={colums}
             data={data}
@@ -48,4 +38,4 @@ function Usuarios(){
     );
 }
 
-export default Usuarios;
+export default Empleados;

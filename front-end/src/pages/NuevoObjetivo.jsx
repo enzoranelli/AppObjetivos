@@ -2,7 +2,7 @@ import { usePageTitle } from "../components/nombrePag";
 import { useState } from "react";
 import "../styles/ObjetivoNuevos.css";
 
-function Home(){
+function NuevoObjetivo(){
     usePageTitle('Home | Medicion de objetos')
 
     const [texto, setTexto] = useState("");
@@ -145,4 +145,4 @@ function Home(){
     );
 
 }
-export default Home;
+export default NuevoObjetivo;
