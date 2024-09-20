@@ -20,7 +20,7 @@ function Empleados(){
     {
         name:"",
         cell:(row)=>(
-            <p>Administrar cuenta</p>
+            <Link to={`/actualizar-usuario/${row.idEmpleado}`}>Administrar cuenta</Link>
         ),
     }]
 

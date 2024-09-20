@@ -34,15 +34,42 @@ export function obtenerObjetivos(){
 }
 export function obtenerUsario(){
     let usuario = {
+        idUsuario: 1,
         name: "Miguel Borja",
         email: "borja@email.com",
+        usuarioPassword: "contraseña",
         empleado: 1,
         rol:"admin"
 
     }
     return usuario;
 }
-
+export function obtenerUsuarios(){
+    let usuarios =[
+        {
+            idUsuario: 1,
+            name: "Enzo Ranelli",
+            email: "enzo@email.com",
+            usuarioPassword: "contraseña",
+            empleado: 1,
+            rol:"admin"
+        },
+        {
+            idUsuario: 2,
+            name: "Juan Perez",
+            email: "juan@email.com",
+            usuarioPassword:"1234",
+            empleado: 2,
+            rol: "user",
+        }
+    ]
+    return usuarios;
+}
+export function obtenerUsuarioIdEmpleado(empleado){
+    let usuario = obtenerUsuarios().filter((obj)=> obj.empleado === parseInt(empleado));
+    
+    return usuario;
+}
 export function obtenerObjetivosID(id){
     console.log("Id obtenido: ",id);
 
@@ -58,13 +85,13 @@ export function obtenerEmpleados(){
             idEmpleado: 1,
             Nombre:"Enzo Ranelli",
             Area:"Banco BICE",
-
+            puesto:"Operador NOC"
         },
         {
             idEmpleado: 2,
             Nombre:"Juan Perez",
-            Area:"Soporte Tecnico",
-
+            Area:"Area Tecnica",
+            puesto: "Soporte Tecnico"
         }
     ]
     return usuarios;

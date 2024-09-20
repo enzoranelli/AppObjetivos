@@ -10,6 +10,7 @@ import Empleados from './pages/Empleados.jsx';
 import { ProtectedRoute } from './components/ProtectedRoute.jsx';
 import { useUserContext } from './UserProvider.jsx';
 import NuevoObjetivo from './pages/NuevoObjetivo.jsx';
+import ActualizarDatos from './pages/ActualizarDatos.jsx';
 function App() {
 
   const user = useUserContext();
@@ -34,6 +35,7 @@ function App() {
             <Route path='/empleados' element={<Empleados />}/>
             <Route path="/nuevo-objetivo" element={<NuevoObjetivo />}/>
             <Route path="/nuevoUsuario" element={<NuevoUsuario />}/>
+            <Route path='/actualizar-usuario/:id' element={<ActualizarDatos />}/>
           </Route>
           </Routes>
       </div>
