@@ -4,6 +4,7 @@
     background-color: #fbb003;
     padding: 10px 20px;
     color: white;
+    border-radius: 0px 0px 10px 10px;
   }
   
   .nav-links {
@@ -20,6 +21,7 @@
     text-decoration: none;
     padding: 8px 16px;
     transition: background-color 0.8s ease;
+    border-radius: 5px;
   }
   
   .nav-links li a:hover {

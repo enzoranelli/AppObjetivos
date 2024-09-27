@@ -1,7 +1,9 @@
 import React from "react";
 import "../styles/Objetivo.css"
+import { useUserContext} from "../UserProvider";
 
 function Objetivo(props){
+    const user = useUserContext();
     /**
      *  const objetivo = {
         titulo: "Certificaciones",
@@ -20,6 +22,15 @@ function Objetivo(props){
             <p>Su puntuacion: </p>
             <progress id="progreso "value={props.objetivo.valor} max="100"></progress>
             <label htmlFor="progreso">{props.objetivo.valor}%</label>
+            <br></br>
+            {
+                user && user.rol === 'admin' ? (
+                    <button>Actualizar estado</button>
+                ) : (
+                    <></>
+                )
+            }
+            
         </div>
     );
 

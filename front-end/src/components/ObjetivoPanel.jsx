@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/Objetivo.css"
+import { Link, Outlet } from "react-router-dom";
 
 function ObjetivoPanel(props){
    
@@ -14,14 +15,16 @@ function ObjetivoPanel(props){
             <label htmlFor="progreso">{props.objetivo.valor}%</label>
             <h2>Personas Asignadas</h2>
             <ul>
-                <li><a>Juan Perez</a></li>
-                <li><a>John Doe</a></li>
+                <li><Link to='/objetivo-empleado/1'>Enzo Ranelli</Link></li>
+                <li>Juan Perez</li>
             </ul>
+            
             <button>Modificar</button>
             {/**
              * Modificar: titulo, descripcion, fecha, y personas asignadas
              * 
              */}
+            <Outlet />
         </div>
     );
 

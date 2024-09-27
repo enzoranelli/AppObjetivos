@@ -1,53 +1,66 @@
 import { usePageTitle } from "../components/nombrePag";
 import { useState } from "react";
 import "../styles/ObjetivoNuevos.css";
-
+import { Navigate } from "react-router-dom";
 function NuevoObjetivo(){
     usePageTitle('Home | Medicion de objetos')
 
     const [texto, setTexto] = useState("");
-    const [opcionSeleccionada, setOpcionSeleccionada] = useState("");
     const [puntuacion, setPuntuacion] = useState(0);
     const [titulo, setTitulo] = useState("");
     const [fechaInicio, setFechaInicio] = useState("");
     const [fechaFinal, setFechaFinal] = useState("");
-    const [opcionEmpleado, setOpcionEmpleado] = useState("");
-
-    const [deshabilitarOp1, setDeshabilitarOp1] = useState(false);
-    const [deshabilitarOp2, setDeshabilitarOp2] = useState(false); 
+    const [redirect, setRedirect] = useState(false);
 
     // Función para manejar el envío del formulario
-    const manejarEnvio = (e) => {
+    const manejarEnvio = async (e) => {
         e.preventDefault();
         // Aquí puedes procesar los valores del formulario
 
-        console.log("Titulo", titulo);
-        console.log("Texto:", texto);
-        console.log("Opción seleccionada:", opcionSeleccionada);
-        console.log("Empleado:" , opcionEmpleado);
-        console.log("Puntaje: ", puntuacion);
+        const formulario = {
+            idObjetivo: 0,
+            titulo: titulo,
+            descripcion: texto,
+            peso: puntuacion,
+            fechaInicio: fechaInicio,
+            fechaFinal: fechaFinal,
+        }
+        
+        try{
+            const response = await fetch('http://localhost:9000/api/objetivos',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formulario),
+            });
+
+            if(!response.ok){
+                throw new Error('Error en la soclicitud');
+            }
+
+            const result = await response.json();
+            
+
+            setFechaFinal('');
+            setFechaInicio('');
+            setPuntuacion(0);
+            setTexto('');
+            setTitulo('');
+
+            console.log(result)
+            if(result) {
+                setRedirect(true); 
+            }
+
+            
+        } catch (error){
+            console.log('Error al enviar datos', error);
+        }
     };
 
-    const handleOp1 = (e) => {
-        const value = e.target.value;
-        setOpcionSeleccionada(value);
-
-        if( value !== ""){
-            setDeshabilitarOp2(true);
-        }else{
-            setDeshabilitarOp2(false);
-        }
-    }
-
-    const handleOp2 = (e) => {
-        const value = e.target.value;
-        setOpcionEmpleado(value);
-
-        if( value !== ""){
-            setDeshabilitarOp1(true);
-        }else{
-            setDeshabilitarOp1(false);
-        }
+    if (redirect) {
+        return <Navigate to='/redireccion' />;
     }
 
     return (
@@ -94,40 +107,9 @@ function NuevoObjetivo(){
                 required
             />
         </div>
+        
         <div className="contenedor-input">
-            <h3>Asigne el objetivo a un area o a un empleado</h3>
-            <label className="descripcion-label" htmlFor="opcion">Selecciona una seccion:</label>
-            <select
-            className="select-form"
-            id="opcion"
-            value={opcionSeleccionada}
-            onChange={handleOp1}
-            disabled={deshabilitarOp1}
-            >
-            <option value="">--Selecciona una seccion--</option>
-            <option value="opcion1">Marketing</option>
-            <option value="opcion2">Operaciones</option>
-            <option value="opcion3">Contabilidad</option>
-            </select>
-        </div>
-       
-        <div className="contenedor-input" >
-            <label htmlFor="opcion" className="descripcion-label">Selecciona un empleado:</label>
-            <select
-            className="select-form"
-            id="opcion"
-            value={opcionEmpleado}
-            onChange={handleOp2}
-            disabled={deshabilitarOp2}
-            >
-            <option value="">--Selecciona un empleado--</option>
-            <option value="Enzo">Enzo</option>
-            <option value="Juan">Juan</option>
-            <option value="Jose">Jose</option>
-            </select>
-        </div>
-        <div className="contenedor-input">
-            <label htmlFor="slider" className="descripcion-label">Asigne porcentaje de puntuación: </label>
+            <label htmlFor="slider" className="descripcion-label">Asigne el peso del objetivo: </label>
             <input 
                 type="range"
                 id="puntuacion"

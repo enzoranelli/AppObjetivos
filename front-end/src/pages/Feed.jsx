@@ -1,7 +1,7 @@
 import Objetivo from "../components/Objetivo";
 import { obtenerEmpleadoID, obtenerObjetivosID } from "../data/MockData";
 import "../styles/Feed.css";
-import { useUserContext, useUserToggleContext } from "../UserProvider";
+import { useUserContext} from "../UserProvider";
 import { useParams } from 'react-router-dom';
 
 function Feed(){

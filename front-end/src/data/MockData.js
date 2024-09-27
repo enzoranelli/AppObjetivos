@@ -32,6 +32,8 @@ export function obtenerObjetivos(){
     ]
     return objetivos;
 }
+
+
 export function obtenerUsario(){
     let usuario = {
         idUsuario: 1,
@@ -70,6 +72,8 @@ export function obtenerUsuarioIdEmpleado(empleado){
     
     return usuario;
 }
+
+
 export function obtenerObjetivosID(id){
     console.log("Id obtenido: ",id);
 
