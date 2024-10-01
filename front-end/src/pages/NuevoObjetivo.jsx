@@ -39,7 +39,7 @@ function NuevoObjetivo(){
                 throw new Error('Error en la soclicitud');
             }
 
-            const result = await response.json();
+            
             
 
             setFechaFinal('');
@@ -48,8 +48,8 @@ function NuevoObjetivo(){
             setTexto('');
             setTitulo('');
 
-            console.log(result)
-            if(result) {
+            
+            if(response.ok) {
                 setRedirect(true); 
             }
 
