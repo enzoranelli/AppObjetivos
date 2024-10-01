@@ -29,7 +29,8 @@ function Empleados(){
     return (
 
         <div>
-            <h1>Lista de Empleados</h1>
+            <h1 className="titulo">Lista de Empleados</h1>
+            <hr className="linea"></hr>
             <DataTable
             columns={colums}
             data={data}

@@ -13,6 +13,7 @@ import NuevoObjetivo from './pages/NuevoObjetivo.jsx';
 import ActualizarDatos from './pages/ActualizarDatos.jsx';
 import ObjetivoEmpleado from './pages/ObjetivoEmpleado.jsx';
 import Redireccion from './components/Redireccion.jsx';
+import AsignarObjetivo from './pages/AsignarObjetivo.jsx';
 function App() {
 
   const user = useUserContext();
@@ -40,7 +41,7 @@ function App() {
             <Route path="/nuevo-objetivo" element={<NuevoObjetivo />}/>
             <Route path="/nuevoUsuario" element={<NuevoUsuario />}/>
             <Route path='/actualizar-usuario/:id' element={<ActualizarDatos />}/>
-            
+            <Route path='/asignar-objetivo/:id' element={<AsignarObjetivo />} />
           </Route>
         </Routes>
       </div>

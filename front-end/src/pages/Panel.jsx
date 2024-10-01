@@ -1,6 +1,7 @@
 import ObjetivoPanel from "../components/ObjetivoPanel";
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import SinElementos from "../components/SinElementos";
 
 function Panel(){
     const [objetivos, setObjetivos] = useState(null);
@@ -9,7 +10,7 @@ function Panel(){
     useEffect(()=>{
         axios.get('http://localhost:9000/api/objetivos')
             .then( response => {
-       
+                console.log(response)
                 setObjetivos(response.data);
             })
             .catch( error => {
@@ -22,15 +23,16 @@ function Panel(){
     return (
         <div>
             {error && <p>Error : {error}</p>}
-            <h1>Lista de objetivos</h1>
-            {objetivos ?  (<ul className="lista">
-                { objetivos.map((objetivos,index)=>(
+            <h1 className="titulo">Lista de objetivos</h1>
+            <hr className="linea"></hr>
+            {objetivos && objetivos.length !== 0 ?  (<ul className="lista">
+                {objetivos.map((objetivos,index)=>(
                     <li key={index}>
                         
                         <ObjetivoPanel objetivo={objetivos}/>
                     </li>
                 ))}
-            </ul>) : (<p>Cargando</p>)}
+            </ul>) : (<SinElementos />)}
             
         </div>
 

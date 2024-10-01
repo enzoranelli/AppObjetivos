@@ -10,3 +10,8 @@ html, body {
   padding: 0;
 
 }
+
+.linea{
+  border: 1px solid  orange;
+  width: 95%;
+}

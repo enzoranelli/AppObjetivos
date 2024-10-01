@@ -5,3 +5,8 @@
     padding: 10px;
     margin: 10px;
 }
+.contenedor-progreso{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
