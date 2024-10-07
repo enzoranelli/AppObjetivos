@@ -1,7 +1,10 @@
 import React, {useState, useContext} from "react";
 import { obtenerUsario } from "./data/MockData";
+
 const userContext = React.createContext();
 const userToggleContext = React.createContext();
+const redireccionar = React.createContext();
+
 export function useUserContext(){
     return useContext(userContext);
 }

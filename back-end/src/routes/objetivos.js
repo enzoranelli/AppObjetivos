@@ -3,8 +3,11 @@ const router = express.Router();
 const {format, parseISO} = require('date-fns'); 
 
 router.get('/', obtenerObjetivos);
+router.get('/ultimo',obtenerUltimoObjetivo );
 router.get('/:id', obtenerObjetivo);
 router.post('/', agregarObjetivo);
+
+
 
 async function agregarObjetivo(req, res) {
  try{
@@ -65,19 +68,64 @@ async function obtenerObjetivos(req, res) {
     }
 }
 
+async function obtenerUltimoObjetivo(req, res) {
+    console.log('Entrando a la funcion');
+    try {
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err){
+                    console.error("Error al conectar en la base de datos:", err);
+                    reject(err);
+                }
+                else{ 
+                    console.log('Conexion exitosa')
+                    resolve(conn);
+                }
+            });
+        });
+        const results = await new Promise((resolve, reject)=>{
+            connection.query('SELECT * FROM Objetivo ORDER BY idObjetivo DESC LIMIT 1 ', (err, results)=>{
+                if(err){
+                    console.error("Error en la consulta:", err);
+                    reject(err);
+                } 
+                else{
+                    resolve(results);
+                }
+            });
+        });
+        console.log(results);
+        
+        res.send(results[0]);
+    } catch (err) {
+        res.send(err);
+    }
+}
+
 async function obtenerObjetivo(req, res) {
     const idObjetivo = req.params.id;
     try {
         const connection = await new Promise((resolve, reject)=>{
             req.getConnection((err, conn)=>{
-                if(err) reject(err);
-                else resolve(conn);
+                if(err){
+                    console.error("Error al conectar en la base de datos:", err);
+                    reject(err);
+                }
+                else{ 
+                    console.log('Conexion exitosa')
+                    resolve(conn);
+                }
             });
         });
         const results = await new Promise((resolve, reject)=>{
             connection.query('SELECT * FROM Objetivo WHERE idObjetivo = ?',[idObjetivo], (err, results)=>{
-                if(err) reject(err);
-                else resolve(results);
+                if(err){
+                    console.error("Error en la consulta:", err);
+                    reject(err);
+                } 
+                else{
+                    resolve(results);
+                }
             });
         });
         console.log(results);

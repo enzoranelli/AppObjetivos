@@ -1,43 +1,70 @@
-import React from "react";
-import {useForm} from 'react-hook-form'
-import '../styles/FormUsuario.css'
+import { Navigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import {useForm} from 'react-hook-form';
+import '../styles/FormUsuario.css';
 
 function NuevoUsuario(){
-  const {register, handleSubmit} = useForm();
-  
-  const onSubmit = (data) =>{
+    const {register, handleSubmit} = useForm();
+    const [redirect, setRedirect] = useState(false);
+
+    const onSubmit = async (data) =>{
     
-    const verificar = verificarFormulario(data);
+        const verificar = verificarFormulario(data);
     
-    console.log(verificar)
-    if(verificar){
+        console.log(verificar)
+        if(verificar){
         
-      alert('Empleado agregado correctamente!!');
-      console.log(data)
-
-    }else{
-        alert('Campos incompletos');
-    }
+         
+            console.log(data)
+            try {
+                const response = await fetch('http://localhost:9000/api/empleados',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
     
-}
+                if(!response.ok){
+                    throw new Error('Error en la soclicitud');
+                }
 
-  function verificarFormulario(data){
-    console.log(data)
-    for(const propiedad in data){
-        if(data.hasOwnProperty(propiedad)){
-            const valor = data[propiedad];
-            if(valor === '' || valor === ""){
-                console.log('Esto dio falso')
-                return false;
+                if(response.ok){
+                    setRedirect(true);
+                }
+    
+            } catch (error) {
+                console.log('Error al enviar datos', error);
+            }
+
+        }else{
+            alert('Campos incompletos');
+        }   
+    
+    }
+
+    function verificarFormulario(data){
+        console.log(data)
+        for(const propiedad in data){
+            if(data.hasOwnProperty(propiedad)){
+                const valor = data[propiedad];
+                if(valor === '' || valor === ""){
+                    console.log('Esto dio falso')
+                    return false;
+                }
             }
         }
+        data.rol = data.rol=== 'admin'
+        console.log(data.usuarioPassword);
+        console.log(data.confirmar);
+        return data.usuarioPassword === data.confirmar ? true : false;
+        
     }
-    data.rol = data.rol=== 'admin'
-    console.log(data.usuarioPassword);
-    console.log(data.confirmar);
-    return data.usuarioPassword === data.confirmar ? true : false;
-    
-}
+
+    if (redirect) {
+        return <Navigate to='/redireccion/usuario' />;
+    }
     return (
       <div className="form-container">
             <form className="form-agregar" onSubmit={handleSubmit(onSubmit)}>
@@ -64,7 +91,7 @@ function NuevoUsuario(){
                 
                 <div className="contenedor-input">
                     <label>Correo electronico<b>**</b></label>
-                    <input type="email" className="input-text" {...register('correo',{autoComplete:"off"})}></input>
+                    <input type="email" className="input-text" {...register('email',{autoComplete:"off"})}></input>
                 </div>
 
                 <div className="contenedor-input">
@@ -103,7 +130,7 @@ function NuevoUsuario(){
                 </div>
                 <div className="contenedor-input">
                     <p className="aviso">{'(**) Los campos marcados tienen que ser unicos para cada empleado.'}</p>
-                    <input type="submit" value="Agregar" className="boton-submit"/>
+                    <button type="submit" value="Agregar" className="boton-submit"/>
                 </div>
                 
             </form>

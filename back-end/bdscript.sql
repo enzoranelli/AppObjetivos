@@ -58,7 +58,10 @@ drop table Empleado;
 /*datos prueba*/
 
 INSERT INTO Empleado VALUES (0,'Enzo Ranelli','Operador NOC','Banco BICE');
+INSERT INTO Empleado VALUES (0,'Juan Perez','Project Manager','Operaciones IT');
 SELECT * FROM Empleado;
+
+DELETE FROM Empleado WHERE idEmpleado = 2;
 
 INSERT INTO Usuario VALUES(0,'enzo.ranelli@gmail.com','contraseña','user',1);
 SELECT * FROM Usuario;
@@ -66,9 +69,17 @@ SELECT * FROM Usuario;
 
 INSERT INTO Objetivo VALUES(0,'Certificaciones','El objetivo sera completar 3 certificaciones este semestre',50,'2024-09-01','2024-10-10');
 SELECT * FROM Objetivo;
+DELETE FROM Objetivo;
+SELECT * FROM Objetivo ORDER BY idObjetivo DESC LIMIT 1;
+
+SELECT * FROM Objetivo WHERE idObjetivo = 'sdfgsdfg';
+
+SET SQL_SAFE_UPDATES= 0;
 
 INSERT INTO ObjetivoEmpleado VALUES(0,1,1,50);
-SELECT * FROM ObjetivoUsuario;
+SELECT * FROM ObjetivoEmpleado;
+
+
 
 INSERT INTO Puntuacion VALUES(0,1,40,'2024-09-24');
 INSERT INTO Puntuacion VALUES(0,1,60,'2024-10-24');

@@ -60,7 +60,7 @@ function NuevoObjetivo(){
     };
 
     if (redirect) {
-        return <Navigate to='/redireccion' />;
+        return <Navigate to='/redireccion/objetivo' />;
     }
 
     return (
