@@ -8,6 +8,7 @@ const objetivos = require('./routes/objetivos.js');
 const empleados = require('./routes/empleados.js');
 const usuarios = require('./routes/usuario.js');
 const objetivoasignacion = require('./routes/objetivoAsignado.js');
+const puntuacion = require('./routes/puntuacion.js');
 //<--Middlewares-->//
 
 app.use(cors());
@@ -27,5 +28,6 @@ app.use('/api/objetivos',objetivos);
 app.use('/api/empleados',empleados);
 app.use('/api/usuarios',usuarios);
 app.use('/api/objetivoasignacion',objetivoasignacion);
+app.use('/api/puntuacion',puntuacion);
 
 module.exports = app;

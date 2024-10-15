@@ -130,7 +130,7 @@ function NuevoUsuario(){
                 </div>
                 <div className="contenedor-input">
                     <p className="aviso">{'(**) Los campos marcados tienen que ser unicos para cada empleado.'}</p>
-                    <button type="submit" value="Agregar" className="boton-submit"/>
+                    <button type="submit" value="Agregar" className="boton-submit">Agregar usuario</button>
                 </div>
                 
             </form>

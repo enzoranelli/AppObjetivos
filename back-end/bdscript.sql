@@ -37,7 +37,8 @@ CREATE TABLE ObjetivoEmpleado(
     
     PRIMARY KEY(idObjetivoEmpleado),
     FOREIGN KEY(empleado) REFERENCES Empleado(idEmpleado),
-    FOREIGN KEY(objetivo) REFERENCES Objetivo(idObjetivo)
+    FOREIGN KEY(objetivo) REFERENCES Objetivo(idObjetivo),
+    UNIQUE(empleado, objetivo)
 );
 
 CREATE TABLE Puntuacion(
@@ -60,12 +61,16 @@ drop table Empleado;
 INSERT INTO Empleado VALUES (0,'Enzo Ranelli','Operador NOC','Banco BICE');
 INSERT INTO Empleado VALUES (0,'Juan Perez','Project Manager','Operaciones IT');
 SELECT * FROM Empleado;
-
-DELETE FROM Empleado WHERE idEmpleado = 2;
+SELECT * FROM Usuario;
+DELETE FROM Empleado WHERE IdEmpleado = 1;
 
 INSERT INTO Usuario VALUES(0,'enzo.ranelli@gmail.com','contraseña','user',1);
-SELECT * FROM Usuario;
 
+DELETE FROM Usuario;
+
+
+
+SELECT oe.objetivo,o.titulo,o.peso,o.fechaInicio, o.fechaFinal, oe.fechaAsignacion FROM Objetivo o JOIN ObjetivoEmpleado oe ON o.idObjetivo= oe.objetivo WHERE oe.empleado = 2;
 
 INSERT INTO Objetivo VALUES(0,'Certificaciones','El objetivo sera completar 3 certificaciones este semestre',50,'2024-09-01','2024-10-10');
 SELECT * FROM Objetivo;
@@ -73,28 +78,64 @@ DELETE FROM Objetivo;
 SELECT * FROM Objetivo ORDER BY idObjetivo DESC LIMIT 1;
 
 SELECT * FROM Objetivo WHERE idObjetivo = 'sdfgsdfg';
+SELECT objetivo, valor from 
 
-SET SQL_SAFE_UPDATES= 0;
 
 INSERT INTO ObjetivoEmpleado VALUES(0,1,1,50);
+
+
+
 SELECT * FROM ObjetivoEmpleado;
-
-
+DROP TABLE ObjetivoEmpleado;
+DELETE FROM ObjetivoEmpleado;
 
 INSERT INTO Puntuacion VALUES(0,1,40,'2024-09-24');
 INSERT INTO Puntuacion VALUES(0,1,60,'2024-10-24');
 SELECT * FROM Puntuacion;
-
-
+DROP TABLE Puntuacion;
+DELETE from Puntuacion;
 /*Lista de objetivos por usuario */
-SELECT e.nombre, o.titulo, o.fechaInicio, o.fechaFinal, oe.peso, p.valor, (oe.peso * p.valor/100) AS despeno FROM ObjetivoEmpleado oe
+
+SELECT e.nombre, o.titulo, o.fechaInicio, o.fechaFinal, o.peso, p.valor, (o.peso * p.valor/100) AS despeno FROM ObjetivoEmpleado oe
 JOIN Empleado e on oe.empleado = e.idEmpleado
 JOIN Objetivo o on oe.objetivo = o.idObjetivo
-JOIN Puntuacion p on oe.IdObjetivoEmpleado = p.objetivo;
+JOIN Puntuacion p on oe.IdObjetivoEmpleado = p.objetivo
+WHERE idEmpleado = 1;
+
+SELECT *, (o.peso * p.valor/100) AS despeno FROM ObjetivoEmpleado oe
+JOIN Empleado e on oe.empleado = e.idEmpleado
+JOIN Objetivo o on oe.objetivo = o.idObjetivo
+JOIN Puntuacion p on oe.IdObjetivoEmpleado = p.objetivo
+WHERE idEmpleado = 1;
+
+SELECT oe.*, e.nombre, e.puesto, e.area, o.titulo, o.descripcion, o.peso, o.fechaInicio, o.fechaFinal, p.idPuntuacion, p.valor, p.fechaPuntuacion, 
+       (o.peso * p.valor / 100) AS despeno
+FROM ObjetivoEmpleado oe
+JOIN Empleado e ON oe.empleado = e.idEmpleado
+JOIN Objetivo o ON oe.objetivo = o.idObjetivo
+JOIN Puntuacion p ON oe.idObjetivoEmpleado = p.objetivo
+JOIN (
+    SELECT p.objetivo, MAX(p.idPuntuacion) AS maxPuntuacion
+    FROM Puntuacion p
+    GROUP BY p.objetivo
+) maxP ON p.objetivo = maxP.objetivo AND p.idPuntuacion = maxP.maxPuntuacion
+WHERE e.idEmpleado = 1;
 
 /*Verifiicar peso de los objetivos asignados*/
 SELECT SUM(peso) AS suma_peso_actual
 FROM ObjetivoEmpleado
 WHERE empleado = 1;
 
+SELECT oe.idObjetivoEmpleado, o.titulo, p.valor, o.peso, 
+       (o.peso * p.valor / 100) AS despeno
+        FROM ObjetivoEmpleado oe
+        JOIN Empleado e ON oe.empleado = e.idEmpleado
+        JOIN Objetivo o ON oe.objetivo = o.idObjetivo
+        JOIN Puntuacion p ON oe.idObjetivoEmpleado = p.objetivo
+        JOIN (
+            SELECT p.objetivo, MAX(p.idPuntuacion) AS maxPuntuacion
+            FROM Puntuacion p
+            GROUP BY p.objetivo
+        ) maxP ON p.objetivo = maxP.objetivo AND p.idPuntuacion = maxP.maxPuntuacion
+        WHERE e.idEmpleado = 1;
 

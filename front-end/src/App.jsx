@@ -14,6 +14,7 @@ import ActualizarDatos from './pages/ActualizarDatos.jsx';
 import ObjetivoEmpleado from './pages/ObjetivoEmpleado.jsx';
 import Redireccion from './components/Redireccion.jsx';
 import AsignarObjetivo from './pages/AsignarObjetivo.jsx';
+import ActualizarPuntuacion from './pages/ActualizarPuntuacion.jsx';
 function App() {
 
   const user = useUserContext();
@@ -31,12 +32,13 @@ function App() {
           <Route path="/" element={<Login />}/>
           
           <Route element={<ProtectedRoute isAllowed={user}/>}>
-            <Route path='/feed/:id' element={<Feed />}/>      
+            <Route path='/feed/:id' element={<Feed />}/>    
+            <Route path='/objetivo-empleado/:asignacion/:empleado/:objetivo' element={<ObjetivoEmpleado />}/>  
           </Route>
           <Route element={<ProtectedRoute isAllowed={!!user && user.rol === 'admin'}/>}>
             <Route path='/panel' element={<Panel />} />
-            <Route path='/objetivo-empleado/:id' element={<ObjetivoEmpleado />}/>
-            <Route path='/redireccion/:tipo'element={<Redireccion />} />
+            <Route path='/actualizar-puntuacion/:asignacion/:empleado/:objetivo' element={<ActualizarPuntuacion />} />        
+            <Route path='/redireccion/:tipo/:aux?'element={<Redireccion />} />
             <Route path='/empleados' element={<Empleados />}/>
             <Route path="/nuevo-objetivo" element={<NuevoObjetivo />}/>
             <Route path="/nuevoUsuario" element={<NuevoUsuario />}/>

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 function Redireccion(){
     const [objetivo, setObjetivo] = useState(null);
     const [error, setError]  =useState(null);
-    const {tipo} = useParams();
+    const {tipo, aux} = useParams();
     
     
     const [titulo, setTitulo] = useState('');
@@ -71,7 +71,9 @@ function Redireccion(){
                 {
                     tipo === 'asignado' ? (
                         <>
-                            
+                          <li className='punto'>
+                            <Link to={`/asignar-objetivo/${aux}`} className='link-verde'>Asignar un nuevo empleado a este objetivo.</Link>
+                          </li>  
                         </>
                     ):(
                         <></>

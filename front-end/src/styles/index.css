@@ -15,3 +15,20 @@ html, body {
   border: 1px solid  orange;
   width: 95%;
 }
+::-webkit-scrollbar {
+  width: 12px; /* Ancho de la barra */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color de la pista (track) */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color del "pulgar" (thumb) */
+  border-radius: 10px; /* Radio del borde */
+  border: 3px solid #f1f1f1; /* Borde alrededor del pulgar */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color del pulgar al pasar el mouse */
+}

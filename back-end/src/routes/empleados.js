@@ -4,11 +4,11 @@ const axios = require('axios');
 
 router.get('/', obtenerEmpleados);
 router.get('/areas',obtenerAreas);
+router.get('/:id',obtenerEmpleadoXId);
 router.post('/', agregarEmpleado);
-async function obtenerEmpleados(req, res) {
 
-    try{
-        
+async function obtenerEmpleados(req, res) {
+    try{ 
         const connection = await new Promise((resolve, reject)=>{
             req.getConnection((err, conn)=>{
                 if(err) reject(err);
@@ -31,6 +31,28 @@ async function obtenerEmpleados(req, res) {
     }
 }
 
+async function obtenerEmpleadoXId(req,res){
+    try{
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err) reject(err);
+                else resolve(conn);
+            });
+        });
+        const idEmpleado = req.params.id;
+        console.log('Id :', idEmpleado)
+        const results = await new Promise((resolve, reject)=>{
+            connection.query('SELECT * FROM Empleado WHERE idEmpleado = ?',[idEmpleado],(err, results)=>{
+                if(err) reject(err);
+                else resolve(results);
+            });
+        });
+        console.log(results);
+        res.status(202).send(results[0]);
+    }catch(error){
+        res.status(404).senf(error)
+    }
+}
 async function obtenerAreas(req, res){
     try{
         

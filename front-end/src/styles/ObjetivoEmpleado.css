@@ -26,3 +26,16 @@
 .boton-obj-emp{
     margin: 10px;
 }
+.boton-obj-emp-eli{
+    background-color: rgb(200, 0, 10);
+}
+.boton-obj-emp-eli:hover{
+    background-color: rgb(255, 0, 13);
+}
+
+.lista-puntuacion{
+    list-style-type: none;
+}
+.contenedor-punto{
+    margin-top: 10px;
+}

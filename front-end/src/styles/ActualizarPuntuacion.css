@@ -1,0 +1,17 @@
+.conetendor-puntuacion-actualizar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.contenedor-actualizar{
+    width: 30%;
+    height: 50%;
+}
+.titulo-puntuacion{
+    width: 100%;
+    text-align: center;
+}
+.input-puntuacion{
+    width: 100%;
+}

@@ -46,7 +46,7 @@ function AsignarObjetivo(){
     const onSubmit =  async (e)=>{
         e.preventDefault();
         try{
-            setIdObjetivo(objetivo.idObjetivo);
+           
 
             const data = {
                 fecha: fecha,
@@ -58,8 +58,14 @@ function AsignarObjetivo(){
             if(response.status === 200){
                 setRedirect(true);
             }
-        }catch(error){
-            console.log('Hubo un error al eviar los datos: ',error);
+        }catch(err){
+           if(err.response){
+            setError(err.response.data.message || 'Ocurrió un error en el servidor');
+           }else if(err.request){
+            setError('No se recibio respuesta del servidor');
+           }else{
+            setError('Error en la configuracion de la solicitud: '+ err.message);
+           }
         }
     }
 
@@ -70,7 +76,7 @@ function AsignarObjetivo(){
     },empleados);
 
     if (redirect) {
-        return <Navigate to='/redireccion/asignado' />;
+        return <Navigate to={`/redireccion/asignado/${id}`} />;
     }
 
     return (
@@ -80,6 +86,7 @@ function AsignarObjetivo(){
                 
                 <form className="form-objetivo" onSubmit={onSubmit}>
                     <h1>Objetivo: {objetivo.titulo}</h1>
+                    {error && <div style={{color:"red"}}>{error}</div>}
                     <h4>Descripcion:</h4>
                     <label>{objetivo.descripcion}</label>
                     <h4>Peso:</h4>
