@@ -4,13 +4,11 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 function ObjetivoPanel(props){
     const nav = useNavigate();
- 
     const handleClick = ()=>{
         console.log('Hciste click')
         
         nav(`/asignar-objetivo/${props.objetivo.idObjetivo}`);
     }
-
     return (
 
         <div className="contenedor-objetivo">
@@ -24,15 +22,10 @@ function ObjetivoPanel(props){
                 <progress id="progreso "value={props.objetivo.peso} max="100"></progress>
                 <label htmlFor="progreso">{props.objetivo.peso}%</label>
             </div>
-            
-            <br></br>
-            
+            <br></br>   
             <button onClick={handleClick}>Asignar personas</button>
-            
-            
+            <button className="boton-modificar">Modificar Objetivo</button>
         </div>
     );
-
 }
-
 export default ObjetivoPanel;

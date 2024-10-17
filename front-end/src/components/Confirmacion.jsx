@@ -1,8 +1,11 @@
-import React from 'react';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
+import { Navigate } from 'react-router-dom';
 
-function Confirmacion({ idElemento }) {
-  const manejarEliminar = async () => {
+
+function Confirmacion({ idElemento, idEmpleado }) {
+  const [redireccion, setRedireccion] = useState(false);
+    const manejarEliminar = async () => {
     // Muestra la alerta de confirmación
     const result = await Swal.fire({
       title: '¿Estás seguro?',
@@ -26,6 +29,7 @@ function Confirmacion({ idElemento }) {
         if (response.ok) {
           // Muestra mensaje de éxito
           Swal.fire('¡Eliminado!', 'Tu elemento ha sido eliminado.', 'success');
+          setRedireccion(true);
         } else {
           throw new Error('Error al eliminar el elemento');
         }
@@ -36,6 +40,9 @@ function Confirmacion({ idElemento }) {
     }
   };
 
+  if(redireccion){
+    return <Navigate to={`/feed/${idEmpleado}`} />
+  }
   return (
     <button onClick={manejarEliminar} style={{ backgroundColor: 'red', color: 'white' }}>
       Eliminar asignacion

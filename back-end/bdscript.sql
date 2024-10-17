@@ -1,4 +1,5 @@
 CREATE DATABASE objetivosDB;
+DROP DATABASE objetivosDB;
 USE objetivosDB;
 
 CREATE TABLE Empleado(
@@ -16,7 +17,7 @@ CREATE TABLE Usuario(
     rol ENUM('user','admin') NOT NULL,
     empleado INT NOT NULL,
     PRIMARY KEY(idUsuario),
-    FOREIGN KEY(empleado) REFERENCES Empleado(idEmpleado)
+    FOREIGN KEY(empleado) REFERENCES Empleado(idEmpleado) ON DELETE CASCADE
 );
 
 CREATE TABLE Objetivo(
@@ -29,6 +30,8 @@ CREATE TABLE Objetivo(
     PRIMARY KEY(idObjetivo)
 );
 
+
+
 CREATE TABLE ObjetivoEmpleado(
     idObjetivoEmpleado INT NOT NULL AUTO_INCREMENT,
     fechaAsignacion DATE,
@@ -36,8 +39,8 @@ CREATE TABLE ObjetivoEmpleado(
     objetivo INT,
     
     PRIMARY KEY(idObjetivoEmpleado),
-    FOREIGN KEY(empleado) REFERENCES Empleado(idEmpleado),
-    FOREIGN KEY(objetivo) REFERENCES Objetivo(idObjetivo),
+    FOREIGN KEY(empleado) REFERENCES Empleado(idEmpleado) ON DELETE CASCADE,
+    FOREIGN KEY(objetivo) REFERENCES Objetivo(idObjetivo) ON DELETE CASCADE,
     UNIQUE(empleado, objetivo)
 );
 
@@ -47,7 +50,7 @@ CREATE TABLE Puntuacion(
     valor INT NOT NULL CHECK(valor BETWEEN 0 AND 100),
     fechaPuntuacion DATE,
     PRIMARY KEY(idPuntuacion),
-    FOREIGN KEY(objetivo) REFERENCES ObjetivoEmpleado(idObjetivoEmpleado)
+    FOREIGN KEY(objetivo) REFERENCES ObjetivoEmpleado(idObjetivoEmpleado)  ON DELETE CASCADE
 );
 
 drop table ObjetivoEmpleado;
@@ -58,6 +61,8 @@ drop table Empleado;
 
 /*datos prueba*/
 
+
+
 INSERT INTO Empleado VALUES (0,'Enzo Ranelli','Operador NOC','Banco BICE');
 INSERT INTO Empleado VALUES (0,'Juan Perez','Project Manager','Operaciones IT');
 SELECT * FROM Empleado;
@@ -66,7 +71,7 @@ DELETE FROM Empleado WHERE IdEmpleado = 1;
 
 INSERT INTO Usuario VALUES(0,'enzo.ranelli@gmail.com','contraseña','user',1);
 
-DELETE FROM Usuario;
+DELETE FROM Empleado WHERE idEmpleado=1;
 
 
 
@@ -76,9 +81,11 @@ INSERT INTO Objetivo VALUES(0,'Certificaciones','El objetivo sera completar 3 ce
 SELECT * FROM Objetivo;
 DELETE FROM Objetivo;
 SELECT * FROM Objetivo ORDER BY idObjetivo DESC LIMIT 1;
-
+UPDATE Objetivo
+SET descripcion = 'Actualizado papa de dio'
+WHERE idObjetivo = 1;
 SELECT * FROM Objetivo WHERE idObjetivo = 'sdfgsdfg';
-SELECT objetivo, valor from 
+
 
 
 INSERT INTO ObjetivoEmpleado VALUES(0,1,1,50);
@@ -137,5 +144,6 @@ SELECT oe.idObjetivoEmpleado, o.titulo, p.valor, o.peso,
             FROM Puntuacion p
             GROUP BY p.objetivo
         ) maxP ON p.objetivo = maxP.objetivo AND p.idPuntuacion = maxP.maxPuntuacion
-        WHERE e.idEmpleado = 1;
+        WHERE e.idEmpleado = 1
+        ORDER BY idOBjetivoEmpleado;
 

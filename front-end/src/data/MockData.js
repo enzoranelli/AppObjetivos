@@ -49,11 +49,11 @@ export function obtenerUsario(){
 export function obtenerUsuarios(){
     let usuarios =[
         {
-            idUsuario: 1,
+            idUsuario: 3,
             name: "Enzo Ranelli",
             email: "enzo@email.com",
             usuarioPassword: "contraseña",
-            empleado: 1,
+            empleado: 3,
             rol:"admin"
         },
         {
@@ -86,7 +86,7 @@ export function obtenerEmpleados(){
     //Seria la tabla empleado
     let usuarios = [
         {
-            idEmpleado: 1,
+            idEmpleado: 3,
             Nombre:"Enzo Ranelli",
             Area:"Banco BICE",
             puesto:"Operador NOC"

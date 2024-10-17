@@ -6,3 +6,12 @@
     width: 200px;
     margin-bottom: 20px;
 }
+.form-contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+}
+.boton-modificar{
+    margin-left: 10px;
+}

@@ -32,6 +32,9 @@ function Redireccion(){
         if(tipo === 'asignado'){
             setTitulo('Objetivo asignado con éxito');
         }
+        if(tipo === 'puntuacion'){
+            setTitulo('Puntuación actualizada con éxito');
+        }
     },[]);
 
     return (
@@ -76,6 +79,18 @@ function Redireccion(){
                           </li>  
                         </>
                     ):(
+                        <></>
+                    )
+                }
+                {
+                    tipo === 'puntuacion' ? (
+                        <>
+
+                            <li className='punto'>
+                                <Link to={`/feed/${aux}`} className='link-verde'>Volver a la lista de objetivos del empleado</Link>
+                            </li> 
+                        </>
+                    ) :(
                         <></>
                     )
                 }

@@ -32,7 +32,7 @@ function Panel(){
                         <ObjetivoPanel objetivo={objetivos}/>
                     </li>
                 ))}
-            </ul>) : (<SinElementos />)}
+            </ul>) : (<SinElementos elemento='objetivos'/>)}
             
         </div>
 

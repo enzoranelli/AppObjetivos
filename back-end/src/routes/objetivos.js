@@ -6,6 +6,7 @@ router.get('/', obtenerObjetivos);
 router.get('/ultimo',obtenerUltimoObjetivo );
 router.get('/:id', obtenerObjetivo);
 router.post('/', agregarObjetivo);
+router.put('/',actualizarObjetivo);
 
 
 
@@ -41,7 +42,47 @@ async function agregarObjetivo(req, res) {
     res.status(404).send(err);
  } 
 }
+async function actualizarObjetivo(req,res){
+    try{
+        const { idObjetivo, titulo, descripcion, peso, fechaInicio, fechaFinal } = req.body;
 
+        // Verificar que todos los datos necesarios estén presentes
+        if (!idObjetivo || !titulo || !descripcion || peso === undefined || !fechaInicio || !fechaFinal) {
+        return res.status(400).send("Faltan datos necesarios");
+        }
+
+        // Crear la conexión a la base de datos
+        const connection = await new Promise((resolve, reject) => {
+        req.getConnection((err, conn) => {
+            if (err) reject(err);
+            else resolve(conn);
+        });
+        });
+
+        // Consulta SQL para actualizar el registro
+        const query = `
+        UPDATE Objetivo 
+        SET titulo = ?, descripcion = ?, peso = ?, fechaInicio = ?, fechaFinal = ?
+        WHERE idObjetivo = ?
+        `;
+
+        // Ejecutar la consulta y actualizar el registro
+        const results = await new Promise((resolve, reject) => {
+        connection.query(query, [titulo, descripcion, peso, fechaInicio, fechaFinal, idObjetivo], (err, results) => {
+            if (err) reject(err);
+            else resolve(results);
+        });
+        });
+
+        // Verificar si se actualizó algún registro
+        if (results.affectedRows === 0) {
+        return res.status(404).send('No se encontró el objetivo con ese ID.');
+        }
+        res.send(results);
+    }catch(error){
+        res.status(500).send(error.message);
+    }
+}
 async function obtenerObjetivos(req, res) {
     try{
         

@@ -127,13 +127,35 @@ async function obtenerUltimaAsignacion(req, res){
     }
 }
 
-function eliminarAsignacion(req, res){
+async function eliminarAsignacion(req, res){
     try{
         const id = req.params.id;
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err){
+                    console.error("Error al conectar en la base de datos:", err);
+                    reject(err);
+                }
+                else{ 
+                    resolve(conn);
+                }
+            });
+        });
 
-        console.log('El id es esto', id);
+        const results = await new Promise((resolve,reject)=>{
+            connection.query('DELETE FROM ObjetivoEmpleado WHERE idObjetivoEmpleado = ?',[id],(err,results)=>{
+                if(err){
+                    console.error("Error en la consulta:", err);
+                    reject(err);
+                } 
+                else{
+                    resolve(results);
+                }
+            });
+        });
 
-        res.send('Eliminado');
+        res.status(200).send(results);
+
     }catch(error){
         res.send(error);
     }

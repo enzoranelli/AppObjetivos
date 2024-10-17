@@ -92,7 +92,7 @@ function AsignarObjetivo(){
                     <h4>Peso:</h4>
                     <div>
                         <progress id="progreso "value={objetivo.peso} max="100"></progress>
-                        <label htmlFor="progreso">{objetivo.peso}%</label>
+                        <label htmlFor="progreso">  {objetivo.peso}%</label>
                     </div>
                     <h4>Fecha de asignación de hoy: {fechaMostrar}</h4>
                     <h4>Asignar a</h4>

@@ -6,6 +6,8 @@ router.get('/', obtenerEmpleados);
 router.get('/areas',obtenerAreas);
 router.get('/:id',obtenerEmpleadoXId);
 router.post('/', agregarEmpleado);
+router.put('/',actualizarEmpleado);
+router.delete('/:id', eliminarEmpleado);
 
 async function obtenerEmpleados(req, res) {
     try{ 
@@ -31,6 +33,45 @@ async function obtenerEmpleados(req, res) {
     }
 }
 
+async function actualizarEmpleado(req, res) {
+    try {
+        const {  nombre, puesto ,area, idEmpleado } = req.body;
+        if (!nombre || !puesto || !area ||!idEmpleado) {
+            return res.status(400).send("Faltan datos necesarios");
+            }
+        const connection = await new Promise((resolve, reject)=>{
+                req.getConnection((err, conn)=>{
+                    if(err) reject(err);
+                    else resolve(conn);
+                });
+            });
+        const query = `UPDATE Empleado 
+        SET nombre = ?, puesto = ?, area= ?
+        WHERE idEmpleado = ?
+        `;
+        const results = await new Promise((resolve, reject)=>{
+            connection.query(query,[nombre,puesto,area,idEmpleado],(err, results)=>{
+                if(err) reject(err);
+                else resolve(results);
+            });
+        });
+
+        const usuario = {
+            email: req.body.email,
+            usuarioPassword: req.body.usuarioPassword,
+            rol: req.body.rol,
+            empleado: idEmpleado,
+        } 
+        
+        const actualizarUsuario = await axios.put('http://localhost:9000/api/usuarios/',usuario);
+        console.log(actualizarUsuario);
+        res.status(200).send({message:"Usuario actualizado correctamente"});
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+    
+}
+
 async function obtenerEmpleadoXId(req,res){
     try{
         const connection = await new Promise((resolve, reject)=>{
@@ -51,6 +92,27 @@ async function obtenerEmpleadoXId(req,res){
         res.status(202).send(results[0]);
     }catch(error){
         res.status(404).senf(error)
+    }
+}
+async function eliminarEmpleado(req, res){
+    try {
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err) reject(err);
+                else resolve(conn);
+            });
+        });
+        const id = req.params.id;
+        const query = `DELETE FROM Empleado WHERE idEmpleado = ?`;
+        const results = await new Promise((resolve, reject)=>{
+            connection.query(query,[id],(err, results)=>{
+                if(err) reject(err);
+                else resolve(results);
+            });
+        });
+        res.status(200).send(results);
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 }
 async function obtenerAreas(req, res){

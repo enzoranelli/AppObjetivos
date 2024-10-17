@@ -62,7 +62,7 @@ function ObjetivoEmpleado(){
                         <h2>Fecha final de objetivo: {getObjetivo.fechaFinal}</h2>
                         <div>
                             <button className='boton-obj-emp' onClick={actualizarPuntuacion}>Actualizar estado</button>
-                            <Confirmacion idElemento={asignacion} />
+                            <Confirmacion idElemento={asignacion} idEmpleado={empleado} />
                         </div>
                         
                         <h3>Historial de {getEmpleado.nombre} en el objetivo:</h3>

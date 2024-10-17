@@ -119,7 +119,7 @@ function Feed(){
                 ))}
                 </ul>
                 </>
-            ) : (<SinElementos />)}
+            ) : (<SinElementos elemento={'objetivos asignados.'}/>)}
             </ul>
             
         </div>

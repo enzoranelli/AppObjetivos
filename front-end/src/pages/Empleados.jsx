@@ -1,6 +1,6 @@
 import DataTable from "react-data-table-component";
 import { Link } from 'react-router-dom';
-import { obtenerEmpleados } from "../data/MockData";
+import SinElementos from "../components/SinElementos";
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 function Empleados(){
@@ -58,6 +58,7 @@ function Empleados(){
                 pagination
                 highlightOnHover
                 striped
+                noDataComponent={<SinElementos elemento='empleados'/>}
             />
             
         

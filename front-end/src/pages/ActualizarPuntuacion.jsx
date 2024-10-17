@@ -1,6 +1,6 @@
 import '../styles/ActualizarPuntuacion.css'
 import axios from 'axios';
-import {useParams} from 'react-router-dom';
+import {Navigate, useParams} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { obtenerFecha, fechaISO } from "../components/fechaHoy";
 function ActualizarPuntuacion(){
@@ -10,6 +10,7 @@ function ActualizarPuntuacion(){
     const fechaMostrar = obtenerFecha();
     const [getObjetivo, setGetObjetivo] = useState(null);
     const [getEmpleado, setGetEmpleado] = useState(null);
+    const [redireccion, setRedireccion] = useState(null);
 
     useEffect(()=>{
         axios.get(`http://localhost:9000/api/objetivos/${objetivo}`)
@@ -45,7 +46,7 @@ function ActualizarPuntuacion(){
             const response = await axios.post('http://localhost:9000/api/puntuacion/', data);
 
             if(response.status === 202){
-                alert('Puntuacion agregada!')
+               setRedireccion(true);
             }
         }catch(err){
            if(err.response){
@@ -56,6 +57,9 @@ function ActualizarPuntuacion(){
             setError('Error en la configuracion de la solicitud: '+ err.message);
            }
         }
+    }
+    if(redireccion){
+        return <Navigate to={`/redireccion/puntuacion/${empleado}`}></Navigate>
     }
     return (
         <div className="conetendor-puntuacion-actualizar">
