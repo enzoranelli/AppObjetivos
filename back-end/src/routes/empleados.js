@@ -56,16 +56,9 @@ async function actualizarEmpleado(req, res) {
             });
         });
 
-        const usuario = {
-            email: req.body.email,
-            usuarioPassword: req.body.usuarioPassword,
-            rol: req.body.rol,
-            empleado: idEmpleado,
-        } 
         
-        const actualizarUsuario = await axios.put('http://localhost:9000/api/usuarios/',usuario);
-        console.log(actualizarUsuario);
-        res.status(200).send({message:"Usuario actualizado correctamente"});
+
+        res.status(200).send(results);
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -178,7 +171,7 @@ async function agregarEmpleado(req, res) {
 
         const nuevoUsuario = await axios.post('http://localhost:9000/api/usuarios/',usuario);
 
-        console.log(nuevoUsuario)
+        console.log(nuevoUsuario.status)
         res.status(200).send({message:"Usuario creado correctamente"});
         
     } catch (error) {

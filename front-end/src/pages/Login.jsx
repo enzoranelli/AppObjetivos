@@ -4,17 +4,17 @@ import '../styles/Login.css'
 import { useUserContext, useUserToggleContext } from "../UserProvider";
 import { Navigate } from "react-router-dom";
 function Login(){
-    const user = useUserContext();
-    const cambiaLogin = useUserToggleContext();
+    const {user, error} = useUserContext();
+    const {login, logout} = useUserToggleContext();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     usePageTitle('Login | Medicion de objetos')
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async(e) =>{
         e.preventDefault();
         console.log('Usuario: ', username);
         console.log('Contraseña: ', password);
-        cambiaLogin();
+        await  login(username, password);
     }
     if(user){
         var ruta = '';
@@ -34,6 +34,7 @@ function Login(){
             <form className="form-login" onSubmit={handleSubmit}>
                 
                 <h2 className="titulo-login">Iniciar sesión</h2>
+                    {error && <p className="error-message">{error}</p>}
                     <label  htmlFor="username">Usuario:</label>
                     <input 
                         type="text" 

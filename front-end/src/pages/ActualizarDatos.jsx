@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/ActualizarDatos.css';
 import axios from 'axios';
+import MensajeConfirmacion from '../components/mensajeConfirmacion';
+import Confirmacion from '../components/Confirmacion';
 
 function ActualizarDatos() {
   // Estado inicial del objeto
   const { id } = useParams()
-
+  const [mostrarMensaje, setMostrarMensaje] = useState(false);
+  const [contrasenaAct, setContrasenaAct] = useState(false);
   const [usuarioData, setUsuarioData] = useState(null);
   const [empleado, setEmpleado] = useState(null);
   const [passwords, setPasswords] = useState({
@@ -20,7 +23,7 @@ function ActualizarDatos() {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     // Manejar los cambios en los campos de usuario
-    if (name === 'name' || name === 'email' || name === 'rol') {
+    if (name === 'email' || name === 'rol') {
       setUsuarioData({
         ...usuarioData,
         [name]: value, // Actualiza solo la propiedad modificada en usuarioData
@@ -44,25 +47,87 @@ function ActualizarDatos() {
   }
 
   // Función para manejar el envío del formulario
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // Aquí podrías hacer una llamada a la API para actualizar los datos
     console.log('Datos actualizados:', usuarioData);
     console.log('Contraseñas ingresadas', passwords);
-    if (passwords.currentPassword) {
-      if (passwords.currentPassword === usuarioData.usuarioPassword) {
-        if (passwords.newPassword === passwords.confirmPassword) {
-          setError("");
-          alert("Contraseña actualizada");
-        } else {
-          setError("Las contraseñas no coinciden.");
+    if (passwords.currentPassword && passwords.newPassword && passwords.confirmPassword) {
+        try{
+            const verificar = {
+                idUsuario: usuarioData.idUsuario,
+                usuarioPassword: passwords.currentPassword,
+            }
+            const response = await axios.post('http://localhost:9000/api/usuarios/confirm',verificar);
+            if(response.status === 200){
+                if(passwords.newPassword===passwords.confirmPassword){
+                    const actualizarContraseña = {
+                        usuarioPassword: passwords.newPassword,
+                        idUsuario: usuarioData.idUsuario,
+                    }
+                    const res = await axios.put('http://localhost:9000/api/usuarios/confirm',actualizarContraseña);
+                    if(res.status === 200){
+                        setPasswords({
+                          currentPassword: "",
+                          newPassword: "",
+                          confirmPassword: "",
+                        });
+                        setContrasenaAct(true);
+                    }
+                }else{
+                    
+                    setError("La contraseña nueva no coincide con la confirmación.")
+                }
+            }
+        }catch(error){
+            
+            if(error.response){
+                setError(error.response.data.message || 'Ocurrió un error en el servidor');
+            }else if(error.request){
+                setError('No se recibio respuesta del servidor');
+            }else{
+                setError('Error en la configuracion de la solicitud: '+ error.message);
+            }
         }
-      } else {
-        setError("La contraseña actual no es valida.");
+    }else {
+      
+      setError("Ingrese datos en los 3 campos de contraseñas, para cambiar la clave.");
+      if(!passwords.confirmPassword && !passwords.newPassword && !passwords.currentPassword){
+        setError('');
       }
+      
     }
-
-  };
+    try {
+        const data = {
+            nombre: empleado.nombre,
+            puesto: empleado.puesto,
+            area: empleado.area,
+            idEmpleado: id,
+        }
+        const dataUsuario = {
+          email: usuarioData.email,
+          rol: usuarioData.rol,
+          empleado : id,
+        }
+        const response = await axios.put('http://localhost:9000/api/empleados/', data);
+        const response2 = await axios.put('http://localhost:9000/api/usuarios/',dataUsuario);
+        if(response.status === 200 && response2.status === 200){
+            console.log(response)
+            console.log(response2)
+            setMostrarMensaje(true);
+            console.log(mostrarMensaje)
+        }
+    }catch (error) {
+        setMostrarMensaje(false);
+        if(error.response){
+            setError(error.response.data.message || 'Ocurrió un error en el servidor');
+        }else if(error.request){
+            setError('No se recibio respuesta del servidor');
+        }else{
+            setError('Error en la configuracion de la solicitud: '+ error.message);
+        }
+    } 
+}
 
   useEffect(() => {
     axios.get(`http://localhost:9000/api/empleados/${id}`)
@@ -91,9 +156,16 @@ function ActualizarDatos() {
       {usuarioData && empleado ? (
         <form onSubmit={handleSubmit}>
           <h2>Actualizar Datos</h2>
+          {console.log(mostrarMensaje)}
+
+          {mostrarMensaje && <MensajeConfirmacion titulo={'Datos actualizados'} tipo={'exito'}/> }
+          {contrasenaAct && <MensajeConfirmacion titulo = {'Contraseña actualizada'} tipo={'exito'}/>}
+          {error && <MensajeConfirmacion titulo={error} tipo={'error'}/>}
           <div className='contenedor-input'>
             <label>Nombre:</label>
             <input
+
+              className='input-datos-actualizar'
               type="text"
               name="nombre"
               value={empleado.nombre}
@@ -103,6 +175,7 @@ function ActualizarDatos() {
           <div className='contenedor-input'>
             <label>Email:</label>
             <input
+              className='input-datos-actualizar'
               type="email"
               name="email"
               value={usuarioData.email}
@@ -117,9 +190,11 @@ function ActualizarDatos() {
                   className="input-radio"
                   type="radio"
                   value="admin"
-
+                  name='rol'
+                  checked={usuarioData.rol === 'admin'}
+                  onChange={handleInputChange}
                 />
-                Sí
+                Admin
               </label>
 
               <label className="label-radio">
@@ -127,20 +202,21 @@ function ActualizarDatos() {
                   className="input-radio"
                   type="radio"
                   value="user"
-
+                  name='rol'
+                  checked={usuarioData.rol === 'user'}
+                  onChange={handleInputChange}
                 />
-                No
+                Usuario
               </label>
             </div>
           </div>
           <div className='contenedor-input'>
             <h2>Actualizar contraseña</h2>
-            {error ? (
-              <h3 className='error'>Error: {error} </h3>
-            ) : (<></>)}
+            
             <label>Ingrese la contraña actual:</label>
             <input
-              type="text"
+              className='input-datos-actualizar'
+              type="password"
               name="currentPassword"
               value={passwords.currentPassword}
               onChange={handleInputChange}
@@ -149,7 +225,8 @@ function ActualizarDatos() {
           <div className='contenedor-input'>
             <label>Ingrese la nueva contraseña:</label>
             <input
-              type='text'
+              className='input-datos-actualizar'
+              type='password'
               name='newPassword'
               value={passwords.newPassword}
               onChange={handleInputChange}
@@ -158,7 +235,8 @@ function ActualizarDatos() {
           <div className='contenedor-input'>
             <label>Confirme la contraseña:</label>
             <input
-              type="text"
+              className='input-datos-actualizar'
+              type="password"
               name="confirmPassword"
               value={passwords.confirmPassword}
               onChange={handleInputChange}
@@ -184,6 +262,7 @@ function ActualizarDatos() {
             <div className='contenedor-input'>
               <label>Puesto</label>
               <input
+                className='input-datos-actualizar'
                 type='text'
                 name="puesto"
                 value={empleado.puesto}
@@ -191,7 +270,8 @@ function ActualizarDatos() {
               />
             </div>
           </div>
-          <button type="submit">Guardar</button>
+          <button className='button-datos' type="submit">Guardar</button>
+          <Confirmacion idEmpleado={id} tipo={'empleado'}/>
         </form>)
         :
         (

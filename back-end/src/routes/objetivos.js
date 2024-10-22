@@ -7,7 +7,7 @@ router.get('/ultimo',obtenerUltimoObjetivo );
 router.get('/:id', obtenerObjetivo);
 router.post('/', agregarObjetivo);
 router.put('/',actualizarObjetivo);
-
+router.delete('/:id',eliminarObjetivo);
 
 
 async function agregarObjetivo(req, res) {
@@ -140,6 +140,41 @@ async function obtenerUltimoObjetivo(req, res) {
         res.send(results[0]);
     } catch (err) {
         res.send(err);
+    }
+}
+async function eliminarObjetivo(req, res){
+    try {
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err){
+                    console.error("Error al conectar en la base de datos:", err);
+                    reject(err);
+                }
+                else{ 
+                    console.log('Conexion exitosa')
+                    resolve(conn);
+                }
+            });
+        });
+        const idObjetivo = req.params.id;
+        if(!idObjetivo){
+            return res.status(400).send({message:'No se envio una id'});
+        }
+        const results = await new Promise((resolve,reject)=>{
+            connection.query('DELETE FROM Objetivo WHERE idObjetivo = ?',[idObjetivo],(err, results)=>{
+                if(err){
+                    console.error("Error en la consulta:", err);
+                    reject(err);
+                } 
+                else{
+                    resolve(results);
+                } 
+            });
+        });
+        console.log(results);
+        res.status(200).send("Objetivo eliminado correctamente.");
+    } catch (error) {
+        res.status(500).send(error);
     }
 }
 

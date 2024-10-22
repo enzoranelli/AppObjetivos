@@ -12,7 +12,7 @@ import { formateo } from "../components/formateo";
 import DesempenoTotal from "../components/DesempenoTotal";
 function Feed(){
 
-    const user = useUserContext();
+    const {user} = useUserContext();
     const {id} = useParams();
     
     const [objetivos, setObjetivos] = useState(null); 
@@ -95,8 +95,7 @@ function Feed(){
             )}
            
             <ul className="lista">
-            {objetivos && objetivos.length !== 0 && puntuaciones ?  (
-                <>
+            {user && user.rol === 'admin'  && puntuaciones ? (<>    
                 <h3 style={{marginLeft:"17px"}}>Barra de peso de los objetivos:</h3>
                 <div className="contenedor-barra">
                    
@@ -110,16 +109,24 @@ function Feed(){
                     
                 </div>
                 <DesempenoTotal objetivos={puntuaciones} />
-                <ul className="lista">
-                    {objetivos.map((objetivos,index)=>(
-                        <li key={index}>
-                            
-                            <Objetivo objetivo={objetivos} empleado={id} />
-                        </li>
-                ))}
-                </ul>
+            </>):(
+                <></>
+            )}
+            
+            {objetivos && objetivos.length !== 0 ?  (
+                <>
+                    <h3 style={{marginLeft:"17px"}}>Objetivos asignados:</h3>
+                    <ul className="lista">
+                        {objetivos.map((objetivos,index)=>(
+                            <li key={index}>
+                                
+                                <Objetivo objetivo={objetivos} empleado={id} />
+                            </li>
+                    ))}
+                    </ul>
                 </>
             ) : (<SinElementos elemento={'objetivos asignados.'}/>)}
+          
             </ul>
             
         </div>

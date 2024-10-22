@@ -9,7 +9,10 @@ router.delete('/:id',eliminarAsignacion);
 
 async function agregarAsignacion(req, res){
     try {
-        
+        if(!req.body.fecha || !req.body.idEmpleado || !req.body.idObjetivo){
+            return res.status(400).json({message : "Todos los campos son obligatorios"})
+
+        }
         const asignacion = {
             fechaAsignacion: req.body.fecha,
             empleado: req.body.idEmpleado,

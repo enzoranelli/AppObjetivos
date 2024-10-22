@@ -4,10 +4,14 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 function ObjetivoPanel(props){
     const nav = useNavigate();
-    const handleClick = ()=>{
-        console.log('Hciste click')
-        
+    const handleClick = (tipo)=>{
+       if(tipo === 'asignacion'){
         nav(`/asignar-objetivo/${props.objetivo.idObjetivo}`);
+       }
+       if(tipo === 'actualizar'){
+        nav(`/actualizar-objetivo/${props.objetivo.idObjetivo}`);
+       }
+        
     }
     return (
 
@@ -23,8 +27,8 @@ function ObjetivoPanel(props){
                 <label htmlFor="progreso">{props.objetivo.peso}%</label>
             </div>
             <br></br>   
-            <button onClick={handleClick}>Asignar personas</button>
-            <button className="boton-modificar">Modificar Objetivo</button>
+            <button onClick={()=>handleClick('asignacion')}>Asignar personas</button>
+            <button className="boton-modificar" onClick={()=>handleClick('actualizar')}>Modificar Objetivo</button>
         </div>
     );
 }

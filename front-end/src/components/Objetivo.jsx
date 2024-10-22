@@ -4,7 +4,7 @@ import { useUserContext} from "../UserProvider";
 import { Navigate } from "react-router-dom";
 
 function Objetivo(props){
-    const user = useUserContext();
+    const {user} = useUserContext();
     /**
      *  const objetivo = {
         titulo: "Certificaciones",

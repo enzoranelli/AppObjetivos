@@ -3,15 +3,31 @@
 }
 .select-datos{
     padding: 10px;
-    width: 200px;
+    width: 500px;
     margin-bottom: 20px;
 }
 .form-contenedor{
+    margin-top: 2%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 95vh;
+    flex-direction: column;
 }
 .boton-modificar{
     margin-left: 10px;
+}
+.input-datos-actualizar{
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px;
+    border-color: #fbb003;
+    border-style: solid;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.button-datos{
+    width: 100%;
 }

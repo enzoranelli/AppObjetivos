@@ -1,9 +1,8 @@
 import React, {useState, useContext} from "react";
-import { obtenerUsario } from "./data/MockData";
-
+import axios from 'axios';
 const userContext = React.createContext();
 const userToggleContext = React.createContext();
-const redireccionar = React.createContext();
+
 
 export function useUserContext(){
     return useContext(userContext);
@@ -12,24 +11,42 @@ export function useUserContext(){
 export function useUserToggleContext(){
     return useContext(userToggleContext);
 }
-function getUsuario(){
-    //Logica para la api 
-    return obtenerUsario();
-}
+
 export function UserProvider(props){
     const [user, setUser] = useState(null);
+    const [error, setError] = useState('');
 
-    const cambiaLogin = () =>{
-        if(user){
+    const login = async(email, usuarioPassword) =>{
+        try{
+            const response  = await axios.post('http://localhost:9000/api/login',{
+                email,
+                usuarioPassword,
+            });
+
+            if(response.status === 200){
+                setUser(response.data);
+                setError('');
+            }
+
+        }catch(error){
+            if(error.response){
+                setError(error.response.data.message || 'Credenciales incorrectas');
+            } else{
+                setError('Error en la conexión con el servidor.');
+            }
             setUser(null);
-        }else {
-            setUser(getUsuario());
         }
     }
+    const logout = () => {
+        setUser(null);  // Al cerrar sesión, simplemente se pone el usuario a null
+        setError('');
+    };
+
+    
 
     return(
-        <userContext.Provider value={user}>
-            <userToggleContext.Provider value={cambiaLogin}>
+        <userContext.Provider value={{user,error}}>
+            <userToggleContext.Provider value={{login, logout}}>
                 {props.children}
             </userToggleContext.Provider>
         </userContext.Provider>

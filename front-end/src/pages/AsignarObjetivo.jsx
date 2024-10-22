@@ -7,10 +7,10 @@ function AsignarObjetivo(){
     const [error, setError]  =useState(null);
     const { id } = useParams();
     const [empleados, setEmpleados] = useState(null);
-    const [areas, setAreas] = useState(null);
+  
 
     const [idEmpleado, setIdEmpleado] = useState('');
-    const [area, setArea] = useState('');
+   
 
     const fechaMostrar = obtenerFecha();
     const fecha = fechaISO();
@@ -33,14 +33,7 @@ function AsignarObjetivo(){
             .catch( error => {
                 setError(error.message);
             });
-            axios.get(`http://localhost:9000/api/empleados/areas`)
-            .then( response => {
-                console.log(response)
-                setAreas(response.data);
-            })
-            .catch( error => {
-                setError(error.message);
-            }); 
+            
     },[id]);
 
     const onSubmit =  async (e)=>{
@@ -81,7 +74,7 @@ function AsignarObjetivo(){
 
     return (
         <div>
-        {objetivo && empleados && areas? (
+        {objetivo && empleados ? (
             <div className="objetivo-container">
                 
                 <form className="form-objetivo" onSubmit={onSubmit}>
@@ -98,7 +91,7 @@ function AsignarObjetivo(){
                     <h4>Asignar a</h4>
                     <label>Empleado:</label>
                     
-                    <select className='select-form' value={idEmpleado} onChange={(e)=>setIdEmpleado(e.target.value)} disabled={area !== ''} required>
+                    <select className='select-form' value={idEmpleado} onChange={(e)=>setIdEmpleado(e.target.value)} required>
                         <option value="" >Elige un empleado</option>
                         {empleados.map(empleado =>(
                             <option key={empleado.idEmpleado} value={empleado.idEmpleado}>
@@ -106,15 +99,7 @@ function AsignarObjetivo(){
                             </option>
                         ))}
                     </select>
-                    <label>Area:</label>
-                    <select className='select-form' value={area} onChange={(e)=>setArea(e.target.value)} disabled={idEmpleado !== ''}>
-                        <option value="" >Elija un area</option>
-                        {areas.map(areaItem =>(
-                            <option key={areaItem.area} value={areaItem.area}>
-                                {areaItem.area}
-                            </option>
-                        ))}
-                    </select>
+                    
                     <button type="submit">Asignar</button>
                 </form>
             </div>

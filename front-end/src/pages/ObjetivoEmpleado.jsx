@@ -60,9 +60,11 @@ function ObjetivoEmpleado(){
                         <h2>Progreso de {getObjetivo.titulo} de {getEmpleado.nombre}</h2>
                         <hr className='linea'></hr>
                         <h2>Fecha final de objetivo: {getObjetivo.fechaFinal}</h2>
-                        <div>
+                        <div className='contenedor-botones'>
                             <button className='boton-obj-emp' onClick={actualizarPuntuacion}>Actualizar estado</button>
-                            <Confirmacion idElemento={asignacion} idEmpleado={empleado} />
+                            <div className='boton-rojo'>
+                            <Confirmacion idElemento={asignacion} idEmpleado={empleado} tipo={'asignacion'}/>
+                            </div>
                         </div>
                         
                         <h3>Historial de {getEmpleado.nombre} en el objetivo:</h3>

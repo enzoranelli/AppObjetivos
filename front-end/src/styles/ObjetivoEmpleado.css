@@ -17,6 +17,12 @@
     -moz-box-shadow: -1px 1px 15px 2px rgba(85, 85, 85, 0.75);
 
 }
+.contenedor-botones{
+    display: flex;
+}
+.boton-rojo{
+    width: 400px;
+}
 /*hr{
     border: 1px solid #ff9100;
     width: 95%;

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { useUserContext, useUserToggleContext } from "../UserProvider";
 
 const Navegacion = () => {
-  const user = useUserContext();
-  const cambiaLogin = useUserToggleContext();
+  const {user} = useUserContext();
+  const {logout} = useUserToggleContext();
 
   return (
     <header className="header">
@@ -26,7 +26,7 @@ const Navegacion = () => {
           
           {
             user ? (
-              <li onClick={cambiaLogin} ><a> Cerrar sesión</a></li>
+              <li onClick={logout} ><a> Cerrar sesión</a></li>
             ) : (
               <li><Link to="/">Login</Link></li>   
             )
