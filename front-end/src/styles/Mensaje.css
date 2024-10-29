@@ -25,6 +25,11 @@
     align-items: center;
     gap: 10px;
 }
+.contenedor-mensaje{
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
 .green-text{
     color: rgb(0, 68, 0);
 }

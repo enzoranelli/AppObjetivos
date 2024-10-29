@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
-
+const {encriptarContrasena, verificarContrasena} = require('../utils/encriptacion.js');
 
 router.post('/', agregarUsuario);
 router.put('/',actualizarUsuario);
 router.post('/confirm', confirmarContrasena);
 router.put('/confirm',actualizarContrasena);
 router.get('/:id',obtenerUsuario);
+router.put('/:id', cambiarEstadoUsuario);
 
 async function obtenerUsuario(req, res){
     try{
@@ -18,7 +19,7 @@ async function obtenerUsuario(req, res){
             });
         });
         const results = await new Promise((resolve, reject)=>{
-            connection.query('SELECT idUsuario, email, rol, empleado FROM Usuario WHERE empleado = ?',[id], (err, results)=>{
+            connection.query('SELECT idUsuario, email, rol, empleado, activo FROM Usuario WHERE empleado = ?',[id], (err, results)=>{
                 if(err) reject(err);
                 else resolve(results);
             });
@@ -48,11 +49,15 @@ async function confirmarContrasena(req,res){
                 else resolve(results);
             });
         });
-        if(results[0].usuarioPassword !== usuarioPassword){
-            return res.status(400).send({message:"La contraseña no es valida."});
+        const esCorrecta = await verificarContrasena(usuarioPassword, results[0].usuarioPassword);
+        if (esCorrecta) {
+            res.status(200).send('Contraseña verificada.');
+        } else {
+            res.status(400).send({message:"La contraseña no es valida."});
         }
+         
         
-        res.status(200).send('La contraseña es correcta');
+        
     }catch(error){
         res.status(500).send({message:"Error en el servidor"});
     }
@@ -69,8 +74,9 @@ async function actualizarContrasena(req,res){
         if(!idUsuario || !usuarioPassword){
             return res.status(400).send({message:"Faltan datos"});
         }
+        const contraEncriptada = await encriptarContrasena(usuarioPassword);
         const results = await new Promise((resolve, reject)=>{
-            connection.query('UPDATE Usuario SET usuarioPassword = ? WHERE idUsuario = ?',[usuarioPassword,idUsuario], (err, results)=>{
+            connection.query('UPDATE Usuario SET usuarioPassword = ? WHERE idUsuario = ?',[contraEncriptada,idUsuario], (err, results)=>{
                 if(err) reject(err);
                 else resolve(results);
             });
@@ -92,17 +98,12 @@ async function agregarUsuario(req,res){
             });
         });
 
-        const usuario = {
-            email: req.body.email,
-            usuarioPassword: req.body.usuarioPassword,
-            rol: req.body.rol,
-            empleado: req.body.empleado,
-        }
-        console.log(usuario);
-
-        const query = 'INSERT INTO Usuario (email, usuarioPassword, rol, empleado) VALUES (?,?,?,?)';
+        const activo = true;
+        const {email, usuarioPassword, rol, empleado} = req.body
+        const contraEncriptada = await encriptarContrasena(usuarioPassword);
+        const query = 'INSERT INTO Usuario (email, usuarioPassword, rol, empleado, activo) VALUES (?,?,?,?,?)';
         const results = await new Promise((resolve, reject)=>{
-            connection.query(query,[usuario.email, usuario.usuarioPassword, usuario.rol, usuario.empleado], (err, results)=>{
+            connection.query(query,[email, contraEncriptada, rol, empleado, activo], (err, results)=>{
                 if(err) reject(err);
                 else resolve(results);
             });
@@ -157,6 +158,43 @@ async function actualizarUsuario(req,res){
         res.send(error);
     }
     
+}
+async function cambiarEstadoUsuario(req, res) {
+    try {
+        const id = req.params.id;
+        const activo = req.body.activo;
+        let nuevoEstado = -1;
+        if(activo === 1){
+            nuevoEstado = 0
+        }else{
+            nuevoEstado = 1
+        }
+        console.log('ESTADO ANTERIOR DE LA CUENTA:', activo);
+        console.log('SE VA A CAMBIAR A :', nuevoEstado);
+        if(!id){
+            return res.status(400).send({message:"Falta id"});
+        }
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err) reject(err);
+                else resolve(conn);
+            });
+        });
+        const results = await new Promise((resolve, reject)=>{
+            connection.query('UPDATE Usuario SET activo = ? WHERE idUsuario = ?',[nuevoEstado, id], (err, results)=>{
+                if (err) {
+                    console.error('Error en la consulta SQL:', err); // Muestra el error específico
+                    reject(err);
+                } else {
+                    console.log('Resultado de la consulta SQL:', results); // Log para ver lo que devuelve la consulta
+                    resolve(results);
+                }
+            });
+        });
+        res.status(200).send('Estado actualizado');
+    } catch (error) {
+        res.status(500).send(error);
+    }
 }
 
 module.exports = router

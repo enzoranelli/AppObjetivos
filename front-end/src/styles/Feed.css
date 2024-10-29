@@ -8,3 +8,8 @@
    
     justify-content: center;
 }
+.contenedor-boton{
+    display:  flex;
+    justify-content: space-between;
+    margin-right: 10px;
+}

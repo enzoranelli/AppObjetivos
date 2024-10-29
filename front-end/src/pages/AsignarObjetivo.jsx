@@ -2,7 +2,10 @@ import { useParams, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { obtenerFecha, fechaISO } from "../components/fechaHoy";
+import '../styles/AsignarObjetivo.css';
+import { getApiUrl } from "../config/configURL";
 function AsignarObjetivo(){
+    const url = getApiUrl();
     const [objetivo, setObjetivo] = useState(null);
     const [error, setError]  =useState(null);
     const { id } = useParams();
@@ -17,7 +20,7 @@ function AsignarObjetivo(){
 
     const [redirect, setRedirect] = useState(false);
     useEffect(()=>{
-        axios.get(`http://localhost:9000/api/objetivos/${id}`)
+        axios.get(`${url}/api/objetivos/${id}`)
             .then( response => {
                 console.log(response)
                 setObjetivo(response.data);
@@ -25,10 +28,11 @@ function AsignarObjetivo(){
             .catch( error => {
                 setError(error.message);
             });
-        axios.get(`http://localhost:9000/api/empleados`)
+        axios.get(`${url}/api/empleados`)
             .then( response => {
                 console.log(response)
-                setEmpleados(response.data);
+                
+                setEmpleados(response.data.filter(empleado => empleado.activo));
             })
             .catch( error => {
                 setError(error.message);
@@ -46,7 +50,7 @@ function AsignarObjetivo(){
                 idEmpleado: idEmpleado,
                 idObjetivo: objetivo.idObjetivo,
             }
-            const response = await axios.post('http://localhost:9000/api/objetivoasignacion/', data);
+            const response = await axios.post(`${url}/api/objetivoasignacion/`, data);
 
             if(response.status === 200){
                 setRedirect(true);
@@ -77,7 +81,7 @@ function AsignarObjetivo(){
         {objetivo && empleados ? (
             <div className="objetivo-container">
                 
-                <form className="form-objetivo" onSubmit={onSubmit}>
+                <form className="form-asignar-objetivo" onSubmit={onSubmit}>
                     <h1>Objetivo: {objetivo.titulo}</h1>
                     {error && <div style={{color:"red"}}>{error}</div>}
                     <h4>Descripcion:</h4>
@@ -100,7 +104,7 @@ function AsignarObjetivo(){
                         ))}
                     </select>
                     
-                    <button type="submit">Asignar</button>
+                    <button type="submit" className='boton-asignar-objetivo '>Asignar</button>
                 </form>
             </div>
         ):(

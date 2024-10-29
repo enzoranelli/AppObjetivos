@@ -3,7 +3,9 @@ import axios from 'axios';
 import {Navigate, useParams} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { obtenerFecha, fechaISO } from "../components/fechaHoy";
+import { getApiUrl } from '../config/configURL';
 function ActualizarPuntuacion(){
+    const url = getApiUrl();
     const {asignacion, empleado, objetivo} = useParams();
     const fecha = fechaISO();
     const [puntuacion, setPuntuacion] = useState(0);
@@ -13,7 +15,7 @@ function ActualizarPuntuacion(){
     const [redireccion, setRedireccion] = useState(null);
 
     useEffect(()=>{
-        axios.get(`http://localhost:9000/api/objetivos/${objetivo}`)
+        axios.get(`${url}/api/objetivos/${objetivo}`)
             .then( response => {
                 console.log(response)
                 setGetObjetivo(response.data);
@@ -21,7 +23,7 @@ function ActualizarPuntuacion(){
             .catch( error => {
                 setError(error.message);
             });
-        axios.get(`http://localhost:9000/api/empleados/${empleado}`)
+        axios.get(`${url}/api/empleados/${empleado}`)
             .then( response => {
                 console.log(response)
                 setGetEmpleado(response.data);
@@ -43,7 +45,7 @@ function ActualizarPuntuacion(){
                 valor: puntuacion,
                 fechaPuntuacion: fecha,
             }
-            const response = await axios.post('http://localhost:9000/api/puntuacion/', data);
+            const response = await axios.post(`${url}/api/puntuacion/`, data);
 
             if(response.status === 202){
                setRedireccion(true);

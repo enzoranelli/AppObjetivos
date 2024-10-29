@@ -2,9 +2,10 @@ import { usePageTitle } from "../components/nombrePag";
 import { useState } from "react";
 import "../styles/ObjetivoNuevos.css";
 import { Navigate } from "react-router-dom";
+import { getApiUrl } from "../config/configURL";
 function NuevoObjetivo(){
     usePageTitle('Home | Medicion de objetos')
-
+    const url = getApiUrl();
     const [texto, setTexto] = useState("");
     const [puntuacion, setPuntuacion] = useState(0);
     const [titulo, setTitulo] = useState("");
@@ -27,7 +28,7 @@ function NuevoObjetivo(){
         }
         
         try{
-            const response = await fetch('http://localhost:9000/api/objetivos',{
+            const response = await fetch(`${url}/api/objetivos`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

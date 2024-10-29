@@ -7,9 +7,32 @@
 html, body {
   height: 100%;
   margin: 0;
-  padding: 0;
-
+  padding-top: 19px;
+  
+  background-repeat: no-repeat;
+  background-position: left top 40px;
+  background-size: 25% auto;
+  
 }
+body{
+  position: relative;
+}
+body::before {
+  content: "";
+  position: absolute; /* Posiciona el pseudo-elemento sobre el contenido */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('https://americagroupit.com/wp-content/uploads/2024/06/cropped-Logo_AG_Color_VF2024-01.png');
+  background-repeat: no-repeat;
+  background-position: left top 11px;
+  filter: grayscale(100%);
+  background-size: 10% auto; /* Ajusta el tamaño como desees */
+  opacity: 0.5; /* 50% de opacidad para el fondo */
+  z-index: -1; /* Asegúrate de que el fondo esté detrás del contenido */
+}
+
 
 .linea{
   border: 1px solid  orange;

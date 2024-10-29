@@ -11,14 +11,17 @@ router.delete('/:id', eliminarEmpleado);
 
 async function obtenerEmpleados(req, res) {
     try{ 
+
         const connection = await new Promise((resolve, reject)=>{
             req.getConnection((err, conn)=>{
                 if(err) reject(err);
                 else resolve(conn);
             });
         });
+        const query = `SELECT e.idEmpleado, e.nombre, e.puesto, e.area, u.rol, u.activo 
+        FROM Empleado e JOIN Usuario u ON e.idEmpleado = u.empleado  `
         const results = await new Promise((resolve, reject)=>{
-            connection.query('SELECT * FROM Empleado', (err, results)=>{
+            connection.query(query, (err, results)=>{
                 if(err) reject(err);
                 else resolve(results);
             });
@@ -143,6 +146,10 @@ async function agregarEmpleado(req, res) {
                 else resolve(conn);
             });
         });
+        const {nombre, apellido, puesto, area, email, usuarioPassword,rol} = req.body;
+        if(!nombre||!apellido||!puesto, !area|| !email|| !usuarioPassword|| typeof rol === 'undefined'){
+            return res.status(400).send("Faltan campos requeridos");
+        }
         const empleado = {
             nombre: req.body.nombre+' '+req.body.apellido,
             puesto: req.body.puesto,

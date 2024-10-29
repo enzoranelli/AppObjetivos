@@ -14,16 +14,21 @@ function Login(){
         e.preventDefault();
         console.log('Usuario: ', username);
         console.log('Contraseña: ', password);
+        
         await  login(username, password);
     }
     if(user){
         var ruta = '';
+        if(user.activo === 1){
         if(user.rol==='admin'){
             ruta= '/panel';
         }else{
             ruta = `/feed/${user.empleado}`;
+        }}else{
+            ruta = `/cuenta-deshabilitada`;
         }
         console.log(ruta);
+        console.log('Estado de la cuenta', user.activo)
         return <Navigate to={ruta}/>
     }
 

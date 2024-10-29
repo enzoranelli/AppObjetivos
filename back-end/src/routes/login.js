@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const {encriptarContrasena, verificarContrasena} = require('../utils/encriptacion.js');
 
 router.post('/',iniciarSesion);
 router.get('/',encontrarEmail);
@@ -15,9 +16,9 @@ async function iniciarSesion(req, res) {
         if(buscarEmail.length === 0){
             return res.status(400).send({message: "Usuario no existe."});
         }
-        console.log(buscarEmail[0].usuarioPassword)
-        console.log(usuarioPassword)
-        if(buscarEmail[0].usuarioPassword === usuarioPassword){
+
+        const esCorrecta = await verificarContrasena(usuarioPassword, buscarEmail[0].usuarioPassword);
+        if(esCorrecta){
             console.log(buscarEmail[0].usuarioPassword)
             console.log(usuarioPassword)
             delete buscarEmail[0].usuarioPassword;
@@ -48,7 +49,7 @@ async function encontrarEmail(req, res) {
         return results;
 
     }catch(error){
-        throw err;
+        throw error;
     }
 }
 module.exports = router

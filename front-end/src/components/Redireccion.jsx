@@ -2,7 +2,9 @@ import {Link, useParams} from 'react-router-dom'
 import '../styles/Redireccion.css'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { getApiUrl } from '../config/configURL.js';
 function Redireccion(){
+    const url = getApiUrl();
     const [objetivo, setObjetivo] = useState(null);
     const [error, setError]  =useState(null);
     const {tipo, aux} = useParams();
@@ -13,7 +15,7 @@ function Redireccion(){
 
     useEffect(()=>{
         if(tipo === 'objetivo'){
-        axios.get('http://localhost:9000/api/objetivos/ultimo')
+        axios.get(`${url}/api/objetivos/ultimo`)
             .then( response => {
                 console.log(response)
                 setObjetivo(response.data);

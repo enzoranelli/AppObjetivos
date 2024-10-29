@@ -1,8 +1,14 @@
 /* src/components/Header.css */
 
 .header {
+    position: fixed;
+    top: 0; /* Posición en la parte superior */
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     background-color: #fbb003;
     padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     color: white;
     border-radius: 0px 0px 10px 10px;
   }

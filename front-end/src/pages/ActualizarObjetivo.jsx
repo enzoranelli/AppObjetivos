@@ -2,16 +2,19 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import '../styles/ActualizarObjetivo.css';
-import { formatearFechaToISO } from "../components/fechaHoy";
-import MensajeConfirmacion from '../components/mensajeConfirmacion';
-import Confirmacion from '../components/Confirmacion';
+import { formatearFechaToISO } from "../components/fechaHoy.js";
+import MensajeConfirmacion from '../components/MensajeConfirmacion.jsx';
+import Confirmacion from '../components/Confirmacion.jsx';
+import { getApiUrl } from '../config/configURL.js';
+
 function ActualizarObjetivo(){
+    const url = getApiUrl();
     const [objetivoData, setObjetivoData] = useState(null);
     const {id} = useParams();
     const [error, setError] = useState("");
     const [mostrarMensaje, setMostrarMensaje] = useState(false);
     useEffect(()=>{
-        axios.get(`http://localhost:9000/api/objetivos/${id}`)
+        axios.get(`${url}/api/objetivos/${id}`)
         .then(response => {
             console.log(response)
             const data = response.data;
@@ -51,7 +54,7 @@ function ActualizarObjetivo(){
                 idObjetivo: id,
             }
             
-            const response = await axios.put('http://localhost:9000/api/objetivos/', data);
+            const response = await axios.put(`${url}/api/objetivos/`, data);
        
             if(response.status === 200){
                 console.log(response)
@@ -79,6 +82,7 @@ function ActualizarObjetivo(){
                     {error && <MensajeConfirmacion titulo={error} tipo={'error'}/>}
                     <div className='contenedor-input'>
                         <label>Titulo:</label>
+                        
                         <input
                             className='input-datos-actualizar-obj'
                             type="text"

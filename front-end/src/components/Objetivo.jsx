@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from "react";
 import "../styles/Objetivo.css"
-import { useUserContext} from "../UserProvider";
+import { useUserContext} from "../UserProvider.jsx";
 import { Navigate } from "react-router-dom";
 
 function Objetivo(props){
@@ -25,17 +25,19 @@ function Objetivo(props){
 
         <div className="contenedor-objetivo">
             <h2>{props.objetivo.titulo}</h2>
-            <p>Descripcion: {props.objetivo.descripcion}</p>
-            <p>Fecha de incicio: {props.objetivo.fechaInicio}</p>
-            <p>Fecha Final: {props.objetivo.fechaFinal}</p>
-            <p>Fue asignado el: {props.objetivo.fechaAsignacion}</p>
-            <p>Peso: </p>
-            <progress id="progreso "value={props.objetivo.peso} max="100"></progress>
-            <label htmlFor="progreso"> {props.objetivo.peso}%</label>
+            <p>Descripcion:<b> {props.objetivo.descripcion}</b></p>
+            <p>Fecha de incicio: <b>{props.objetivo.fechaInicio}</b></p>
+            <p>Fecha Final: <b>{props.objetivo.fechaFinal}</b></p>
+            <p>Fue asignado el: <b>{props.objetivo.fechaAsignacion}</b></p>
+            <div className="contenedor-progreso">
+                <p style={{margin:0}}>Peso: </p>
+                <progress id="progreso "value={props.objetivo.peso} max="100" className="no-print"></progress>
+                <label htmlFor="progreso"> <b>{props.objetivo.peso}%</b></label>
+            </div>
             <br></br>
             {
                 user && user.rol === 'admin' ? (
-                    <button onClick={()=>{setRedireccion(true)}}>Ver mas detalles</button>
+                    <button onClick={()=>{setRedireccion(true)}} className="no-print">Ver mas detalles</button>
                 ) : (
                     <></>
                 )

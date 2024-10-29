@@ -16,6 +16,7 @@ import Redireccion from './components/Redireccion.jsx';
 import AsignarObjetivo from './pages/AsignarObjetivo.jsx';
 import ActualizarPuntuacion from './pages/ActualizarPuntuacion.jsx';
 import ActualizarObjetivo from './pages/ActualizarObjetivo.jsx';
+import CuentaDeshabilitada from './pages/CuentaDeshabilitada.jsx';
 function App() {
 
   const {user} = useUserContext();
@@ -35,6 +36,7 @@ function App() {
           <Route element={<ProtectedRoute isAllowed={user}/>}>
             <Route path='/feed/:id' element={<Feed />}/>    
             <Route path='/objetivo-empleado/:asignacion/:empleado/:objetivo' element={<ObjetivoEmpleado />}/>  
+            <Route path='/cuenta-deshabilitada' element={<CuentaDeshabilitada />} />
           </Route>
           <Route element={<ProtectedRoute isAllowed={!!user && user.rol === 'admin'}/>}>
             <Route path='/panel' element={<Panel />} />

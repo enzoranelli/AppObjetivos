@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/ActualizarDatos.css';
 import axios from 'axios';
-import MensajeConfirmacion from '../components/mensajeConfirmacion';
+import MensajeConfirmacion from '../components/MensajeConfirmacion.jsx';
 import Confirmacion from '../components/Confirmacion';
+import { getApiUrl } from '../config/configURL';
 
 function ActualizarDatos() {
+  const url = getApiUrl();
   // Estado inicial del objeto
+  const navigate = useNavigate();
   const { id } = useParams()
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
   const [contrasenaAct, setContrasenaAct] = useState(false);
@@ -19,6 +22,24 @@ function ActualizarDatos() {
   });
   const [error, setError] = useState("");
 
+
+  const handleEstado = async () =>{
+    try{
+      const data = {activo: usuarioData.activo};
+      const response = await axios.put(`${url}/api/usuarios/${usuarioData.idUsuario}`,data);
+      if(response.status === 200){
+        navigate('/empleados');
+      }
+    }catch(error){
+      if(error.response){
+        setError(error.response.data.message || 'Ocurrió un error en el servidor');
+    }else if(error.request){
+        setError('No se recibio respuesta del servidor');
+    }else{
+        setError('Error en la configuracion de la solicitud: '+ error.message);
+    }
+    }
+  }
   // Función para manejar los cambios en los inputs
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -58,14 +79,14 @@ function ActualizarDatos() {
                 idUsuario: usuarioData.idUsuario,
                 usuarioPassword: passwords.currentPassword,
             }
-            const response = await axios.post('http://localhost:9000/api/usuarios/confirm',verificar);
+            const response = await axios.post(`${url}/api/usuarios/confirm`,verificar);
             if(response.status === 200){
                 if(passwords.newPassword===passwords.confirmPassword){
                     const actualizarContraseña = {
                         usuarioPassword: passwords.newPassword,
                         idUsuario: usuarioData.idUsuario,
                     }
-                    const res = await axios.put('http://localhost:9000/api/usuarios/confirm',actualizarContraseña);
+                    const res = await axios.put(`${url}/api/usuarios/confirm`,actualizarContraseña);
                     if(res.status === 200){
                         setPasswords({
                           currentPassword: "",
@@ -109,8 +130,8 @@ function ActualizarDatos() {
           rol: usuarioData.rol,
           empleado : id,
         }
-        const response = await axios.put('http://localhost:9000/api/empleados/', data);
-        const response2 = await axios.put('http://localhost:9000/api/usuarios/',dataUsuario);
+        const response = await axios.put(`${url}/api/empleados/`, data);
+        const response2 = await axios.put(`${url}/api/usuarios/`,dataUsuario);
         if(response.status === 200 && response2.status === 200){
             console.log(response)
             console.log(response2)
@@ -130,7 +151,7 @@ function ActualizarDatos() {
 }
 
   useEffect(() => {
-    axios.get(`http://localhost:9000/api/empleados/${id}`)
+    axios.get(`${url}/api/empleados/${id}`)
       .then(response => {
         console.log(response)
         setEmpleado(response.data);
@@ -139,7 +160,7 @@ function ActualizarDatos() {
       .catch(error => {
         setError(error.message);
       });
-    axios.get(`http://localhost:9000/api/usuarios/${id}`)
+    axios.get(`${url}/api/usuarios/${id}`)
       .then(response => {
         console.log(response)
         setUsuarioData(response.data);
@@ -271,7 +292,10 @@ function ActualizarDatos() {
             </div>
           </div>
           <button className='button-datos' type="submit">Guardar</button>
-          <Confirmacion idEmpleado={id} tipo={'empleado'}/>
+          <button className='button-datos' type="button" onClick={handleEstado} style={{ backgroundColor: usuarioData.activo === 1 ? 'gray' : 'green', color: 'white', width:'100%'}}>
+            {usuarioData.activo === 1 ? 'Deshabilitar cuenta' : 'Habilitar cuenta'}
+          </button>
+          <Confirmacion idEmpleado={id} tipo={'de forma permanente al empleado'}/>
         </form>)
         :
         (

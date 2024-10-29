@@ -3,10 +3,13 @@ import { useState } from "react";
 import axios from "axios";
 import {useForm} from 'react-hook-form';
 import '../styles/FormUsuario.css';
-
+import { getApiUrl } from "../config/configURL";
+import MensajeConfirmacion from "../components/MensajeConfirmacion";
 function NuevoUsuario(){
     const {register, handleSubmit} = useForm();
     const [redirect, setRedirect] = useState(false);
+    const [errorForm, setErrorForm] = useState('');
+    const url = getApiUrl();
 
     const onSubmit = async (data) =>{
     
@@ -18,7 +21,7 @@ function NuevoUsuario(){
          
             console.log(data)
             try {
-                const response = await fetch('http://localhost:9000/api/empleados',{
+                const response = await fetch(`${url}/api/empleados`,{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -35,13 +38,9 @@ function NuevoUsuario(){
                 }
     
             } catch (error) {
-                console.log('Error al enviar datos', error);
+               setErrorForm(error);
             }
-
-        }else{
-            alert('Campos incompletos');
         }   
-    
     }
 
     function verificarFormulario(data){
@@ -51,6 +50,8 @@ function NuevoUsuario(){
                 const valor = data[propiedad];
                 if(valor === '' || valor === ""){
                     console.log('Esto dio falso')
+                    setErrorForm('Faltan campos.');
+                    console.log(errorForm);
                     return false;
                 }
             }
@@ -58,7 +59,13 @@ function NuevoUsuario(){
         data.rol = data.rol=== 'admin'
         console.log(data.usuarioPassword);
         console.log(data.confirmar);
-        return data.usuarioPassword === data.confirmar ? true : false;
+        if(data.usuarioPassword === data.confirmar){
+            return true;
+        }else{
+            setErrorForm('Las contraseñas no coinciden.');
+            return false;
+        }
+        
         
     }
 
@@ -67,8 +74,11 @@ function NuevoUsuario(){
     }
     return (
       <div className="form-container">
+            
             <form className="form-agregar" onSubmit={handleSubmit(onSubmit)}>
                 <h1 className="titulo">Agregar nuevo usuario</h1>
+                {errorForm && <MensajeConfirmacion titulo={errorForm} tipo={'error'}/>}
+                
                 <div className="contenedor-input">
                     <label className="label-form">Nombre</label>
                     <input type="text" className="input-text" {...register('nombre')}></input>

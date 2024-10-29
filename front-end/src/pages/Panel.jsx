@@ -2,13 +2,15 @@ import ObjetivoPanel from "../components/ObjetivoPanel";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import SinElementos from "../components/SinElementos";
+import { getApiUrl } from "../config/configURL";
 
 function Panel(){
     const [objetivos, setObjetivos] = useState(null);
     const [error, setError]  =useState(null);
-    
+    const url = getApiUrl();
+
     useEffect(()=>{
-        axios.get('http://localhost:9000/api/objetivos')
+        axios.get(`${url}/api/objetivos`)
             .then( response => {
                 console.log(response)
                 setObjetivos(response.data);

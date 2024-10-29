@@ -1,0 +1,6 @@
+.form-asignar-objetivo{
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+   
+}

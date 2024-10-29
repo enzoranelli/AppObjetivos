@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { Navigate } from 'react-router-dom';
+import { getApiUrl } from '../config/configURL';
 
 
 function Confirmacion({ idElemento, idEmpleado, tipo}) {
   const [redireccion, setRedireccion] = useState(false);
+  const url = getApiUrl();
     const manejarEliminar = async () => {
     // Muestra la alerta de confirmación
     const result = await Swal.fire({
@@ -22,8 +24,9 @@ function Confirmacion({ idElemento, idEmpleado, tipo}) {
     if (result.isConfirmed) {
       if(tipo === 'asignacion'){
         try {
+          
           // Realiza la petición para eliminar el elemento
-          const response = await fetch(`http://localhost:9000/api/objetivoasignacion/${idElemento}`, {
+          const response = await fetch(`${url}/api/objetivoasignacion/${idElemento}`, {
             method: 'DELETE',
           });
 
@@ -42,7 +45,7 @@ function Confirmacion({ idElemento, idEmpleado, tipo}) {
       if(tipo === 'empleado'){
         try {
           // Realiza la petición para eliminar el elemento
-          const response = await fetch(`http://localhost:9000/api/empleados/${idEmpleado}`, {
+          const response = await fetch(`${url}/api/empleados/${idEmpleado}`, {
             method: 'DELETE',
           });
 
@@ -60,7 +63,7 @@ function Confirmacion({ idElemento, idEmpleado, tipo}) {
       }
       if(tipo === 'objetivo'){
         try{
-          const response = await fetch(`http://localhost:9000/api/objetivos/${idElemento}`, {
+          const response = await fetch(`${url}/api/objetivos/${idElemento}`, {
             method: 'DELETE',
           });
 
@@ -91,7 +94,7 @@ function Confirmacion({ idElemento, idEmpleado, tipo}) {
     }
   }
   return (
-    <button type="button"onClick={manejarEliminar} style={{ backgroundColor: 'red', color: 'white', width:'100%'}}>
+    <button type="button" onClick={manejarEliminar} style={{ backgroundColor: 'red', color: 'white', width:'100%'}}>
       Eliminar {tipo}
     </button>
   );

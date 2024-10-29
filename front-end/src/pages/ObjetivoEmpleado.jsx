@@ -3,16 +3,18 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import Confirmacion from '../components/Confirmacion';
+import { getApiUrl } from '../config/configURL';
 function ObjetivoEmpleado(){
     const {asignacion, empleado, objetivo} = useParams();
     const [getObjetivo, setGetObjetivo]= useState(null);
     const [getEmpleado, setGetEmpleado] = useState(null);
     const [puntuacion, setPuntuacion] = useState(null);
+    const url = getApiUrl();
 
     const [vuelta, setVuelta] = useState(false);
     const [actualizar, setActualizar] = useState(false);
     useEffect(()=>{
-        axios.get(`http://localhost:9000/api/empleados/${empleado}`)
+        axios.get(`${url}/api/empleados/${empleado}`)
             .then( response => {
                 console.log(response)
                 setGetEmpleado(response.data);
@@ -21,7 +23,7 @@ function ObjetivoEmpleado(){
             .catch( error => {
                 setError(error.message);     
             });
-        axios.get(`http://localhost:9000/api/objetivos/${objetivo}`)
+        axios.get(`${url}/api/objetivos/${objetivo}`)
             .then(response => {
                 console.log(response)
                 setGetObjetivo(response.data);
@@ -29,7 +31,7 @@ function ObjetivoEmpleado(){
             .catch( error => {
                 setError(error.message);
             })
-        axios.get(`http://localhost:9000/api/puntuacion/${asignacion}`)
+        axios.get(`${url}/api/puntuacion/${asignacion}`)
             .then(response => {
                 console.log(response)
                 setPuntuacion(response.data);

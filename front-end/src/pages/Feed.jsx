@@ -10,8 +10,11 @@ import { generarColorAleatorio } from "../components/generarColorAleatorio";
 import BarraDesempeno from "../components/BarraDesempeno";
 import { formateo } from "../components/formateo";
 import DesempenoTotal from "../components/DesempenoTotal";
-function Feed(){
+import BotonPdf from "../components/BotonPdf";
+import { getApiUrl } from "../config/configURL";
 
+function Feed(){
+    const url = getApiUrl();
     const {user} = useUserContext();
     const {id} = useParams();
     
@@ -27,7 +30,7 @@ function Feed(){
 
     const [error, setError] = useState('');
     useEffect(()=>{
-        axios.get(`http://localhost:9000/api/empleados/${id}`)
+        axios.get(`${url}/api/empleados/${id}`)
             .then( response => {
                 console.log(response)
                 setEmpleado(response.data);
@@ -36,7 +39,7 @@ function Feed(){
             .catch( error => {
                 setError(error.message);     
             });
-        axios.get(`http://localhost:9000/api/objetivoasignacion/${id}`)
+        axios.get(`${url}/api/objetivoasignacion/${id}`)
             .then(response => {
                 console.log(response)
                 setObjetivos(response.data);
@@ -45,7 +48,7 @@ function Feed(){
             .catch( error => {
                 setError(error.message);
             })
-        axios.get(`http://localhost:9000/api/puntuacion/puntuacionBarra/${id}`)
+        axios.get(`${url}/api/puntuacion/puntuacionBarra/${id}`)
             .then(response => {
                 console.log(response)
                 setPuntuaciones(response.data);
@@ -77,7 +80,7 @@ function Feed(){
     return(
        
 
-        <div>
+        <div id="main-content">
           
             {error && <p>Error : {error}</p>}
             {user && user.rol === 'admin' ? (<>
@@ -97,6 +100,7 @@ function Feed(){
             <ul className="lista">
             {user && user.rol === 'admin'  && puntuaciones ? (<>    
                 <h3 style={{marginLeft:"17px"}}>Barra de peso de los objetivos:</h3>
+                
                 <div className="contenedor-barra">
                    
                     <BarraPeso objetivos={objetivos} colores={colores} />
@@ -112,14 +116,21 @@ function Feed(){
             </>):(
                 <></>
             )}
-            
+            {user && user.rol === 'admin' ? ( 
+                <div className="contenedor-boton">
+                    <h3 style={{marginLeft:"17px"}}>Objetivos asignados:</h3>
+                    <BotonPdf nombreEmpleado={empleado?.nombre} />
+                </div>):(
+                <></>
+                )
+            }
+           
             {objetivos && objetivos.length !== 0 ?  (
                 <>
-                    <h3 style={{marginLeft:"17px"}}>Objetivos asignados:</h3>
+                    
                     <ul className="lista">
                         {objetivos.map((objetivos,index)=>(
                             <li key={index}>
-                                
                                 <Objetivo objetivo={objetivos} empleado={id} />
                             </li>
                     ))}
