@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Navigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import '../styles/ActualizarObjetivo.css';
@@ -13,6 +14,9 @@ function ActualizarObjetivo(){
     const {id} = useParams();
     const [error, setError] = useState("");
     const [mostrarMensaje, setMostrarMensaje] = useState(false);
+    const [contador, setContador] = useState(3);
+    const [redirigir, setRedirigir] = useState(false);
+
     useEffect(()=>{
         axios.get(`${url}/api/objetivos/${id}`)
         .then(response => {
@@ -31,6 +35,25 @@ function ActualizarObjetivo(){
         });
     },[id, formatearFechaToISO]);
 
+    useEffect(()=>{
+        if (contador > 0 && mostrarMensaje && !error) {
+            // Si el contador es mayor que 0, configura un intervalo para restar 1 cada segundo
+            const timer = setTimeout(() => {
+              setContador(contador - 1);
+            }, 1000);
+      
+            return () => clearTimeout(timer); // Limpia el timeout al desmontar el componente
+          } else if(contador === 0) {
+            // Cuando el contador llega a 0, activa la redirección
+            setRedirigir(true);
+          }
+      
+    },[mostrarMensaje,contador])
+
+    if (redirigir) {
+        return <Navigate to="/panel" />;
+    }
+    
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         // Manejar los cambios en los campos de usuario
@@ -78,7 +101,7 @@ function ActualizarObjetivo(){
             {objetivoData ? (
                 <form onSubmit={handleSubmit} >
                     <h2>Actualizar campos del Objetivo</h2>
-                    {mostrarMensaje && <MensajeConfirmacion titulo={'Campos actualizados del objetivo'} tipo={'exito'}/> }
+                    {mostrarMensaje && <MensajeConfirmacion titulo={`Campos actualizados del objetivo con exito. Regresando en ${contador} segundos.`} tipo={'exito'}/> }
                     {error && <MensajeConfirmacion titulo={error} tipo={'error'}/>}
                     <div className='contenedor-input'>
                         <label>Titulo:</label>
