@@ -1,53 +1,34 @@
 import '../styles/BotonPdf.css';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import html2pdf from 'html2pdf.js';
 function BotonPdf({nombreEmpleado}){
     const generarPdf = () =>{
-        const element = document.getElementById('main-content'); // Selecciona el div principal
-
-        // Clona el contenido del div principal
-        const clonedElement = element.cloneNode(true);
-
-        // Elimina los elementos que no quieres incluir (ejemplo de clase "no-print")
-        const excludeElements = clonedElement.querySelectorAll('.no-print');
-        excludeElements.forEach(el => el.remove());
-
-        // Crea un nuevo div temporal para almacenar el contenido clonado
-        const tempDiv = document.createElement('div');
-        tempDiv.style.position = 'absolute';
-        tempDiv.style.top = '-9999px';
-        tempDiv.style.left = '-9999px';
-        tempDiv.appendChild(clonedElement);
-        document.body.appendChild(tempDiv);
-
-        // Usa html2canvas para generar la imagen a partir del div clonado
-        html2canvas(tempDiv, {
-            scale: 2,  // Aumenta la calidad
-            allowTaint: true,
-            useCORS: true
-        }).then((canvas) => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('p', 'mm', 'a4');
-
-            // Ajusta el tamaño de la imagen al tamaño del PDF
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-
-            // Guarda el PDF
-            const fecha = new Date().toLocaleDateString();
-            const nombreArchivo = `Reporte_${nombreEmpleado}_${fecha}.pdf`;
-            
-            
-            pdf.save(nombreArchivo);
-
-            // Limpia el div temporal
-            tempDiv.remove();
-        }).catch(error => {
-            console.error('Error generando el PDF:', error);
-        });
        
+        const element = document.getElementById('main-content'); // Div principal que quieres convertir a PDF
+
+        // Opciones para html2pdf
+        const opt = {
+          margin: 10,
+          filename: `Reporte_${nombreEmpleado}_${new Date().toLocaleDateString()}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+          pagebreak: { mode: ['avoid-all', 'css', 'legacy'] } // Opción para manejar saltos de página
+        };
+    
+        // Excluir elementos con clase no-print antes de generar el PDF
+        const excludeElements = document.querySelectorAll('.no-print');
+        excludeElements.forEach(el => el.style.display = 'none');
+    
+        // Genera el PDF
+        html2pdf()
+          .from(element)
+          .set(opt)
+          .save()
+          .then(() => {
+            // Restaura los elementos excluidos
+            excludeElements.forEach(el => el.style.display = '');
+          })
+          .catch(err => console.error('Error generando el PDF:', err));
     }
     return(
         <div className="boton-pdf no-print" onClick={generarPdf}>

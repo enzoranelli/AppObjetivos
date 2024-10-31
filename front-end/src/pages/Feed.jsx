@@ -12,17 +12,21 @@ import { formateo } from "../components/formateo";
 import DesempenoTotal from "../components/DesempenoTotal";
 import BotonPdf from "../components/BotonPdf";
 import { getApiUrl } from "../config/configURL";
+import Leyenda from "../components/Leyenda.jsx";
 
 function Feed(){
     const url = getApiUrl();
     const {user} = useUserContext();
     const {id} = useParams();
-    
+    const [hoveredIndex, setHoveredIndex] = useState(null);
+
     const [objetivos, setObjetivos] = useState(null); 
     const [empleado, setEmpleado] = useState(null);
     const [colores, setColores] = useState([]);
     const [puntuaciones, setPuntuaciones] = useState(null);
 
+    const handleMouseEnter = (index) => setHoveredIndex(index);
+    const handleMouseLeave = () => setHoveredIndex(null);
 
     const [formateado, setFormateado] = useState([]);
     const [cargando, setCargando] = useState(false)
@@ -103,16 +107,45 @@ function Feed(){
                 
                 <div className="contenedor-barra">
                    
-                    <BarraPeso objetivos={objetivos} colores={colores} />
+                    <BarraPeso 
+                        objetivos={objetivos} 
+                        colores={colores} 
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        hoveredIndex={hoveredIndex}
+                    />
                 </div>
                 
                 <h3 style={{marginLeft:"17px"}}>Desempeño:</h3>
                 <div className="contenedor-barra">
                    
-                    <BarraDesempeno  formateado={puntuaciones} colores={colores} />
+                    <BarraDesempeno  
+                    formateado={puntuaciones} 
+                    colores={colores} 
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    hoveredIndex={hoveredIndex}/>
                     
                 </div>
                 <DesempenoTotal objetivos={puntuaciones} />
+                <div className="contenedor-leyendas">
+                    <Leyenda 
+                        tituloLeyenda={'Barra de peso de los objetivos'}
+                        objetivos={objetivos} 
+                        colores={colores} 
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        hoveredIndex={hoveredIndex} 
+                    />
+                    <Leyenda 
+                        tituloLeyenda={'Barra de desempeño'}
+                        objetivos={puntuaciones} 
+                        colores={colores} 
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        hoveredIndex={hoveredIndex} 
+                    />
+                </div>
             </>):(
                 <></>
             )}
