@@ -16,19 +16,27 @@ function ObjetivoPanel(props){
     return (
 
         <div className="contenedor-objetivo">
-            <h2>{props.objetivo.titulo}</h2>
+            <div className="cabecera-objetivo">
+                <h2 className="titulo-del-objetivo">{props.objetivo.titulo}</h2>
+                <p className="fechas-objetivo">Fecha de inicio: {props.objetivo.fechaInicio}</p>
+                <p className="fechas-objetivo">Fecha final: {props.objetivo.fechaFinal}</p>
+                <div className="contenedor-botones-panel">
+                    <button className='botones-panel' onClick={()=>handleClick('asignacion')}>Asignar personas</button>
+                    <button className='botones-panel' onClick={()=>handleClick('actualizar')}>Modificar Objetivo</button>
+                </div>
+                
+            </div>
+            <hr className="linea linea-objetivo"></hr>
+ 
             <p>Descripcion: {props.objetivo.descripcion}</p>
-            <p>Fecha de inicio: {props.objetivo.fechaInicio}</p>
-            <p>Fecha final: {props.objetivo.fechaFinal}</p>
-            
+                       
             <div className="contenedor-progreso">
-                <p>Peso: </p>
+                <p className="peso-p">Peso: </p>
                 <progress id="progreso "value={props.objetivo.peso} max="100"></progress>
                 <label htmlFor="progreso">{props.objetivo.peso}%</label>
             </div>
-            <br></br>   
-            <button onClick={()=>handleClick('asignacion')}>Asignar personas</button>
-            <button className="boton-modificar" onClick={()=>handleClick('actualizar')}>Modificar Objetivo</button>
+          
+            
         </div>
     );
 }

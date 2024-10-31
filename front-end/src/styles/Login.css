@@ -3,6 +3,7 @@
     display: flex;
     
     align-items: center;
+    background-color: white ;
    
     height: 100vh;
     flex-direction: column;
