@@ -26,7 +26,7 @@ function ObjetivoPanel(props){
                 </div>
                 
             </div>
-            <hr className="linea linea-objetivo"></hr>
+            <hr className="linea-objetivo"></hr>
  
             <p>Descripcion: {props.objetivo.descripcion}</p>
                        

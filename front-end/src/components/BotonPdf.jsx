@@ -4,21 +4,32 @@ function BotonPdf({nombreEmpleado}){
     const generarPdf = () =>{
        
         const element = document.getElementById('main-content'); // Div principal que quieres convertir a PDF
+        const elementsToStyle = document.querySelectorAll('.temp-style-target'); 
+
+        const excludeElements = document.querySelectorAll('.no-print, .contenedor-boton-feed, .contenedor-botones-panel');
+
+        // Aplica la clase no-print a todos los elementos excluidos antes de generar el PDF
+        excludeElements.forEach(el => {
+            el.style.display = 'none'; // Oculta los elementos
+        });
+      
+        const originalWidths = [];
+        elementsToStyle.forEach(el => {
+          originalWidths.push({ element: el, width: el.style.width || '' });
+          el.classList.add('pdf-temp-style'); // Agrega clase de estilos temporales
+        });
 
         // Opciones para html2pdf
         const opt = {
           margin: 10,
           filename: `Reporte_${nombreEmpleado}_${new Date().toLocaleDateString()}.pdf`,
           image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true },
+          html2canvas: { scale: 1.5, useCORS: true },
           jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
           pagebreak: { mode: ['avoid-all', 'css', 'legacy'] } // Opción para manejar saltos de página
         };
     
-        // Excluir elementos con clase no-print antes de generar el PDF
-        const excludeElements = document.querySelectorAll('.no-print');
-        excludeElements.forEach(el => el.style.display = 'none');
-    
+       
         // Genera el PDF
         html2pdf()
           .from(element)
@@ -26,7 +37,16 @@ function BotonPdf({nombreEmpleado}){
           .save()
           .then(() => {
             // Restaura los elementos excluidos
-            excludeElements.forEach(el => el.style.display = '');
+            
+            excludeElements.forEach(el => {
+                el.style.display = ''; // Restaura la visibilidad de los elementos
+            });
+            originalWidths.forEach(({ element, width }) => {
+                element.style.width = width;
+                console.log(`Restaurando width: ${width} para el elemento`, element);
+            });
+
+            elementsToStyle.forEach(el => el.classList.remove('pdf-temp-style'));
           })
           .catch(err => console.error('Error generando el PDF:', err));
     }

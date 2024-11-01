@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Navigate} from 'react-router-dom';
 import '../styles/ActualizarDatos.css';
 import axios from 'axios';
 import MensajeConfirmacion from '../components/MensajeConfirmacion.jsx';
@@ -21,6 +21,24 @@ function ActualizarDatos() {
     confirmPassword: "",
   });
   const [error, setError] = useState("");
+  const [contador, setContador] = useState(3);
+  const [redirigir, setRedirigir] = useState(false);
+
+  useEffect(()=>{
+    if (contador > 0 && mostrarMensaje && !error) {
+        // Si el contador es mayor que 0, configura un intervalo para restar 1 cada segundo
+        const timer = setTimeout(() => {
+          setContador(contador - 1);
+        }, 1000);
+  
+        return () => clearTimeout(timer); // Limpia el timeout al desmontar el componente
+      } else if(contador === 0) {
+        // Cuando el contador llega a 0, activa la redirección
+        navigate('/empleados');
+      }
+  
+  },[mostrarMensaje,contador])
+
 
 
   const handleEstado = async () =>{
@@ -175,12 +193,12 @@ function ActualizarDatos() {
   return (
     <div className='form-contenedor'>
       {usuarioData && empleado ? (
-        <form onSubmit={handleSubmit}>
+        <form className='form-actualizar-datos' onSubmit={handleSubmit}>
           <h2>Actualizar Datos</h2>
           {console.log(mostrarMensaje)}
 
-          {mostrarMensaje && <MensajeConfirmacion titulo={'Datos actualizados'} tipo={'exito'}/> }
-          {contrasenaAct && <MensajeConfirmacion titulo = {'Contraseña actualizada'} tipo={'exito'}/>}
+          {mostrarMensaje && <MensajeConfirmacion titulo={`Datos actualizados con exito. Regresando en ${contador} seg.`} tipo={'exito'}/> }
+          {contrasenaAct && <MensajeConfirmacion titulo = {`Contraseña actualizada con exito. Regresando en ${contador} seg.`} tipo={'exito'}/>}
           {error && <MensajeConfirmacion titulo={error} tipo={'error'}/>}
           <div className='contenedor-input'>
             <label>Nombre:</label>

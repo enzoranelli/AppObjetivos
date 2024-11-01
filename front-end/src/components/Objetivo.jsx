@@ -26,18 +26,24 @@ function Objetivo(props){
         <div className="contenedor-objetivo">
             <div className="cabecera-objetivo">
                 <h2 className="titulo-del-objetivo">{props.objetivo.titulo}</h2>
-                <p className="fechas-objetivo">Fecha de incicio: <b>{props.objetivo.fechaInicio}</b></p>
-                <p className="fechas-objetivo">Fecha Final: <b>{props.objetivo.fechaFinal}</b></p>
-                <p className="fechas-objetivo">Fue asignado el: <b>{props.objetivo.fechaAsignacion}</b></p>
+                <div className="contenedor-fechas temp-style-target">
+                    <p className="fechas-objetivo">Fecha de incicio: <b>{props.objetivo.fechaInicio}</b></p>
+                    <p className="fechas-objetivo">Fecha Final: <b>{props.objetivo.fechaFinal}</b></p>
+                    <p className="fechas-objetivo">Fue asignado el: <b>{props.objetivo.fechaAsignacion}</b></p>
+                </div>
+                
                 {
                 user && user.rol === 'admin' ? (
-                    <button className='botones-panel no-print' onClick={()=>{setRedireccion(true)}} >Ver mas detalles</button>
+                    <div className="contenedor-boton-feed no-print">
+                        <button className='botones-panel no-print' onClick={()=>{setRedireccion(true)}} >Ver mas detalles</button>
+                    </div>            
                 ) : (
                     <></>
                 )
             }
             </div>
-            <hr className="linea linea-objetivo"></hr>
+            
+            <hr className="linea-objetivo"></hr>
             
             <p>Descripcion:<b> {props.objetivo.descripcion}</b></p>
             

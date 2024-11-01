@@ -10,6 +10,8 @@
 }
 .linea-objetivo{
     width: 100%;
+    border: 1px solid orange;
+
 }
 .contenedor-progreso{
     display: flex;
@@ -23,13 +25,25 @@
     width: 40%;
 }
 .fechas-objetivo{
-    width: 10%;
+    width: 33%;
 }
 .contenedor-botones-panel{
     display: flex;
     width: 40%;
     gap: 20px;
 }
-.botones-panel{
-    width: 350px;
+.contenedor-fechas {
+    display: flex;
+    
+    width: 30%;
 }
+
+.contenedor-boton-feed{
+    display: flex;
+    justify-content: end;
+    width: 30%;
+    
+}
+.pdf-temp-style {
+    width: 50%;
+  }
