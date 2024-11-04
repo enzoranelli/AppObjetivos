@@ -12,6 +12,6 @@ export function getApiUrl(){
       // Estás en la máquina virtual
       return 'http://objetivos.americagroupsrl.com:9000' || import.meta.env.VITE_API_URL;
     } else if(hostname === '172.31.50.156'){
-      return '172.31.50.156:9000';
+      return 'test';
     }
 }
