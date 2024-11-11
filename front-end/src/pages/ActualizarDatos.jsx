@@ -313,7 +313,7 @@ function ActualizarDatos() {
           <button className='button-datos' type="button" onClick={handleEstado} style={{ backgroundColor: usuarioData.activo === 1 ? 'gray' : 'green', color: 'white', width:'100%'}}>
             {usuarioData.activo === 1 ? 'Deshabilitar cuenta' : 'Habilitar cuenta'}
           </button>
-          <Confirmacion idEmpleado={id} tipo={'de forma permanente al empleado'}/>
+          <Confirmacion idEmpleado={id} tipo={'empleado'}/>
         </form>)
         :
         (

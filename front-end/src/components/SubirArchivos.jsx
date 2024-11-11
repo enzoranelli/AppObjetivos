@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { getApiUrl } from '../config/configURL';
-function SubirArchivos({objetivoId}){
+function SubirArchivos({objetivoId, onArchivoSubido}){
     const [archivos, setArchivos] = useState([]);
     const url = getApiUrl();
     const handleAgregarArchivos = (event) => {
@@ -27,6 +27,7 @@ function SubirArchivos({objetivoId}){
             if (response.status === 200) {
                 alert('Archivos subidos con éxito');
                 setArchivos([]); // Limpia la lista después de subir
+                onArchivoSubido(); 
             } else {
                 alert('Error al subir los archivos');
             }

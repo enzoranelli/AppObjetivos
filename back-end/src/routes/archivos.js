@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const multer = require('multer');
-
+const axios = require('axios');
+const fs = require('fs');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, path.join(__dirname, '../../uploads'));  // Carpeta para archivos
@@ -17,6 +18,7 @@ const upload = multer({ storage: storage });
 
 router.post('/:id', upload.array('archivo'),subirArchivo);
 router.get('/:id',obtenerArchivos);
+router.delete('/:id',eliminarArchivo);
 router.get('/descargar/:id',descargaArchivos);
 
 async function subirArchivo(req,res){
@@ -122,5 +124,49 @@ async function descargaArchivos(req,res){
         console.log(error)
         res.status(500).send(error);
     }
+}
+async function eliminarArchivo(req,res){
+    try {
+        const id = req.params.id
+        const connection = await new Promise((resolve, reject) => {
+            req.getConnection((err, conn) => {
+                if (err) reject(err);
+                else resolve(conn);
+            });
+        });
+        console.log('El id ess: ',id)
+        const resultado = await new Promise((resolve, reject) => {
+            connection.query('SELECT ruta FROM Archivos WHERE idArchivo = ?', [id], (err, results) => {
+                if (err) reject(err);
+                else resolve(results);
+            });
+        });
+        console.log(resultado)
+        if (resultado.length === 0) {
+            return res.status(404).json({ mensaje: 'Archivo no encontrado' });
+        }
+        const rutaArchivo = resultado[0].ruta;
+        fs.unlink(rutaArchivo, (err) => {
+            if (err) {
+                console.error('Error al eliminar el archivo:', err);
+                return res.status(500).json({ mensaje: 'Error al eliminar el archivo' });
+            }
+
+            // Eliminar el archivo de la base de datos
+            const deleteQuery = 'DELETE FROM Archivos WHERE idArchivo = ?';
+            connection.query(deleteQuery, [id], (error, results) => {
+                if (error) {
+                    console.error('Error al eliminar el registro de la base de datos:', error);
+                    return res.status(500).json({ mensaje: 'Error al eliminar el archivo de la base de datos' });
+                }
+
+                res.status(200).json({ mensaje: 'Archivo eliminado exitosamente' });
+            });
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).send(error);
+    }
+
 }
 module.exports = router;

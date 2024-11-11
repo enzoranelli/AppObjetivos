@@ -29,7 +29,7 @@ function Confirmacion({ idElemento, idEmpleado, tipo}) {
           const response = await fetch(`${url}/api/objetivoasignacion/${idElemento}`, {
             method: 'DELETE',
           });
-
+          console.log(response)
           if (response.ok) {
             // Muestra mensaje de éxito
             Swal.fire('¡Eliminado!', 'Tu elemento ha sido eliminado.', 'success');
@@ -48,7 +48,7 @@ function Confirmacion({ idElemento, idEmpleado, tipo}) {
           const response = await fetch(`${url}/api/empleados/${idEmpleado}`, {
             method: 'DELETE',
           });
-
+          console.log(response)
           if (response.ok) {
             // Muestra mensaje de éxito
             Swal.fire('¡Eliminado!', 'Tu elemento ha sido eliminado.', 'success');
@@ -95,7 +95,8 @@ function Confirmacion({ idElemento, idEmpleado, tipo}) {
   }
   return (
     <button type="button" onClick={manejarEliminar} style={{ backgroundColor: 'red', color: 'white', width:'100%'}}>
-      Eliminar {tipo}
+      Eliminar de forma permanente 
+      tipo
     </button>
   );
 }

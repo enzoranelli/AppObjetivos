@@ -11,10 +11,36 @@ function ObjetivoEmpleado(){
     const [getObjetivo, setGetObjetivo]= useState(null);
     const [getEmpleado, setGetEmpleado] = useState(null);
     const [puntuacion, setPuntuacion] = useState(null);
+    const [archivos, setArchivos] = useState([]);
     const url = getApiUrl();
 
     const [vuelta, setVuelta] = useState(false);
     const [actualizar, setActualizar] = useState(false);
+    const cargarArchivos = async () => {
+        try {
+            const response = await axios.get(`${url}/api/archivos/${asignacion}`);
+            setArchivos(response.data);
+        } catch (error) {
+            console.error('Error al cargar archivos:', error);
+        }
+    };
+    const handleEliminarArchivo = async (archivoId) => {
+        try {
+            await axios.delete(`${url}/api/archivos/${archivoId}`);
+            setArchivos((prevArchivos) => prevArchivos.filter(archivo => archivo.idArchivo !== archivoId));
+            alert('Archivo eliminado correctamente');
+        } catch (error) {
+            console.error('Error al eliminar el archivo:', error);
+            alert('Error al eliminar el archivo');
+        }
+    };
+    useEffect(() => {
+        cargarArchivos();
+    }, [asignacion]);
+    const handleArchivoSubido = () => {
+        cargarArchivos(); // Recargar archivos al subir uno nuevo
+    };
+
     useEffect(()=>{
         axios.get(`${url}/api/empleados/${empleado}`)
             .then( response => {
@@ -97,8 +123,8 @@ function ObjetivoEmpleado(){
                             
                         </div>
                         
-                        <SubirArchivos objetivoId={asignacion} />
-                        <ArchivoAdjuntados objetivoId={asignacion}/>
+                        <SubirArchivos objetivoId={asignacion} onArchivoSubido={handleArchivoSubido}/>
+                        <ArchivoAdjuntados archivos={archivos} objetivoId={asignacion} onEliminarArchivo={handleEliminarArchivo} />
                     </>
                 ):(
                     <></>

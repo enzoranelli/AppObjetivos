@@ -24,6 +24,7 @@ function Feed(){
     const [empleado, setEmpleado] = useState(null);
     const [colores, setColores] = useState([]);
     const [puntuaciones, setPuntuaciones] = useState(null);
+    
 
     const handleMouseEnter = (index) => setHoveredIndex(index);
     const handleMouseLeave = () => setHoveredIndex(null);

@@ -71,6 +71,7 @@ drop table Empleado;
 
 /*datos prueba*/
 SELECT * FROM Archivos;
+SELECT ruta FROM Archivos WHERE idArchivo = 1;
 SELECT ruta FROM Archivos WHERE objetivoAsignado = 14;
 DELETE FROM Archivos WHERE idArchivo = 1;
 INSERT INTO Empleado VALUES (0,'Enzo Ranelli','Operador NOC','Banco BICE');
@@ -82,6 +83,7 @@ DELETE FROM Empleado WHERE IdEmpleado = 1;
 INSERT INTO Usuario VALUES(0,'juanpe@gmail.com','1234','admin',5);
 
 DELETE FROM Empleado WHERE idEmpleado=5;
+SELECT * FROM Puntuacion;
 
 
 UPDATE Usuario 
