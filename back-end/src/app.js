@@ -5,14 +5,20 @@ const path = require('path');
 const dbconfig= require('./db/dbconfig.js');
 const app = express();
 
+
 const objetivos = require('./routes/objetivos.js');
 const empleados = require('./routes/empleados.js');
 const usuarios = require('./routes/usuario.js');
 const objetivoasignacion = require('./routes/objetivoAsignado.js');
 const puntuacion = require('./routes/puntuacion.js');
 const login = require('./routes/login.js');
+const archivos = require('./routes/archivos.js');
+
+
 
 //<--Middlewares-->//
+
+
 
 app.use(cors());
 app.use(express.json());
@@ -32,10 +38,13 @@ app.use('/api/usuarios',usuarios);
 app.use('/api/objetivoasignacion',objetivoasignacion);
 app.use('/api/puntuacion',puntuacion);
 app.use('/api/login',login);
+app.use('/api/archivos',archivos);
 
-
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(express.static(path.join(__dirname, '../../front-end/dist')));
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../../front-end/dist', 'index.html'));
 });
-module.exports = app;
+module.exports = {
+    app
+};

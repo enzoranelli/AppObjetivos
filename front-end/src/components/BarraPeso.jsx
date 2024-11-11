@@ -8,7 +8,7 @@ function BarraPeso({objetivos, colores,hoveredIndex, onMouseEnter, onMouseLeave}
     return (
       <div style={{ display: 'flex', height: '30px', width: '98%', border: '1px solid #000', borderRadius: '0 10px 10px 0', fontSize:'12px'}}>
         {objetivos.map((item, index) => {
-          const porcentaje = item.peso; // Utiliza el peso directamente
+          const porcentaje = item.peso ; // Utiliza el peso directamente
           const color =colores[index]; // Generar color aleatorio
           
           return (
@@ -18,7 +18,7 @@ function BarraPeso({objetivos, colores,hoveredIndex, onMouseEnter, onMouseLeave}
               onMouseEnter={() => onMouseEnter(index)}
               onMouseLeave={onMouseLeave} 
               style={{
-                width: `${porcentaje}%`,
+                width: `${porcentaje*1.05}%`,
                 backgroundColor: color,
                 textAlign: 'center',
                 display: 'flex',

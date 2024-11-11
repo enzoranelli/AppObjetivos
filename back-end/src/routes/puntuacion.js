@@ -13,6 +13,7 @@ async function agregarPuntuacion(req, res){
             objetivo: req.body.objetivo,
             valor: req.body.valor,
             fechaPuntuacion: req.body.fechaPuntuacion,
+            comentario: req.body.comentario
         }
 
         console.log(puntuacion)
@@ -23,9 +24,10 @@ async function agregarPuntuacion(req, res){
             });
         });
 
-        const query = 'INSERT INTO Puntuacion (objetivo, valor, fechaPuntuacion) VALUES (?,?,?)';
+        const query = 'INSERT INTO Puntuacion (objetivo, valor, fechaPuntuacion,comentario) VALUES (?,?,?,?)';
+      
         const results = await new Promise((resolve,reject)=>{
-            connection.query(query, [puntuacion.objetivo, puntuacion.valor, puntuacion.fechaPuntuacion], (err, results)=>{
+            connection.query(query, [puntuacion.objetivo, puntuacion.valor, puntuacion.fechaPuntuacion,puntuacion.comentario], (err, results)=>{
                 if(err){ 
                     if(err.code === 'ER_DUP_ENTRY'){
                         return res.status(409).send({message:'Este objetivo ya ha sido asignado a este empleado. '})

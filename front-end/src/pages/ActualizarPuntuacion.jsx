@@ -9,6 +9,7 @@ function ActualizarPuntuacion(){
     const {asignacion, empleado, objetivo} = useParams();
     const fecha = fechaISO();
     const [puntuacion, setPuntuacion] = useState(0);
+    const [comentario, SetComentario] = useState('');
     const fechaMostrar = obtenerFecha();
     const [getObjetivo, setGetObjetivo] = useState(null);
     const [getEmpleado, setGetEmpleado] = useState(null);
@@ -44,7 +45,9 @@ function ActualizarPuntuacion(){
                 objetivo: asignacion,
                 valor: puntuacion,
                 fechaPuntuacion: fecha,
+                comentario:comentario,
             }
+            console.log(data)
             const response = await axios.post(`${url}/api/puntuacion/`, data);
 
             if(response.status === 202){
@@ -72,6 +75,15 @@ function ActualizarPuntuacion(){
                 <h3>Objetivo: {getObjetivo.titulo}</h3>
                 <h3>Empleado: {getEmpleado.nombre} </h3>
                 <h3>Fecha asignada: {fechaMostrar}</h3>
+                <label className="descripcion-label" htmlFor="texto">Descripcion del objetivo: (Máximo de caracteres: {comentario.length}/{2500})</label>
+                    <textarea
+                        placeholder='Escribe un comentario o puede dejarlo vacio...'
+                        className="text-datos-actualizar-obj"
+                        name="descripcion"
+                        maxLength={2500}    
+                        value={comentario}
+                        onChange={(e)=>SetComentario(e.target.value)}
+                />
                 <h3>Puntuar:</h3>
                 <div className="contenedor-input">
                     <label htmlFor="slider" className="descripcion-label">Asigne el peso del objetivo: </label>

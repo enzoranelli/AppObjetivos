@@ -47,6 +47,7 @@ async function agregarAsignacion(req, res){
             objetivo: ultimaAsignacion[0].idObjetivoEmpleado,
             valor: 0,
             fechaPuntuacion: req.body.fecha,
+            comentario: '',
         }
         console.log(ultimaAsignacion)
         console.log(data)

@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import Confirmacion from '../components/Confirmacion';
 import { getApiUrl } from '../config/configURL';
+import ArchivoAdjuntados from '../components/ArchivosAdjuntados';
+import SubirArchivos from '../components/SubirArchivos';
 function ObjetivoEmpleado(){
     const {asignacion, empleado, objetivo} = useParams();
     const [getObjetivo, setGetObjetivo]= useState(null);
@@ -58,17 +60,23 @@ function ObjetivoEmpleado(){
             <div className='cuadrado'>
                 {(getEmpleado && getObjetivo && puntuacion) ? (
                     <>
-                        <button onClick={volver}> Volver</button>
-                        <h2>Progreso de {getObjetivo.titulo} de {getEmpleado.nombre}</h2>
-                        <hr className='linea'></hr>
-                        <h2>Fecha final de objetivo: {getObjetivo.fechaFinal}</h2>
-                        <div className='contenedor-botones'>
-                            <button className='boton-obj-emp' onClick={actualizarPuntuacion}>Actualizar estado</button>
-                            <div className='boton-rojo'>
-                            <Confirmacion idElemento={asignacion} idEmpleado={empleado} tipo={'asignacion'}/>
-                            </div>
+                        <div className='contenedor-fecha-boton'>
+                            <h2>Progreso de {getObjetivo.titulo} de {getEmpleado.nombre}</h2>
+                            <button onClick={volver}> Volver</button>
+                        
                         </div>
                         
+                        <hr className='linea'></hr>
+                        <div className='contenedor-fecha-boton'>
+                            <h2>Fecha final de objetivo: {getObjetivo.fechaFinal}</h2>
+                            <div className='contenedor-botones'>
+                                
+                                <button className='boton-obj-emp' onClick={actualizarPuntuacion}>Actualizar estado</button>
+                                <div className='boton-rojo'>
+                                <Confirmacion idElemento={asignacion} idEmpleado={empleado} tipo={'asignacion'}/>
+                                </div>
+                            </div>
+                        </div>
                         <h3>Historial de {getEmpleado.nombre} en el objetivo:</h3>
                         <div className='contenedor-lista'>
                         <ul className='lista-puntuacion'>
@@ -77,6 +85,7 @@ function ObjetivoEmpleado(){
                                     <ul className='lista-puntuacion'>
                                         <li>Fecha: {new Date(punto.fechaPuntuacion).toLocaleDateString()}</li>
                                         <li>Progreso: <progress value={punto.valor} max='100'></progress> {punto.valor}%</li>
+                                        <li>Comentario: {punto.comentario ? <>{punto.comentario}</>:<>Sin comentarios</>}</li>
                                         <hr className='linea'></hr>
                                     </ul>
                                 </li>
@@ -85,7 +94,11 @@ function ObjetivoEmpleado(){
                             }
                             
                         </ul>
+                            
                         </div>
+                        
+                        <SubirArchivos objetivoId={asignacion} />
+                        <ArchivoAdjuntados objetivoId={asignacion}/>
                     </>
                 ):(
                     <></>

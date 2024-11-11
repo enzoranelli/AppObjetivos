@@ -20,6 +20,10 @@
 .contenedor-botones{
     display: flex;
 }
+.contenedor-fecha-boton{
+    display: flex;
+    justify-content: space-between;
+}
 .boton-rojo{
     width: 400px;
 }
@@ -38,10 +42,35 @@
 .boton-obj-emp-eli:hover{
     background-color: rgb(255, 0, 13);
 }
-
+.boton-desactivado{
+    background-color: lightgray;
+    color: gray;
+    cursor: not-allowed;
+}
+.boton-desactivado:hover{
+    background-color: lightgray;
+    color: gray;
+    cursor: not-allowed;
+}
 .lista-puntuacion{
+    
     list-style-type: none;
+    
+}
+.contenedor-lista{
+    height: auto;
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid orange ;
+    background: white;
+    border-radius: 10px;
+    padding: 10px
 }
 .contenedor-punto{
     margin-top: 10px;
+}
+.contenedor-archivos{
+    height: 290px;
+    max-height: 290px;
+    overflow-y: auto;
 }

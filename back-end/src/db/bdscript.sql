@@ -49,11 +49,20 @@ CREATE TABLE Puntuacion(
 	idPuntuacion INT NOT NULL AUTO_INCREMENT,
     objetivo INT NOT NULL,
     valor INT NOT NULL CHECK(valor BETWEEN 0 AND 100),
+	comentario VARCHAR(2500) NOT NULL,
     fechaPuntuacion DATE,
     PRIMARY KEY(idPuntuacion),
     FOREIGN KEY(objetivo) REFERENCES ObjetivoEmpleado(idObjetivoEmpleado)  ON DELETE CASCADE
 );
-
+CREATE TABLE Archivos(
+	idArchivo INT NOT NULL AUTO_INCREMENT,
+    objetivoAsignado INT,
+    nombre VARCHAR(255),
+    ruta VARCHAR(255),
+    fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(idArchivo),
+    FOREIGN KEY(objetivoAsignado) REFERENCES ObjetivoEmpleado(idObjetivoEmpleado)  ON DELETE CASCADE
+);
 drop table ObjetivoEmpleado;
 drop table Puntuacion;
 drop table Objetivo;
@@ -61,9 +70,9 @@ drop table Usuario;
 drop table Empleado;
 
 /*datos prueba*/
-
-
-
+SELECT * FROM Archivos;
+SELECT ruta FROM Archivos WHERE objetivoAsignado = 14;
+DELETE FROM Archivos WHERE idArchivo = 1;
 INSERT INTO Empleado VALUES (0,'Enzo Ranelli','Operador NOC','Banco BICE');
 INSERT INTO Empleado VALUES (0,'Juan Perez','Project Manager','Operaciones IT');
 SELECT * FROM Empleado;
@@ -104,6 +113,10 @@ INSERT INTO Puntuacion VALUES(0,1,60,'2024-10-24');
 SELECT * FROM Puntuacion;
 DROP TABLE Puntuacion;
 DELETE from Puntuacion;
+
+UPDATE Puntuacion 
+SET comentario = "Comentario nuevo"
+WHERE idPuntuacion = 2;
 /*Lista de objetivos por usuario */
 
 SELECT e.nombre, o.titulo, o.fechaInicio, o.fechaFinal, o.peso, p.valor, (o.peso * p.valor/100) AS despeno FROM ObjetivoEmpleado oe
