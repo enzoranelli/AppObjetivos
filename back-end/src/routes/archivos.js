@@ -32,7 +32,7 @@ async function subirArchivo(req,res){
                 else resolve(conn);
             });
         });
-        const query = 'INSERT INTO archivos (puntuacion, nombre, ruta) VALUES (?, ?, ?)';
+        const query = 'INSERT INTO Archivos (puntuacion, nombre, ruta) VALUES (?, ?, ?)';
         for (const archivo of archivos) {
             const nombreArchivo = archivo.originalname;
             const rutaArchivo = archivo.path;

@@ -147,7 +147,7 @@ async function agregarEmpleado(req, res) {
             });
         });
         const {nombre, apellido, puesto, area, email, usuarioPassword,rol} = req.body;
-        if(!nombre||!apellido||!puesto, !area|| !email|| !usuarioPassword|| typeof rol === 'undefined'){
+        if(!nombre||!apellido||!puesto|| !area|| !email|| !usuarioPassword|| typeof rol === 'undefined'){
             return res.status(400).send("Faltan campos requeridos");
         }
         const empleado = {
@@ -176,7 +176,7 @@ async function agregarEmpleado(req, res) {
             empleado: claveForanea[0].idEmpleado,
         }
 
-        const nuevoUsuario = await axios.post('http://localhost:9000/api/usuarios/',usuario);
+        const nuevoUsuario = await axios.post('http://localhost:8001/api/usuarios/',usuario);
 
         console.log(nuevoUsuario.status)
         res.status(200).send({message:"Usuario creado correctamente"});

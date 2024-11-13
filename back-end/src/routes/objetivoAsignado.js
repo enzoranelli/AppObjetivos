@@ -53,7 +53,7 @@ async function agregarAsignacion(req, res){
         }
         console.log(ultimaAsignacion)
         console.log(data)
-        const nuevaPuntuacion = await axios.post('http://localhost:9000/api/puntuacion/',data);
+        const nuevaPuntuacion = await axios.post('http://localhost:8001/api/puntuacion/',data);
         console.log(nuevaPuntuacion);
         res.status(200).send(results);
     } catch (error) {
