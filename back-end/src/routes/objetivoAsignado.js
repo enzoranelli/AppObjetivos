@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const {format} = require('date-fns'); 
 const axios = require('axios');
+const fs = require('fs'); // Módulo de Node.js para interactuar con el sistema de archivos
+const path = require('path'); // Módulo para trabajar con rutas de archivos
 
 router.post('/', agregarAsignacion);
 router.get('/:id',obtenerObjetivosAsignados);
@@ -145,7 +147,29 @@ async function eliminarAsignacion(req, res){
                 }
             });
         });
+        const archivos = await new Promise((resolve, reject) => {
+            connection.query(
+                'SELECT * FROM Archivos WHERE puntuacion = (SELECT idPuntuacion FROM Puntuacion WHERE objetivo = ?)',
+                [id],
+                (err, results) => {
+                    if (err) {
+                        console.error("Error al obtener los archivos:", err);
+                        reject(err);
+                    } else {
+                        resolve(results);
+                    }
+                }
+            );
+        });
 
+        archivos.forEach(archivo => {
+            const archivoPath = archivo.ruta;
+            if (fs.existsSync(archivoPath)) {
+                fs.unlinkSync(archivoPath); // Eliminar archivo
+                console.log(`Archivo eliminado: ${archivoPath}`);
+            }
+        });
+        
         const results = await new Promise((resolve,reject)=>{
             connection.query('DELETE FROM ObjetivoEmpleado WHERE idObjetivoEmpleado = ?',[id],(err,results)=>{
                 if(err){

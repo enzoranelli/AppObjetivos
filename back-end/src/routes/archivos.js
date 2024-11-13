@@ -23,7 +23,7 @@ router.get('/descargar/:id',descargaArchivos);
 
 async function subirArchivo(req,res){
     try{
-        const objetivoAsignado = req.params.id;
+        const puntuacion = req.params.id;
         const archivos = req.files;
 
         const connection = await new Promise((resolve, reject)=>{
@@ -32,13 +32,13 @@ async function subirArchivo(req,res){
                 else resolve(conn);
             });
         });
-        const query = 'INSERT INTO archivos (objetivoAsignado, nombre, ruta) VALUES (?, ?, ?)';
+        const query = 'INSERT INTO archivos (puntuacion, nombre, ruta) VALUES (?, ?, ?)';
         for (const archivo of archivos) {
             const nombreArchivo = archivo.originalname;
             const rutaArchivo = archivo.path;
 
             await new Promise((resolve, reject) => {
-                connection.query(query, [objetivoAsignado, nombreArchivo, rutaArchivo], (error, results) => {
+                connection.query(query, [puntuacion, nombreArchivo, rutaArchivo], (error, results) => {
                     if (error) reject(error);
                     else resolve(results);
                 });
@@ -53,7 +53,7 @@ async function subirArchivo(req,res){
 async function obtenerArchivos(req,res){
     try{
         console.log('Entre en obtener archivos')
-        const objetivoAsignado = req.params.id;
+        const puntuacion = req.params.id;
         
         const connection = await new Promise((resolve, reject)=>{
             req.getConnection((err, conn)=>{
@@ -67,7 +67,7 @@ async function obtenerArchivos(req,res){
 
         
         const results = await new Promise((resolve, reject)=>{
-            connection.query('SELECT nombre, idArchivo FROM Archivos WHERE objetivoAsignado = ?',[objetivoAsignado], (err, results)=>{
+            connection.query('SELECT nombre, idArchivo FROM Archivos WHERE puntuacion = ?',[puntuacion], (err, results)=>{
                 if(err){
                     console.log(err)
                     reject(err);

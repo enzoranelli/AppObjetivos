@@ -10,7 +10,7 @@
     background-color: rgb(255, 227, 167);
     padding: 10px;
     width: 90%;
-    height: 90% ;
+    height:auto;
     border-radius: 15px;
     box-shadow: -1px 1px 15px 2px rgba(79, 79, 79, 0.75);
     -webkit-box-shadow: -1px 1px 15px 2px rgba(77, 77, 77, 0.75);
@@ -58,8 +58,8 @@
     
 }
 .contenedor-lista{
-    height: auto;
-    max-height: 250px;
+    
+    max-height: 600px;
     overflow-y: auto;
     border: 1px solid orange ;
     background: white;
@@ -70,7 +70,8 @@
     margin-top: 10px;
 }
 .contenedor-archivos{
-    height: 290px;
-    max-height: 290px;
+    height: 200px;
+    max-height: 200px;
+    padding: 10px;
     overflow-y: auto;
 }

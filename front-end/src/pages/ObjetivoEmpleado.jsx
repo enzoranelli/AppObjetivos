@@ -2,10 +2,11 @@ import '../styles/ObjetivoEmpleado.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
-import Confirmacion from '../components/Confirmacion';
-import { getApiUrl } from '../config/configURL';
-import ArchivoAdjuntados from '../components/ArchivosAdjuntados';
-import SubirArchivos from '../components/SubirArchivos';
+import Confirmacion from '../components/Confirmacion.jsx';
+import { getApiUrl } from '../config/configURL.js';
+import ArchivoAdjuntados from '../components/ArchivosAdjuntados.jsx';
+import SubirArchivos from '../components/SubirArchivos.jsx';
+import BotonDesplegable from '../components/BotonDesplegable.jsx';
 function ObjetivoEmpleado(){
     const {asignacion, empleado, objetivo} = useParams();
     const [getObjetivo, setGetObjetivo]= useState(null);
@@ -16,31 +17,45 @@ function ObjetivoEmpleado(){
 
     const [vuelta, setVuelta] = useState(false);
     const [actualizar, setActualizar] = useState(false);
-    const cargarArchivos = async () => {
+    const cargarArchivos = async (puntuacion) => {
         try {
-            const response = await axios.get(`${url}/api/archivos/${asignacion}`);
-            setArchivos(response.data);
+            const response = await axios.get(`${url}/api/archivos/${puntuacion}`);
+            console.log(response)
+            setArchivos((prevArchivos) => ({
+                ...prevArchivos,
+                [puntuacion]: response.data
+            }));
+            console.log(archivos)
         } catch (error) {
             console.error('Error al cargar archivos:', error);
         }
     };
-    const handleEliminarArchivo = async (archivoId) => {
+    const handleEliminarArchivo = async (archivoId,puntuacion) => {
         try {
             await axios.delete(`${url}/api/archivos/${archivoId}`);
-            setArchivos((prevArchivos) => prevArchivos.filter(archivo => archivo.idArchivo !== archivoId));
+            setArchivos((prevArchivos) => ({
+                ...prevArchivos,
+                [puntuacion]: prevArchivos[puntuacion].filter(
+                    (archivo) => archivo.idArchivo !== archivoId
+                )
+            }));
             alert('Archivo eliminado correctamente');
         } catch (error) {
             console.error('Error al eliminar el archivo:', error);
             alert('Error al eliminar el archivo');
         }
     };
-    useEffect(() => {
-        cargarArchivos();
-    }, [asignacion]);
-    const handleArchivoSubido = () => {
-        cargarArchivos(); // Recargar archivos al subir uno nuevo
+    
+    const handleArchivoSubido = (puntuacion) => {
+        cargarArchivos(puntuacion); // Recargar archivos al subir uno nuevo
     };
-
+    useEffect(() => {
+        if (puntuacion) {
+            puntuacion.forEach(punto => {
+                cargarArchivos(punto.idPuntuacion); // Cargar archivos para cada puntuación
+            });
+        }
+    }, [puntuacion]);
     useEffect(()=>{
         axios.get(`${url}/api/empleados/${empleado}`)
             .then( response => {
@@ -72,6 +87,9 @@ function ObjetivoEmpleado(){
     const volver = () =>{
        setVuelta(true);
     }
+    useEffect(()=>{
+        console.log(archivos)
+    },[archivos])
     const actualizarPuntuacion = () =>{
         setActualizar(true);
      }
@@ -84,14 +102,12 @@ function ObjetivoEmpleado(){
     return (
         <div className="container-objetivo-empleado">
             <div className='cuadrado'>
-                {(getEmpleado && getObjetivo && puntuacion) ? (
+                {(getEmpleado && getObjetivo && puntuacion) && archivos ? (
                     <>
                         <div className='contenedor-fecha-boton'>
                             <h2>Progreso de {getObjetivo.titulo} de {getEmpleado.nombre}</h2>
                             <button onClick={volver}> Volver</button>
-                        
                         </div>
-                        
                         <hr className='linea'></hr>
                         <div className='contenedor-fecha-boton'>
                             <h2>Fecha final de objetivo: {getObjetivo.fechaFinal}</h2>
@@ -109,22 +125,33 @@ function ObjetivoEmpleado(){
                             {puntuacion.map((punto) => (
                                 <li key={punto.idPuntuacion} className='contenedor-punto'>
                                     <ul className='lista-puntuacion'>
-                                        <li>Fecha: {new Date(punto.fechaPuntuacion).toLocaleDateString()}</li>
-                                        <li>Progreso: <progress value={punto.valor} max='100'></progress> {punto.valor}%</li>
-                                        <li>Comentario: {punto.comentario ? <>{punto.comentario}</>:<>Sin comentarios</>}</li>
-                                        <hr className='linea'></hr>
+                                        <div style={{display:'flex', flexDirection: 'column', width: '100%'}}>
+                                            <div>
+                                                <li>Fecha: {new Date(punto.fechaPuntuacion).toLocaleDateString()}</li>
+                                                <li>Progreso: <progress value={punto.valor} max='100'></progress> {punto.valor}%</li>
+                                                <li>Comentario: {punto.comentario ? <>{punto.comentario}</>:<>Sin comentarios</>}</li>
+                                            </div>
+                                            <div style={{display:'flex', width: '100%', gap: '10px', marginTop: '10px'}}>
+                                                <BotonDesplegable 
+                                                    titulo={"Subir archivos"}
+                                                    contenido={ <SubirArchivos 
+                                                    puntuacion={punto.idPuntuacion} 
+                                                    onArchivoSubido={()=>handleArchivoSubido(punto.idPuntuacion)}/>}
+                                                    estilo={{ width: '100%' }}
+                                                />
+                                                <BotonDesplegable 
+                                                    titulo={"Archivos Adjuntados"}
+                                                    contenido={ <ArchivoAdjuntados puntuacion={punto.idPuntuacion} archivos={archivos[punto.idPuntuacion]} onEliminarArchivo={handleEliminarArchivo} />}
+                                                    estilo={{ width: '100%' }}
+                                                />
+                                            </div>
+                                        </div>                                        
+                                        <hr className='linea'></hr>                                       
                                     </ul>
                                 </li>
-                            ))
-
-                            }
-                            
+                            ))}
                         </ul>
-                            
-                        </div>
-                        
-                        <SubirArchivos objetivoId={asignacion} onArchivoSubido={handleArchivoSubido}/>
-                        <ArchivoAdjuntados archivos={archivos} objetivoId={asignacion} onEliminarArchivo={handleEliminarArchivo} />
+                        </div>   
                     </>
                 ):(
                     <></>

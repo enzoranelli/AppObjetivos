@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { Navigate } from 'react-router-dom';
-import { getApiUrl } from '../config/configURL';
+import { getApiUrl } from '../config/configURL.js';
 
 
 function Confirmacion({ idElemento, idEmpleado, tipo}) {
@@ -95,8 +95,7 @@ function Confirmacion({ idElemento, idEmpleado, tipo}) {
   }
   return (
     <button type="button" onClick={manejarEliminar} style={{ backgroundColor: 'red', color: 'white', width:'100%'}}>
-      Eliminar de forma permanente 
-      tipo
+      Eliminar de forma permanente {tipo}
     </button>
   );
 }

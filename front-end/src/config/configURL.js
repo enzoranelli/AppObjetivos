@@ -1,4 +1,5 @@
 export function getApiUrl(){
+   
     const hostname = window.location.hostname;
 
     console.log('HOSTNAME:', hostname);
@@ -14,4 +15,6 @@ export function getApiUrl(){
     } else if(hostname === '172.31.50.156'){
       return 'test';
     }
+   //return "http://172.31.50.156:9000";
+
 }

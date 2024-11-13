@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { getApiUrl } from '../config/configURL';
-function SubirArchivos({objetivoId, onArchivoSubido}){
+import { getApiUrl } from '../config/configURL.js';
+function SubirArchivos({puntuacion ,onArchivoSubido}){
     const [archivos, setArchivos] = useState([]);
     const url = getApiUrl();
     const handleAgregarArchivos = (event) => {
-    const nuevosArchivos = Array.from(event.target.files);
+        const nuevosArchivos = Array.from(event.target.files);
         setArchivos((prevArchivos) => [...prevArchivos, ...nuevosArchivos]);
     };
     const handleEliminarArchivo = (index) => {
@@ -18,7 +18,7 @@ function SubirArchivos({objetivoId, onArchivoSubido}){
         });
     
         try {
-            const response = await axios.post(`${url}/api/archivos/${objetivoId}`, formData, {
+            const response = await axios.post(`${url}/api/archivos/${puntuacion}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
