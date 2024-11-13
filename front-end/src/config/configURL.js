@@ -1,5 +1,5 @@
 export function getApiUrl(){
-   
+    /*
     const hostname = window.location.hostname;
 
     console.log('HOSTNAME:', hostname);
@@ -14,7 +14,8 @@ export function getApiUrl(){
       return 'http://objetivos.americagroupsrl.com:9000' || import.meta.env.VITE_API_URL;
     } else if(hostname === '172.31.50.156'){
       return 'test';
-    }
-   //return "http://172.31.50.156:9000";
+    }*/
+
+  return "http://172.31.50.156:9000";
 
 }

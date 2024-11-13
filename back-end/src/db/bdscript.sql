@@ -56,19 +56,19 @@ CREATE TABLE Puntuacion(
 );
 CREATE TABLE Archivos(
 	idArchivo INT NOT NULL AUTO_INCREMENT,
-    objetivoAsignado INT,
+    puntuacion INT,
     nombre VARCHAR(255),
     ruta VARCHAR(255),
     fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(idArchivo),
-    FOREIGN KEY(objetivoAsignado) REFERENCES ObjetivoEmpleado(idObjetivoEmpleado)  ON DELETE CASCADE
+    FOREIGN KEY(puntuacion) REFERENCES Puntuacion(idPuntuacion)  ON DELETE CASCADE
 );
 drop table ObjetivoEmpleado;
 drop table Puntuacion;
 drop table Objetivo;
 drop table Usuario;
 drop table Empleado;
-
+drop table Archivos;
 /*datos prueba*/
 SELECT * FROM Archivos;
 SELECT ruta FROM Archivos WHERE idArchivo = 1;
