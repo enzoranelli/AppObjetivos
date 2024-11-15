@@ -46,6 +46,7 @@
     background-color: lightgray;
     color: gray;
     cursor: not-allowed;
+    margin-top: 0px;
 }
 .boton-desactivado:hover{
     background-color: lightgray;
@@ -74,4 +75,16 @@
     max-height: 200px;
     padding: 10px;
     overflow-y: auto;
+}
+.subir-archivos{
+    display: flex;
+    justify-content: center;
+    flex-direction:row;
+    align-items: center;
+    gap: 10px; /* Espacio entre el input y el botón */
+    
+}
+.boton-subir-archivos{
+    margin-top: 0px;
+    margin-bottom: 0px;
 }

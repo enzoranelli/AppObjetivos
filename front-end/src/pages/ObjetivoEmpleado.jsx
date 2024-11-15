@@ -132,19 +132,11 @@ function ObjetivoEmpleado(){
                                                 <li>Comentario: {punto.comentario ? <>{punto.comentario}</>:<>Sin comentarios</>}</li>
                                             </div>
                                             <div style={{display:'flex', width: '100%', gap: '10px', marginTop: '10px'}}>
-                                                <BotonDesplegable 
-                                                    titulo={"Subir archivos"}
-                                                    contenido={ <SubirArchivos 
-                                                    puntuacion={punto.idPuntuacion} 
-                                                    onArchivoSubido={()=>handleArchivoSubido(punto.idPuntuacion)}/>}
-                                                    estilo={{ width: '100%' }}
-                                                />
-                                                <BotonDesplegable 
-                                                    titulo={"Archivos Adjuntados"}
-                                                    contenido={ <ArchivoAdjuntados puntuacion={punto.idPuntuacion} archivos={archivos[punto.idPuntuacion]} onEliminarArchivo={handleEliminarArchivo} />}
-                                                    estilo={{ width: '100%' }}
-                                                />
+                                                <div style={{display:'flex', flexDirection:'row', width:'100%'}}>
+                                                    <SubirArchivos puntuacion={punto.idPuntuacion} onArchivoSubido={()=>handleArchivoSubido(punto.idPuntuacion)}/>
+                                                </div>
                                             </div>
+                                            <ArchivoAdjuntados puntuacion={punto.idPuntuacion} archivos={archivos[punto.idPuntuacion]} onEliminarArchivo={handleEliminarArchivo} />
                                         </div>                                        
                                         <hr className='linea'></hr>                                       
                                     </ul>
