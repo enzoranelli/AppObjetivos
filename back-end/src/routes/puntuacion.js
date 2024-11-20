@@ -66,7 +66,7 @@ async function obtenerPuntuacionBarra(req,res) {
             GROUP BY p.objetivo
         ) maxP ON p.objetivo = maxP.objetivo AND p.idPuntuacion = maxP.maxPuntuacion
         WHERE e.idEmpleado = ?
-        ORDER BY idOBjetivoEmpleado;`
+        ORDER BY idOBjetivoEmpleado ASC;`
         const results = await new Promise((resolve, reject)=>{
             connection.query(query,[id], (err, results)=>{
                 if(err) reject(err);

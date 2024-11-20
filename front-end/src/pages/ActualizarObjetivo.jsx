@@ -97,10 +97,10 @@ function ActualizarObjetivo(){
         } 
     }
     return (
-        <div className='form-contenedor'>
+        <div className='form-contenedor-actualizar-objetivo'>
             {objetivoData ? (
                 <form onSubmit={handleSubmit} >
-                    <h2>Actualizar campos del Objetivo</h2>
+                    <h1 className="titulo-puntuacion">Actualizar campos del Objetivo</h1>
                     {mostrarMensaje && <MensajeConfirmacion titulo={`Campos actualizados del objetivo con exito. Regresando en ${contador} segundos.`} tipo={'exito'}/> }
                     {error && <MensajeConfirmacion titulo={error} tipo={'error'}/>}
                     <div className='contenedor-input'>

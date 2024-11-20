@@ -3,6 +3,14 @@
     vertical-align: top;
     width: 100%;
 }
+.form-contenedor-actualizar-objetivo{
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    flex-direction: column;
+}
 .input-dates-actualizar-obj{
     width: 100%;
 }

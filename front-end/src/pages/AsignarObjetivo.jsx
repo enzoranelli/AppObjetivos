@@ -87,15 +87,15 @@ function AsignarObjetivo(){
                     <h4>Descripcion:</h4>
                     <label>{objetivo.descripcion}</label>
                     <h4>Peso:</h4>
-                    <div>
-                        <progress id="progreso "value={objetivo.peso} max="100"></progress>
+                    <div className="contenedor-barra-asignar">
+                        <progress id="progreso" className='barra-asignar' value={objetivo.peso} max="100"></progress>
                         <label htmlFor="progreso">  {objetivo.peso}%</label>
                     </div>
                     <h4>Fecha de asignación de hoy: {fechaMostrar}</h4>
                     <h4>Asignar a</h4>
                     <label>Empleado:</label>
                     
-                    <select className='select-form' value={idEmpleado} onChange={(e)=>setIdEmpleado(e.target.value)} required>
+                    <select className='select-form asignar' value={idEmpleado} onChange={(e)=>setIdEmpleado(e.target.value)} required>
                         <option value="" >Elige un empleado</option>
                         {empleados.map(empleado =>(
                             <option key={empleado.idEmpleado} value={empleado.idEmpleado}>
@@ -104,7 +104,7 @@ function AsignarObjetivo(){
                         ))}
                     </select>
                     
-                    <button type="submit" className='boton-asignar-objetivo '>Asignar</button>
+                    <button type="submit" className='boton-asignar-objetivo'>Asignar</button>
                 </form>
             </div>
         ):(
