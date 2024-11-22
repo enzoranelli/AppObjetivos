@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 95vh;
 }
 .titulo{
     text-align: center;
@@ -33,8 +33,22 @@
 }
 .input-text{
     width: 100%;
+    margin: 0px;
+    padding: 0px;
     text-align: left;
 }
 .boton-submit{
     width: 100%;
+}
+@media (max-width: 1280px){
+    p{
+        margin: 0px;
+    } 
+    .input-radio{
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+    .form-container{
+        height: 94vh;
+    }
 }

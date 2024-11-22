@@ -70,7 +70,7 @@ async function obtenerObjetivosAsignados(req, res) {
             });
         });
         const empleado = req.params.id;
-        const query = `SELECT * FROM Objetivo o JOIN ObjetivoEmpleado oe ON o.idObjetivo= oe.objetivo WHERE oe.empleado = ?`;
+        const query = `SELECT * FROM Objetivo o JOIN ObjetivoEmpleado oe ON o.idObjetivo= oe.objetivo WHERE oe.empleado = ? ORDER BY idOBjetivoEmpleado ASC;`;
 
         const results = await new Promise((resolve, reject)=>{
             connection.query(query,[empleado], (err, results)=>{

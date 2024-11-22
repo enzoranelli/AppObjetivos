@@ -1,6 +1,6 @@
 import '../styles/ActualizarPuntuacion.css'
 import axios from 'axios';
-import {Navigate, useParams} from 'react-router-dom';
+import {Form, Navigate, useParams} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { obtenerFecha, fechaISO } from "../components/fechaHoy";
 import { getApiUrl } from '../config/configURL';
@@ -69,13 +69,13 @@ function ActualizarPuntuacion(){
     return (
         <div className="conetendor-puntuacion-actualizar">
             { getEmpleado && getObjetivo ? (
-                <div className="contenedor-actualizar">
-                <h1 className="titulo-puntuacion">Actualizar puntuacion</h1>
-                <hr className="linea"></hr>
-                <h3>Objetivo: {getObjetivo.titulo}</h3>
-                <h3>Empleado: {getEmpleado.nombre} </h3>
-                <h3>Fecha asignada: {fechaMostrar}</h3>
-                <label className="descripcion-label" htmlFor="texto">Descripcion del objetivo: (Máximo de caracteres: {comentario.length}/{2500})</label>
+                <form className="contenedor-actualizar">
+                    <h1 className="titulo-puntuacion">Actualizar puntuacion</h1>
+                    
+                    <h3>Objetivo: {getObjetivo.titulo}</h3>
+                    <h3>Empleado: {getEmpleado.nombre} </h3>
+                    <h3>Fecha asignada: {fechaMostrar}</h3>
+                    <label className="descripcion-label" htmlFor="texto">Descripcion del objetivo: (Máximo de caracteres: {comentario.length}/{2500})</label>
                     <textarea
                         placeholder='Escribe un comentario o puede dejarlo vacio...'
                         className="text-datos-actualizar-obj"
@@ -83,23 +83,23 @@ function ActualizarPuntuacion(){
                         maxLength={2500}    
                         value={comentario}
                         onChange={(e)=>SetComentario(e.target.value)}
-                />
-                <h3>Puntuar:</h3>
-                <div className="contenedor-input">
-                    <label htmlFor="slider" className="descripcion-label">Asigne el peso del objetivo: </label>
-                    <input 
-                        className='input-puntuacion'
-                        type="range"
-                        id="puntuacion"
-                        min="0"
-                        max="100"
-                        value={puntuacion}
-                        onChange={(e)=>setPuntuacion(e.target.value)}
                     />
-                    <label>{puntuacion}%</label>
-                    <button onClick={handleSubmit}>Agregar puntuacion</button>
-                </div>
-            </div>) :(<>
+                    <h3>Puntuar:</h3>
+                    <div className="contenedor-input">
+                        <label htmlFor="slider" className="descripcion-label">Asigne el peso del objetivo: </label>
+                        <input 
+                            className='input-puntuacion'
+                            type="range"
+                            id="puntuacion"
+                            min="0"
+                            max="100"
+                            value={puntuacion}
+                            onChange={(e)=>setPuntuacion(e.target.value)}
+                        />
+                        <label>{puntuacion}%</label>
+                        <button className='actualizar-puntuacion-boton' onClick={handleSubmit}>Agregar puntuacion</button>
+                    </div>
+                </form>) :(<>
                 <h1> Error: no se cargaron los datos</h1>
             </>)}
             

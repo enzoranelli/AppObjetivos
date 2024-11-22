@@ -19,9 +19,9 @@ function ArchivoAdjuntados({ archivos ,puntuacion, onEliminarArchivo}){
                             </a>
                             <button
                                 onClick={() => onEliminarArchivo(archivo.idArchivo,puntuacion)}
-                                style={{ marginLeft: '10px', background: 'red', color: 'white', width:'auto' }}
+                                style={{ margin: '0px 0px 0px 10px', background: 'red', color: 'white', width:'auto', height:'auto' }}
                             >
-                                    X
+                                    <b>x</b>
                             </button>
 
                         </li>
@@ -30,7 +30,7 @@ function ArchivoAdjuntados({ archivos ,puntuacion, onEliminarArchivo}){
                 </>
             ):
             (
-                <SinElementos elemento={'archivos adjuntados.'}/>
+                <SinElementos elemento={'archivos adjuntados.'} estilo={'puntuacion'}/>
             )}
         </div>
     );

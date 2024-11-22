@@ -68,10 +68,11 @@ function NuevoObjetivo(){
         <div className="objetivo-container">
         
             <form className="form-objetivo" onSubmit={manejarEnvio}>
-                <h1>Agregar objetivo</h1>
+                <h1  className="titulo-puntuacion">Agregar objetivo</h1>
+                
                 <div className="contenedor-input">
                     <label className="label-form">Título</label>
-                    <input type="text" className="input-text" value={titulo} onChange={(e)=> setTitulo(e.target.value)}></input>
+                    <input type="text" className="input-objetivo-nuevo" value={titulo} onChange={(e)=> setTitulo(e.target.value)}></input>
                 </div>
 
                 <div className="contenedor-input">
@@ -88,6 +89,7 @@ function NuevoObjetivo(){
         <div className="contenedor-input">
             <label htmlFor="fechaInicio"> Fecha de inicio: </label>
             <input
+                className="input-objetivo-nuevo"
                 type="date"
                 id="fechaInicio"
                 name="fechaInicio"
@@ -102,6 +104,7 @@ function NuevoObjetivo(){
                 type="date"
                 id="fechaFinal"
                 name="fechaFinal"
+                className="input-objetivo-nuevo"
                 value={fechaFinal}
                 min={fechaInicio}
                 onChange={(e) => setFechaFinal(e.target.value)}
@@ -112,6 +115,7 @@ function NuevoObjetivo(){
         <div className="contenedor-input">
             <label htmlFor="slider" className="descripcion-label">Asigne el peso del objetivo: </label>
             <input 
+                className="input-objetivo-nuevo"
                 type="range"
                 id="puntuacion"
                 min="0"

@@ -6,7 +6,7 @@ import Confirmacion from '../components/Confirmacion.jsx';
 import { getApiUrl } from '../config/configURL.js';
 import ArchivoAdjuntados from '../components/ArchivosAdjuntados.jsx';
 import SubirArchivos from '../components/SubirArchivos.jsx';
-import BotonDesplegable from '../components/BotonDesplegable.jsx';
+
 function ObjetivoEmpleado(){
     const {asignacion, empleado, objetivo} = useParams();
     const [getObjetivo, setGetObjetivo]= useState(null);
@@ -105,12 +105,12 @@ function ObjetivoEmpleado(){
                 {(getEmpleado && getObjetivo && puntuacion) && archivos ? (
                     <>
                         <div className='contenedor-fecha-boton'>
-                            <h2>Progreso de {getObjetivo.titulo} de {getEmpleado.nombre}</h2>
+                            <h3>Progreso de {getObjetivo.titulo} de {getEmpleado.nombre}</h3>
                             <button onClick={volver}> Volver</button>
                         </div>
                         <hr className='linea'></hr>
                         <div className='contenedor-fecha-boton'>
-                            <h2>Fecha final de objetivo: {getObjetivo.fechaFinal}</h2>
+                            <h3>Fecha final de objetivo: {getObjetivo.fechaFinal}</h3>
                             <div className='contenedor-botones'>
                                 
                                 <button className='boton-obj-emp' onClick={actualizarPuntuacion}>Actualizar estado</button>
@@ -125,27 +125,20 @@ function ObjetivoEmpleado(){
                             {puntuacion.map((punto) => (
                                 <li key={punto.idPuntuacion} className='contenedor-punto'>
                                     <ul className='lista-puntuacion'>
-                                        <div style={{display:'flex', flexDirection: 'column', width: '100%'}}>
+                                        <div style={{display:'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between'}}>
                                             <div>
                                                 <li>Fecha: {new Date(punto.fechaPuntuacion).toLocaleDateString()}</li>
                                                 <li>Progreso: <progress value={punto.valor} max='100'></progress> {punto.valor}%</li>
                                                 <li>Comentario: {punto.comentario ? <>{punto.comentario}</>:<>Sin comentarios</>}</li>
                                             </div>
-                                            <div style={{display:'flex', width: '100%', gap: '10px', marginTop: '10px'}}>
-                                                <BotonDesplegable 
-                                                    titulo={"Subir archivos"}
-                                                    contenido={ <SubirArchivos 
-                                                    puntuacion={punto.idPuntuacion} 
-                                                    onArchivoSubido={()=>handleArchivoSubido(punto.idPuntuacion)}/>}
-                                                    estilo={{ width: '100%' }}
-                                                />
-                                                <BotonDesplegable 
-                                                    titulo={"Archivos Adjuntados"}
-                                                    contenido={ <ArchivoAdjuntados puntuacion={punto.idPuntuacion} archivos={archivos[punto.idPuntuacion]} onEliminarArchivo={handleEliminarArchivo} />}
-                                                    estilo={{ width: '100%' }}
-                                                />
+                        
+                                            <div style={{display:'flex', flexDirection:'row'}}>
+                                                <SubirArchivos puntuacion={punto.idPuntuacion} onArchivoSubido={()=>handleArchivoSubido(punto.idPuntuacion)}/>
                                             </div>
-                                        </div>                                        
+                                            
+                                            </div> 
+                                            <ArchivoAdjuntados puntuacion={punto.idPuntuacion} archivos={archivos[punto.idPuntuacion]} onEliminarArchivo={handleEliminarArchivo} />
+                                                                              
                                         <hr className='linea'></hr>                                       
                                     </ul>
                                 </li>

@@ -27,7 +27,7 @@ function Objetivo(props){
             <div className="cabecera-objetivo">
                 <h2 className="titulo-del-objetivo">{props.objetivo.titulo}</h2>
                 <div className="contenedor-fechas temp-style-target">
-                    <p className="fechas-objetivo">Fecha de incicio: <b>{props.objetivo.fechaInicio}</b></p>
+                    <p className="fechas-objetivo">Fecha de inicio: <b>{props.objetivo.fechaInicio}</b></p>
                     <p className="fechas-objetivo">Fecha Final: <b>{props.objetivo.fechaFinal}</b></p>
                     <p className="fechas-objetivo">Fue asignado el: <b>{props.objetivo.fechaAsignacion}</b></p>
                 </div>
