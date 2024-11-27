@@ -6,15 +6,16 @@ import Confirmacion from '../components/Confirmacion.jsx';
 import { getApiUrl } from '../config/configURL.js';
 import ArchivoAdjuntados from '../components/ArchivosAdjuntados.jsx';
 import SubirArchivos from '../components/SubirArchivos.jsx';
+import { useTrimestreContext } from '../UserProvider.jsx';
 
 function ObjetivoEmpleado(){
+    const trimestre = useTrimestreContext();
     const {asignacion, empleado, objetivo} = useParams();
     const [getObjetivo, setGetObjetivo]= useState(null);
     const [getEmpleado, setGetEmpleado] = useState(null);
     const [puntuacion, setPuntuacion] = useState(null);
     const [archivos, setArchivos] = useState([]);
     const url = getApiUrl();
-
     const [vuelta, setVuelta] = useState(false);
     const [actualizar, setActualizar] = useState(false);
     const cargarArchivos = async (puntuacion) => {
@@ -92,7 +93,7 @@ function ObjetivoEmpleado(){
     },[archivos])
     const actualizarPuntuacion = () =>{
         setActualizar(true);
-     }
+    }
     if(vuelta){
         return <Navigate to={`/feed/${empleado}`}></Navigate>
     }
@@ -112,8 +113,15 @@ function ObjetivoEmpleado(){
                         <div className='contenedor-fecha-boton'>
                             <h3>Fecha final de objetivo: {getObjetivo.fechaFinal}</h3>
                             <div className='contenedor-botones'>
+                                {trimestre === 5 ? <p>Trimestre: 4/4</p>
+                                : <p>Puntuaciones trimestrales: {trimestre}/4</p>
+                                }
                                 
-                                <button className='boton-obj-emp' onClick={actualizarPuntuacion}>Actualizar estado</button>
+                                <button 
+                                    className={`boton-obj-emp ${trimestre >= 4 ? 'boton-deshabilitado' : ''}`} 
+                                    onClick={actualizarPuntuacion}  
+                                    disabled={trimestre >= 4}>
+                                    Actualizar estado</button>
                                 <div className='boton-rojo'>
                                 <Confirmacion idElemento={asignacion} idEmpleado={empleado} tipo={'asignacion'}/>
                                 </div>
@@ -130,6 +138,7 @@ function ObjetivoEmpleado(){
                                                 <li>Fecha: {new Date(punto.fechaPuntuacion).toLocaleDateString()}</li>
                                                 <li>Progreso: <progress value={punto.valor} max='100'></progress> {punto.valor}%</li>
                                                 <li>Comentario: {punto.comentario ? <>{punto.comentario}</>:<>Sin comentarios</>}</li>
+                                                <li>Trimestre: {punto.trimestre}°</li>
                                             </div>
                         
                                             <div style={{display:'flex', flexDirection:'row'}}>

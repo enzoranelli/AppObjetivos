@@ -50,6 +50,7 @@ async function agregarAsignacion(req, res){
             valor: 0,
             fechaPuntuacion: req.body.fecha,
             comentario: '',
+            trimestre: 0,
         }
         console.log(ultimaAsignacion)
         console.log(data)
@@ -149,7 +150,7 @@ async function eliminarAsignacion(req, res){
         });
         const archivos = await new Promise((resolve, reject) => {
             connection.query(
-                'SELECT * FROM Archivos WHERE puntuacion = (SELECT idPuntuacion FROM Puntuacion WHERE objetivo = ?)',
+                'SELECT * FROM Archivos WHERE puntuacion IN (SELECT idPuntuacion FROM Puntuacion WHERE objetivo = ?)',
                 [id],
                 (err, results) => {
                     if (err) {

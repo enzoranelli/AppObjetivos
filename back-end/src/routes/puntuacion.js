@@ -13,7 +13,8 @@ async function agregarPuntuacion(req, res){
             objetivo: req.body.objetivo,
             valor: req.body.valor,
             fechaPuntuacion: req.body.fechaPuntuacion,
-            comentario: req.body.comentario
+            comentario: req.body.comentario,
+            trimestre: req.body.trimestre
         }
 
         console.log(puntuacion)
@@ -24,10 +25,10 @@ async function agregarPuntuacion(req, res){
             });
         });
 
-        const query = 'INSERT INTO Puntuacion (objetivo, valor, fechaPuntuacion,comentario) VALUES (?,?,?,?)';
+        const query = 'INSERT INTO Puntuacion (objetivo, valor, fechaPuntuacion,comentario,trimestre) VALUES (?,?,?,?,?)';
       
         const results = await new Promise((resolve,reject)=>{
-            connection.query(query, [puntuacion.objetivo, puntuacion.valor, puntuacion.fechaPuntuacion,puntuacion.comentario], (err, results)=>{
+            connection.query(query, [puntuacion.objetivo, puntuacion.valor, puntuacion.fechaPuntuacion,puntuacion.comentario, puntuacion.trimestre], (err, results)=>{
                 if(err){ 
                     if(err.code === 'ER_DUP_ENTRY'){
                         return res.status(409).send({message:'Este objetivo ya ha sido asignado a este empleado. '})
@@ -54,19 +55,25 @@ async function obtenerPuntuacionBarra(req,res) {
             });
         });
         const id = req.params.id;
-        const query = `SELECT oe.idObjetivoEmpleado, o.titulo, p.valor, o.peso, 
-       (o.peso * p.valor / 100) AS despeno
-        FROM ObjetivoEmpleado oe
-        JOIN Empleado e ON oe.empleado = e.idEmpleado
-        JOIN Objetivo o ON oe.objetivo = o.idObjetivo
-        JOIN Puntuacion p ON oe.idObjetivoEmpleado = p.objetivo
-        JOIN (
-            SELECT p.objetivo, MAX(p.idPuntuacion) AS maxPuntuacion
-            FROM Puntuacion p
-            GROUP BY p.objetivo
-        ) maxP ON p.objetivo = maxP.objetivo AND p.idPuntuacion = maxP.maxPuntuacion
-        WHERE e.idEmpleado = ?
-        ORDER BY idOBjetivoEmpleado ASC;`
+        const query = `SELECT 
+            oe.idObjetivoEmpleado, 
+            o.titulo, 
+            AVG(p.valor) AS promedioPuntuacion, 
+            o.peso, 
+            (o.peso * AVG(p.valor) / 100) AS despeno
+            FROM 
+                ObjetivoEmpleado oe
+            JOIN 
+                Empleado e ON oe.empleado = e.idEmpleado
+            JOIN 
+                Objetivo o ON oe.objetivo = o.idObjetivo
+            JOIN 
+                Puntuacion p ON oe.idObjetivoEmpleado = p.objetivo
+            WHERE 
+                e.idEmpleado = ?
+                AND p.trimestre > 0
+            GROUP BY    oe.idObjetivoEmpleado, o.titulo, o.peso
+            ORDER BY idOBjetivoEmpleado ASC;`
         const results = await new Promise((resolve, reject)=>{
             connection.query(query,[id], (err, results)=>{
                 if(err) reject(err);
