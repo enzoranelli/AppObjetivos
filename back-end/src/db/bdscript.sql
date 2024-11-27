@@ -51,6 +51,7 @@ CREATE TABLE Puntuacion(
     valor INT NOT NULL CHECK(valor BETWEEN 0 AND 100),
 	comentario VARCHAR(2500) NOT NULL,
     fechaPuntuacion DATE,
+    trimestre INT NOT NULL CHECK(trimestre BETWEEN 0 AND 4),
     PRIMARY KEY(idPuntuacion),
     FOREIGN KEY(objetivo) REFERENCES ObjetivoEmpleado(idObjetivoEmpleado)  ON DELETE CASCADE
 );
@@ -144,7 +145,7 @@ JOIN (
     FROM Puntuacion p
     GROUP BY p.objetivo
 ) maxP ON p.objetivo = maxP.objetivo AND p.idPuntuacion = maxP.maxPuntuacion
-WHERE e.idEmpleado = 1;
+WHERE e.idEmpleado = 2;
 
 /*Verifiicar peso de los objetivos asignados*/
 SELECT SUM(peso) AS suma_peso_actual
@@ -165,3 +166,27 @@ SELECT oe.idObjetivoEmpleado, o.titulo, p.valor, o.peso,
         WHERE e.idEmpleado = 1
         ORDER BY idOBjetivoEmpleado;
 
+
+SELECT * FROM Archivos WHERE puntuacion = (SELECT idPuntuacion FROM Puntuacion WHERE objetivo = '2');
+
+SELECT 
+    oe.idObjetivoEmpleado, 
+    o.titulo, 
+    AVG(p.valor) AS promedioPuntuacion, 
+    o.peso, 
+    (o.peso * AVG(p.valor) / 100) AS desempeno
+FROM 
+    ObjetivoEmpleado oe
+JOIN 
+    Empleado e ON oe.empleado = e.idEmpleado
+JOIN 
+    Objetivo o ON oe.objetivo = o.idObjetivo
+JOIN 
+    Puntuacion p ON oe.idObjetivoEmpleado = p.objetivo
+WHERE 
+    e.idEmpleado = 2
+    AND p.trimestre > 0
+GROUP BY 
+    oe.idObjetivoEmpleado, o.titulo, o.peso
+ORDER BY 
+    oe.idObjetivoEmpleado;
