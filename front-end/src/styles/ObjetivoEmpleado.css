@@ -31,6 +31,17 @@
 .boton-obj-emp{
     margin: 10px;
 }
+.boton-deshabilitado{
+    margin: 10px;
+    background-color: lightgray;
+    color: gray;
+    cursor: not-allowed;
+}
+.boton-deshabilitado:hover{
+    background-color: lightgray;
+    color: gray;
+    cursor: not-allowed;
+}
 .boton-obj-emp-eli{
     background-color: rgb(200, 0, 10);
 }
