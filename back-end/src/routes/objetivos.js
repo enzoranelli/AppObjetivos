@@ -4,6 +4,7 @@ const {format, parseISO} = require('date-fns');
 
 router.get('/', obtenerObjetivos);
 router.get('/ultimo',obtenerUltimoObjetivo );
+router.get('/objetivo-con-asignacion',obtenerObjetivosConAsignacion);
 router.get('/:id', obtenerObjetivo);
 router.post('/', agregarObjetivo);
 router.put('/',actualizarObjetivo);
@@ -140,6 +141,39 @@ async function obtenerUltimoObjetivo(req, res) {
         res.send(results[0]);
     } catch (err) {
         res.send(err);
+    }
+}
+async function obtenerObjetivosConAsignacion(req,res){
+    try {
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err){
+                    console.error("Error al conectar en la base de datos:", err);
+                    reject(err);
+                }
+                else{ 
+                    console.log('Conexion exitosa')
+                    resolve(conn);
+                }
+            });
+        });
+        const query = `SELECT idObjetivo FROM Objetivo o
+            JOIN ObjetivoEmpleado oe on oe.objetivo = o.idObjetivo
+            GROUP BY idObjetivo;`
+        const results = await new Promise((resolve, reject)=>{
+            connection.query(query, (err, results)=>{
+                if(err){
+                    console.error("Error en la consulta:", err);
+                    reject(err);
+                } 
+                else{
+                    resolve(results);
+                }
+            });
+        });
+        res.send(results);
+    } catch (error) {
+        res.send(error);
     }
 }
 async function eliminarObjetivo(req, res){
