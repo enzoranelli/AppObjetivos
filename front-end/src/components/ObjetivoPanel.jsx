@@ -17,7 +17,7 @@ function ObjetivoPanel(props){
 
         <div className="contenedor-objetivo">
             <div className="cabecera-objetivo">
-                <h2 className="titulo-del-objetivo">{props.objetivo.idObjetivo}: {props.objetivo.titulo}</h2>
+                <h2 className="titulo-del-objetivo">{props.objetivo.titulo}</h2>
                 <p className="fechas-objetivo">Fecha de inicio: {props.objetivo.fechaInicio}</p>
                 <p className="fechas-objetivo">Fecha final: {props.objetivo.fechaFinal}</p>
                 <div className="contenedor-botones-panel">

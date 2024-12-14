@@ -12,7 +12,7 @@ function Paginacion({setCurrentPage, currentPage, nPages}){
             <h3 >
                 {currentPage} / {nPages}
             </h3>
-            <h3 className='boton-paginacion' onClick={next}>Siguiente</h3>
+            <h3 className='boton-paginacion siguiente' onClick={next}>Siguiente</h3>
         </div>
     );
 }

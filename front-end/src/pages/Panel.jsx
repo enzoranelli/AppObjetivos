@@ -4,6 +4,7 @@ import axios from 'axios';
 import SinElementos from "../components/SinElementos";
 import { getApiUrl } from "../config/configURL";
 import Paginacion from "../components/Paginacion";
+import Filtros from "../components/Filtros";
 
 function Panel(){
     const [objetivos, setObjetivos] = useState(null);
@@ -44,21 +45,24 @@ function Panel(){
                     <h1 className="titulo">Lista de objetivos</h1>
                     <hr className="linea"></hr>
                     {nObjetivos && nObjetivos.length !== 0 ?  (
-                        
-                        <ul className="lista">
-                            {nObjetivos.map((objetivos,index)=>(
-                                <li key={index}>
-                                    <ObjetivoPanel objetivo={objetivos}/>
-                                </li>
-                            ))}
-                        </ul>) : (
+                        <>
+                            <Filtros />
+                            <ul className="lista">
+                                {nObjetivos.map((objetivos,index)=>(
+                                    <li key={index}>
+                                        <ObjetivoPanel objetivo={objetivos}/>
+                                    </li>
+                                ))}
+                            </ul>
+                            <Paginacion 
+                                currentPage={currentPage} 
+                                setCurrentPage={setCurrentPage}
+                                nPages={nPages}    
+                            />
+                        </> ) : (
                     <SinElementos elemento='objetivos'/>
                     )}
-                    <Paginacion 
-                        currentPage={currentPage} 
-                        setCurrentPage={setCurrentPage}
-                        nPages={nPages}    
-                    /> 
+                   
                 </>
             )
 

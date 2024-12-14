@@ -1,5 +1,7 @@
 /* src/components/Header.css */
-
+.cerrar-sesion{
+  cursor: pointer;
+}
 .header {
     position: fixed;
     top: 0; /* Posición en la parte superior */
