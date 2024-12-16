@@ -43,3 +43,8 @@
 .input-objetivo-nuevo{
     width: 100%;
 }
+@media (max-width: 1300px){
+    .form-objetivo{
+        max-height: 400px;
+    } 
+}

@@ -55,6 +55,7 @@ CREATE TABLE Puntuacion(
     PRIMARY KEY(idPuntuacion),
     FOREIGN KEY(objetivo) REFERENCES ObjetivoEmpleado(idObjetivoEmpleado)  ON DELETE CASCADE
 );
+
 CREATE TABLE Archivos(
 	idArchivo INT NOT NULL AUTO_INCREMENT,
     puntuacion INT,

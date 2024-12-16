@@ -114,13 +114,13 @@ function ObjetivoEmpleado(){
                             <h3>Fecha final de objetivo: {getObjetivo.fechaFinal}</h3>
                             <div className='contenedor-botones'>
                                 {trimestre === 5 ? <p>Trimestre: 4/4</p>
-                                : <p>Puntuaciones trimestrales: {trimestre}/4</p>
+                                : <p>Puntuaciones trimestrales: {trimestre-1}/4</p>
                                 }
                                 
                                 <button 
                                     className={`boton-obj-emp ${trimestre >= 4 ? 'boton-deshabilitado' : ''}`} 
                                     onClick={actualizarPuntuacion}  
-                                    disabled={trimestre >= 4}>
+                                    disabled={trimestre >= 5}>
                                     Actualizar estado</button>
                                 <div className='boton-rojo'>
                                 <Confirmacion idElemento={asignacion} idEmpleado={empleado} tipo={'asignacion'}/>
