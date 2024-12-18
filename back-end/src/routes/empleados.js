@@ -121,7 +121,7 @@ async function obtenerAreas(req, res){
             });
         });
         const results = await new Promise((resolve, reject)=>{
-            connection.query('SELECT DISTINCT area FROM Empleado', (err, results)=>{
+            connection.query('SELECT * FROM Areas', (err, results)=>{
                 if(err) reject(err);
                 else resolve(results);
             });

@@ -5,6 +5,7 @@ const {format, parseISO} = require('date-fns');
 router.get('/', obtenerObjetivos);
 router.get('/ultimo',obtenerUltimoObjetivo );
 router.get('/objetivo-con-asignacion',obtenerObjetivosConAsignacion);
+router.get('/anios', obtenerAnios);
 router.get('/:id', obtenerObjetivo);
 router.post('/', agregarObjetivo);
 router.put('/',actualizarObjetivo);
@@ -42,6 +43,26 @@ async function agregarObjetivo(req, res) {
  }  catch (err){
     res.status(404).send(err);
  } 
+}
+async function obtenerAnios(req,res){
+    try {
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err) reject(err);
+                else resolve(conn);
+            });
+        });
+        const query = 'SELECT DISTINCT YEAR(fechaInicio) as anio FROM Objetivo ORDER BY anio;';
+        const results = await new Promise((resolve, reject)=>{
+            connection.query(query, (err, results)=>{
+                if(err) reject(err);
+                else resolve(results);
+            });
+        });
+        res.status(200).send(results);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 }
 async function actualizarObjetivo(req,res){
     try{

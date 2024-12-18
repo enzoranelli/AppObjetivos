@@ -37,6 +37,18 @@
     padding: 0px;
     text-align: left;
 }
+.input-select{
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    
+    border: 2px solid  #fbb003;
+}
+.input-select:focus {
+    outline: none;
+    border-color: #ff8000;
+    
+}
 .boton-submit{
     width: 100%;
 }
