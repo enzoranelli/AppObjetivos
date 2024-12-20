@@ -109,7 +109,7 @@ SET descripcion = 'Actualizado papa de dio'
 WHERE idObjetivo = 1;
 SELECT * FROM Objetivo WHERE idObjetivo = 'sdfgsdfg';
 
-
+INSERT INTO Areas VALUES('Operaciones'),('RRHH'),('Comercial'),('Administracion');
 
 INSERT INTO ObjetivoEmpleado VALUES(0,1,1,50);
 

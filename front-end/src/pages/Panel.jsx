@@ -8,12 +8,16 @@ import Filtros from "../components/Filtros";
 
 function Panel(){
     const [objetivos, setObjetivos] = useState(null);
+    const [objetivosFiltrado, setObjetivosFiltrados] = useState(null);
     const [error, setError]  =useState(null);
     const [cantidadObjetivos, SetCantidadObjetivos] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
     const url = getApiUrl();
     
+    const handleListaFiltrada = (listaNueva)=>{
+        setObjetivosFiltrados(listaNueva);
+    }
     useEffect(()=>{
         axios.get(`${url}/api/objetivos`)
             .then( response => {
@@ -46,7 +50,7 @@ function Panel(){
                     <hr className="linea"></hr>
                     {nObjetivos && nObjetivos.length !== 0 ?  (
                         <>
-                            <Filtros />
+                            <Filtros manejarLista={handleListaFiltrada} />
                             <ul className="lista">
                                 {nObjetivos.map((objetivos,index)=>(
                                     <li key={index}>

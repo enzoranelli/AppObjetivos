@@ -13,6 +13,7 @@ const objetivoasignacion = require('./routes/objetivoAsignado.js');
 const puntuacion = require('./routes/puntuacion.js');
 const login = require('./routes/login.js');
 const archivos = require('./routes/archivos.js');
+const filtros = require('./routes/filtros.js');
 
 
 
@@ -39,6 +40,7 @@ app.use('/api/objetivoasignacion',objetivoasignacion);
 app.use('/api/puntuacion',puntuacion);
 app.use('/api/login',login);
 app.use('/api/archivos',archivos);
+app.use('/api/filtros',filtros);
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(express.static(path.join(__dirname, '../../front-end/dist')));

@@ -2,3 +2,16 @@
     width: 13px;
     height: 13px;
 }
+.boton-filtro{
+    width: 200px;
+}
+.contenedor-opciones-fitros{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.contenedor-filtros{
+    display:  flex;
+    justify-content: space-between;
+    padding: 10px;
+}
