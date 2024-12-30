@@ -2,7 +2,8 @@ import axios from 'axios';
 import { useState, useEffect } from "react";
 import { getApiUrl } from '../config/configURL';
 import '../styles/Filtros.css';
-function Filtros({manejarLista}){
+import { parse, getYear } from 'date-fns';
+function Filtros({manejarLista, lista}){
     const url = getApiUrl();
     
     const [areas, setAreas] = useState(null);
@@ -46,6 +47,7 @@ function Filtros({manejarLista}){
     },[]);
 
     const filtrar = ()=>{
+        console.log(areaSeleccionada)
         if(areaSeleccionada !== 'todos'){
             console.log('Filtrar areas: ',areaSeleccionada)
         }else{
@@ -58,6 +60,11 @@ function Filtros({manejarLista}){
         }
         if(objetivoSinAsignacion){
             console.log('filtrar objetivo sin asignacion', objetivoSinAsignacion )
+            const idsExcluidos = objetivos.map((item) => item.idObjetivo);
+            const listaFiltrada = lista.filter(
+                (item) => !idsExcluidos.includes(item.idObjetivo)
+              );
+            manejarLista(listaFiltrada);
         }else{
             console.log('Sin Filtrar objetivo sin asignacion')
         }
@@ -70,7 +77,7 @@ function Filtros({manejarLista}){
                 <select
                     value={anioSeleccionado}
                     onChange={(e) => setAnioSeleccionado(e.target.value)} >
-                    <option value="">Todos</option>
+                    <option value="todos">Todos</option>
                     {anios?.map((anio)=> (
                         <option key={anio.anio} value={anio.anio}>
                             {anio.anio}
@@ -81,7 +88,7 @@ function Filtros({manejarLista}){
                     <select
                         value={areaSeleccionada}
                         onChange={(e) => setAreaSeleccionada(e.target.value)} >
-                        <option value="">Todos</option>
+                        <option value="todos">Todos</option>
                         {areas?.map((area)=> (
                             <option key={area.nombre} value={area.nombre}>
                                 {area.nombre}

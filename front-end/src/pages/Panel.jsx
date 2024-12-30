@@ -8,21 +8,26 @@ import Filtros from "../components/Filtros";
 
 function Panel(){
     const [objetivos, setObjetivos] = useState(null);
-    const [objetivosFiltrado, setObjetivosFiltrados] = useState(null);
+    const [lista, setLista] = useState(null);
     const [error, setError]  =useState(null);
     const [cantidadObjetivos, SetCantidadObjetivos] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
+    const [nObjetivos, setNObjetivos] = useState([]);
+    const [nPages, setNPages] = useState(0);
     const url = getApiUrl();
     
     const handleListaFiltrada = (listaNueva)=>{
-        setObjetivosFiltrados(listaNueva);
+        setLista(listaNueva);
+        setCurrentPage(1);
+        console.log(lista)
     }
     useEffect(()=>{
         axios.get(`${url}/api/objetivos`)
             .then( response => {
                 console.log(response)
                 setObjetivos(response.data);
+                setLista(response.data);
                 setIsLoading(false);
             })
             .catch( error => {
@@ -33,10 +38,14 @@ function Panel(){
             console.log(objetivos)
     },[]);
 
-    const indexFin = currentPage * cantidadObjetivos;
-    const indexIni = indexFin - cantidadObjetivos;
-    const nObjetivos = objetivos ? objetivos.slice(indexIni,indexFin) : [];
-    const nPages = objetivos ?  Math.ceil(objetivos.length / cantidadObjetivos) : 0;
+    useEffect(() => {
+        if (lista) {
+            const indexFin = currentPage * cantidadObjetivos;
+            const indexIni = indexFin - cantidadObjetivos;
+            setNObjetivos(lista.slice(indexIni, indexFin)); // Calcula la lista paginada
+            setNPages(Math.ceil(lista.length / cantidadObjetivos)); // Calcula el número de páginas
+        }
+    }, [lista, currentPage, cantidadObjetivos]); 
 
 
     return (
@@ -50,7 +59,7 @@ function Panel(){
                     <hr className="linea"></hr>
                     {nObjetivos && nObjetivos.length !== 0 ?  (
                         <>
-                            <Filtros manejarLista={handleListaFiltrada} />
+                            <Filtros manejarLista={handleListaFiltrada} lista={objetivos} />
                             <ul className="lista">
                                 {nObjetivos.map((objetivos,index)=>(
                                     <li key={index}>
