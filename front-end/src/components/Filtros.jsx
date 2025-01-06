@@ -11,6 +11,7 @@ function Filtros({manejarLista, lista}){
     const [objetivos, setObjetivos] = useState(null);
     const [anioSeleccionado, setAnioSeleccionado] = useState('todos');
     const [areaSeleccionada, setAreaSeleccionada] = useState('todos');
+    const [objetivosArea, setObjetivosArea] = useState(null);
     const [objetivoSinAsignacion, setObjetivoSinAsignacion] = useState(false);
     const [error,setError] = useState('');
     useEffect(()=>{
@@ -19,11 +20,11 @@ function Filtros({manejarLista, lista}){
             .then( response => {
                 console.log(response)
                 setObjetivos(response.data);
-                setIsLoading(false);
+               
             })
             .catch( error => {
                 setError(error.message);
-                setIsLoading(false);
+               
             });
         
             console.log(objetivos)
@@ -45,16 +46,44 @@ function Filtros({manejarLista, lista}){
                 setError(error.message);
             });
     },[]);
-
+    useEffect(()=>{
+        axios.get(`${url}/api/filtros/objetivos-por-area?area=${areaSeleccionada}`)
+        .then( response => {
+            console.log(response)
+            setObjetivosArea(response.data);
+           
+        })
+        .catch( error => {
+            setError(error.message);
+           
+        });
+    
+    },[areaSeleccionada]);
+    const filtrarPorAño = (lista, anio) => {
+        return lista.filter(item => {
+            
+            const fechaInicio = parse(item.fechaInicio, 'dd/MM/yyyy', new Date());
+            const fechaFinal = parse(item.fechaFinal, 'dd/MM/yyyy', new Date());
+            console.log('AnIO:',anio)
+            console.log('AÑÓ EN FILTRAR AÑO: ',getYear(fechaInicio))
+            console.log('AÑÓ EN FILTRAR AÑO: ',fechaFinal)
+            console.log('AÑÓ EN FILTRAR AÑO: ',fechaInicio)
+            return getYear(fechaInicio) === parseInt(anio) || getYear(fechaFinal) === parseInt(anio);
+        });
+      };
     const filtrar = ()=>{
         console.log(areaSeleccionada)
         if(areaSeleccionada !== 'todos'){
-            console.log('Filtrar areas: ',areaSeleccionada)
+           const listaFiltrada = lista.filter(item => objetivosArea.some(area => area.idObjetivo === item.idObjetivo));
+           console.log(listaFiltrada)
         }else{
             console.log('Sin Filtrar areas')
         }
         if(anioSeleccionado !== 'todos'){
-            console.log('Filtrar anio: ',anioSeleccionado )
+            const fechasFiltradas = filtrarPorAño(lista, anioSeleccionado);
+            console.log('LISTA CON AÑO')
+            console.log(fechasFiltradas)
+            manejarLista(fechasFiltradas);
         }else{
             console.log('No se Filtra año')
         }

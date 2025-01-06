@@ -36,6 +36,9 @@ CREATE TABLE Objetivo(
     PRIMARY KEY(idObjetivo)
 );
 
+SELECT DISTINCT YEAR(fechaInicio) as anio 
+FROM Objetivo 
+ORDER BY anio;
 
 
 CREATE TABLE ObjetivoEmpleado(
@@ -109,7 +112,7 @@ SET descripcion = 'Actualizado papa de dio'
 WHERE idObjetivo = 1;
 SELECT * FROM Objetivo WHERE idObjetivo = 'sdfgsdfg';
 
-INSERT INTO Areas VALUES('Operaciones'),('RRHH'),('Comercial'),('Administracion');
+
 
 INSERT INTO ObjetivoEmpleado VALUES(0,1,1,50);
 
@@ -159,6 +162,11 @@ WHERE e.idEmpleado = 2;
 SELECT SUM(peso) AS suma_peso_actual
 FROM ObjetivoEmpleado
 WHERE empleado = 1;
+SELECT idObjetivo, area FROM Objetivo o
+JOIN ObjetivoEmpleado oe on oe.objetivo = o.idObjetivo
+JOIN Empleado on idEmpleado = oe.empleado 
+WHERE area = 'Administracion'
+GROUP BY idObjetivo;
 
 SELECT oe.idObjetivoEmpleado, o.titulo, p.valor, o.peso, 
        (o.peso * p.valor / 100) AS despeno

@@ -3,6 +3,7 @@ const router = express.Router();
 
 router.get('/objetivo-con-asignacion',obtenerObjetivosConAsignacion);
 router.get('/anios', obtenerAnios);
+router.get('/objetivos-por-area',obtenerObteivosPorArea);
 async function obtenerObjetivosConAsignacion(req,res){
     try {
         const connection = await new Promise((resolve, reject)=>{
@@ -34,6 +35,31 @@ async function obtenerObjetivosConAsignacion(req,res){
         res.send(results);
     } catch (error) {
         res.send(error);
+    }
+}
+async function obtenerObteivosPorArea(req, res){
+    try {
+        const area = req.query.area;
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err) reject(err);
+                else resolve(conn);
+            });
+        });
+        const query = `SELECT idObjetivo, area FROM Objetivo o
+            JOIN ObjetivoEmpleado oe on oe.objetivo = o.idObjetivo
+            JOIN Empleado on idEmpleado = oe.empleado 
+            WHERE area = ?
+            GROUP BY idObjetivo;`
+        const results = await new Promise((resolve, reject)=>{
+            connection.query(query,[area], (err, results)=>{
+                if(err) reject(err);
+                else resolve(results);
+            });
+        });
+        res.status(200).send(results);
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 }
 async function obtenerAnios(req,res){
