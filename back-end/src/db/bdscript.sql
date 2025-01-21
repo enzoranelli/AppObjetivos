@@ -206,3 +206,5 @@ GROUP BY
     oe.idObjetivoEmpleado, o.titulo, o.peso
 ORDER BY 
     oe.idObjetivoEmpleado;
+
+INSERT INTO Areas VALUES ('Operaciones');
