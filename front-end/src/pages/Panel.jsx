@@ -28,7 +28,7 @@ function Panel(){
                 console.log(response)
                 setObjetivos(response.data);
                 setLista(response.data);
-                setIsLoading(false);
+                
             })
             .catch( error => {
                 setError(error.message);
@@ -44,6 +44,7 @@ function Panel(){
             const indexIni = indexFin - cantidadObjetivos;
             setNObjetivos(lista.slice(indexIni, indexFin)); // Calcula la lista paginada
             setNPages(Math.ceil(lista.length / cantidadObjetivos)); // Calcula el número de páginas
+            setIsLoading(false);
         }
     }, [lista, currentPage, cantidadObjetivos]); 
 
@@ -59,7 +60,7 @@ function Panel(){
                     <hr className="linea"></hr>
                     <Filtros manejarLista={handleListaFiltrada} lista={objetivos} />
                     
-                    {nObjetivos && nObjetivos.length !== 0 ?  (
+                    {(nObjetivos || []).length !== 0  ?  (
                         <>
                             <ul className="lista">
                                 {nObjetivos.map((objetivos,index)=>(

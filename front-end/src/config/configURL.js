@@ -1,7 +1,7 @@
 export function getApiUrl(){
     
     const hostname = window.location.hostname;
-
+    /*
     console.log('HOSTNAME:', hostname);
     if (hostname === 'localhost') {
       // Estás en el entorno de desarrollo local
@@ -11,11 +11,12 @@ export function getApiUrl(){
       return url;
     } else if (hostname === import.meta.env.VITE_IP_VM) {
       // Estás en la máquina virtual
-      return 'http://objetivos.americagroupsrl.com:9000' || import.meta.env.VITE_API_URL;
+      return 'http://localhost:9000';
+      //return 'http://objetivos.americagroupsrl.com:9000' || import.meta.env.VITE_API_URL;
     } else if(hostname === '172.31.50.156'){
       return "http://172.31.50.156:9000";
     }
-
-  return ;
+  */
+  return 'http://localhost:9000';
 
 }
