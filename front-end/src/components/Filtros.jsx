@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from "react";
 import { getApiUrl } from '../config/configURL';
 import '../styles/Filtros.css';
-import { parse, getYear } from 'date-fns';
+import { parse, getYear, set } from 'date-fns';
 function Filtros({manejarLista, lista}){
     const url = getApiUrl();
     
@@ -14,6 +14,10 @@ function Filtros({manejarLista, lista}){
     const [objetivosArea, setObjetivosArea] = useState(null);
     const [objetivoSinAsignacion, setObjetivoSinAsignacion] = useState(false);
     const [error,setError] = useState('');
+    const [deshacer, setDeshacer] = useState(false);
+
+
+    const listaOriginal = lista;    
     useEffect(()=>{
         
         axios.get(`${url}/api/filtros/objetivo-con-asignacion`)
@@ -72,33 +76,40 @@ function Filtros({manejarLista, lista}){
         });
       };
     const filtrar = ()=>{
+        var listaFiltrada = lista;
         console.log(areaSeleccionada)
         if(areaSeleccionada !== 'todos'){
-           const listaFiltrada = lista.filter(item => objetivosArea.some(area => area.idObjetivo === item.idObjetivo));
-           console.log(listaFiltrada)
+            listaFiltrada = listaFiltrada.filter(item => objetivosArea.some(area => area.idObjetivo === item.idObjetivo));
+    
         }else{
             console.log('Sin Filtrar areas')
         }
         if(anioSeleccionado !== 'todos'){
-            const fechasFiltradas = filtrarPorAño(lista, anioSeleccionado);
-            console.log('LISTA CON AÑO')
-            console.log(fechasFiltradas)
-            manejarLista(fechasFiltradas);
+            listaFiltrada = filtrarPorAño(listaFiltrada, anioSeleccionado);
         }else{
             console.log('No se Filtra año')
         }
         if(objetivoSinAsignacion){
             console.log('filtrar objetivo sin asignacion', objetivoSinAsignacion )
             const idsExcluidos = objetivos.map((item) => item.idObjetivo);
-            const listaFiltrada = lista.filter(
+            listaFiltrada = listaFiltrada.filter(
                 (item) => !idsExcluidos.includes(item.idObjetivo)
               );
-            manejarLista(listaFiltrada);
+    
         }else{
             console.log('Sin Filtrar objetivo sin asignacion')
         }
+        manejarLista(listaFiltrada);
+        setDeshacer(true);
     }
-    return(
+    const deshacerFiltros = ()=>{
+        setAnioSeleccionado('todos');
+        setAreaSeleccionada('todos');
+        setObjetivoSinAsignacion(false);
+        manejarLista(listaOriginal);
+        setDeshacer(false);
+    }
+        return(
         <div className='contenedor-filtros'>
             <div className='contenedor-opciones-fitros'>
                 <h3>Filtros:</h3>
@@ -136,6 +147,8 @@ function Filtros({manejarLista, lista}){
                
             </div>
             <div className='contenedor-boton-filtro'>
+                { deshacer ? <button className='boton-filtro' onClick={deshacerFiltros}>Deshacer filtros</button> : null}
+                
                 <button className='boton-filtro' onClick={filtrar}>Aplicar filtros</button> 
             </div>
             

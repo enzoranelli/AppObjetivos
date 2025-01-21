@@ -57,9 +57,10 @@ function Panel(){
                 <>
                     <h1 className="titulo">Lista de objetivos</h1>
                     <hr className="linea"></hr>
+                    <Filtros manejarLista={handleListaFiltrada} lista={objetivos} />
+                    
                     {nObjetivos && nObjetivos.length !== 0 ?  (
                         <>
-                            <Filtros manejarLista={handleListaFiltrada} lista={objetivos} />
                             <ul className="lista">
                                 {nObjetivos.map((objetivos,index)=>(
                                     <li key={index}>
