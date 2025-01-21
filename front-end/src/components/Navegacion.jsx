@@ -26,7 +26,7 @@ const Navegacion = () => {
           
           {
             user ? (
-              <li onClick={logout} ><a> Cerrar sesión</a></li>
+              <li onClick={logout} className='cerrar-sesion'><a> Cerrar sesión</a></li>
             ) : (
               <li><Link to="/">Login</Link></li>   
             )

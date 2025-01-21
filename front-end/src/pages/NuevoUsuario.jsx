@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import {useForm} from 'react-hook-form';
 import '../styles/FormUsuario.css';
@@ -9,6 +9,8 @@ function NuevoUsuario(){
     const {register, handleSubmit} = useForm();
     const [redirect, setRedirect] = useState(false);
     const [errorForm, setErrorForm] = useState('');
+    const [error, setError] = useState('');
+    const [areas, setAreas] = useState(null);
     const url = getApiUrl();
 
     const onSubmit = async (data) =>{
@@ -43,6 +45,16 @@ function NuevoUsuario(){
         }   
     }
 
+    useEffect(()=>{
+        axios.get(`${url}/api/empleados/areas`)
+        .then(response => {
+            console.log(response)
+            setAreas(response.data);
+        })
+        .catch(error => {
+            setError(error.message);
+        }); 
+    },[]);
     function verificarFormulario(data){
         console.log(data)
         for(const propiedad in data){
@@ -96,7 +108,13 @@ function NuevoUsuario(){
 
                 <div className="contenedor-input">
                     <label>Area</label>
-                    <input type="text" className="input-text" {...register('area')}></input>
+                    <select className="input-select" {...register('area')}>
+                        {areas?.map((area)=> (
+                            <option key={area.nombre} value={area.nombre}>
+                                {area.nombre}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 
                 <div className="contenedor-input">

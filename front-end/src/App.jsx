@@ -40,7 +40,7 @@ function App() {
           </Route>
           <Route element={<ProtectedRoute isAllowed={!!user && user.rol === 'admin'}/>}>
             <Route path='/panel' element={<Panel />} />
-            <Route path='/actualizar-puntuacion/:asignacion/:empleado/:objetivo' element={<ActualizarPuntuacion />} />        
+            <Route path='/actualizar-puntuacion/:asignacion/:empleado/:objetivo/:trimestre' element={<ActualizarPuntuacion />} />        
             <Route path='/redireccion/:tipo/:aux?'element={<Redireccion />} />
             <Route path='/empleados' element={<Empleados />}/>
             <Route path="/nuevo-objetivo" element={<NuevoObjetivo />}/>

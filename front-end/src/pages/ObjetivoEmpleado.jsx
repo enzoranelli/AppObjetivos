@@ -6,10 +6,10 @@ import Confirmacion from '../components/Confirmacion.jsx';
 import { getApiUrl } from '../config/configURL.js';
 import ArchivoAdjuntados from '../components/ArchivosAdjuntados.jsx';
 import SubirArchivos from '../components/SubirArchivos.jsx';
-import { useTrimestreContext } from '../UserProvider.jsx';
+
 
 function ObjetivoEmpleado(){
-    const trimestre = useTrimestreContext();
+    const [trimestre, setTrimestre] = useState(0);
     const {asignacion, empleado, objetivo} = useParams();
     const [getObjetivo, setGetObjetivo]= useState(null);
     const [getEmpleado, setGetEmpleado] = useState(null);
@@ -79,6 +79,8 @@ function ObjetivoEmpleado(){
             .then(response => {
                 console.log(response)
                 setPuntuacion(response.data);
+                let numeroDeTrimestres = response.data.length;
+                setTrimestre(numeroDeTrimestres-1);
             })
             .catch( error => {
                 setError(error.message);
@@ -98,7 +100,7 @@ function ObjetivoEmpleado(){
         return <Navigate to={`/feed/${empleado}`}></Navigate>
     }
     if(actualizar){
-        return <Navigate to={`/actualizar-puntuacion/${asignacion}/${empleado}/${objetivo}`} ></Navigate>
+        return <Navigate to={`/actualizar-puntuacion/${asignacion}/${empleado}/${objetivo}/${trimestre}`} ></Navigate>
     }
     return (
         <div className="container-objetivo-empleado">
@@ -120,7 +122,7 @@ function ObjetivoEmpleado(){
                                 <button 
                                     className={`boton-obj-emp ${trimestre >= 4 ? 'boton-deshabilitado' : ''}`} 
                                     onClick={actualizarPuntuacion}  
-                                    disabled={trimestre >= 4}>
+                                    disabled={trimestre === 4}>
                                     Actualizar estado</button>
                                 <div className='boton-rojo'>
                                 <Confirmacion idElemento={asignacion} idEmpleado={empleado} tipo={'asignacion'}/>

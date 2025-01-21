@@ -4,10 +4,10 @@ import {Form, Navigate, useParams} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { obtenerFecha, fechaISO } from "../components/fechaHoy";
 import { getApiUrl } from '../config/configURL';
-import { useTrimestreContext, useTrimestreToggleContext } from '../UserProvider';
+
 function ActualizarPuntuacion(){
     const url = getApiUrl();
-    const {asignacion, empleado, objetivo} = useParams();
+    const {asignacion, empleado, objetivo, trimestre} = useParams();
     const fecha = fechaISO();
     const [puntuacion, setPuntuacion] = useState(0);
     const [comentario, SetComentario] = useState('');
@@ -15,9 +15,9 @@ function ActualizarPuntuacion(){
     const [getObjetivo, setGetObjetivo] = useState(null);
     const [getEmpleado, setGetEmpleado] = useState(null);
     const [redireccion, setRedireccion] = useState(null);
-    const trimestre = useTrimestreContext()
+    
     const [error, setError] = useState('')
-    const { incrementarTrimestre } = useTrimestreToggleContext();
+   
     useEffect(()=>{
         axios.get(`${url}/api/objetivos/${objetivo}`)
             .then( response => {
@@ -49,14 +49,14 @@ function ActualizarPuntuacion(){
                 valor: puntuacion,
                 fechaPuntuacion: fecha,
                 comentario:comentario,
-                trimestre:trimestre,
+                trimestre: parseInt(trimestre,10) + 1,
             }
             console.log(data)
             const response = await axios.post(`${url}/api/puntuacion/`, data);
             console.log(response)
             if(response.status === 202){
                 console.log('Eentre aca')
-                incrementarTrimestre();
+                
                 setRedireccion(true);
             }
         }catch(err){
@@ -82,7 +82,7 @@ function ActualizarPuntuacion(){
                     <h3>Objetivo: {getObjetivo.titulo}</h3>
                     <h3>Empleado: {getEmpleado.nombre} </h3>
                     <h3>Fecha asignada: {fechaMostrar}</h3>
-                    <h3>Trimestre: {trimestre}°</h3>
+                    <h3>Trimestre: {parseInt(trimestre)+1}°</h3>
                     <label className="descripcion-label" htmlFor="texto">Descripcion del objetivo: (Máximo de caracteres: {comentario.length}/{2500})</label>
                     <textarea
                         placeholder='Escribe un comentario o puede dejarlo vacio...'

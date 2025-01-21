@@ -42,6 +42,7 @@ async function agregarObjetivo(req, res) {
     res.status(404).send(err);
  } 
 }
+
 async function actualizarObjetivo(req,res){
     try{
         const { idObjetivo, titulo, descripcion, peso, fechaInicio, fechaFinal } = req.body;
@@ -142,6 +143,7 @@ async function obtenerUltimoObjetivo(req, res) {
         res.send(err);
     }
 }
+
 async function eliminarObjetivo(req, res){
     try {
         const connection = await new Promise((resolve, reject)=>{

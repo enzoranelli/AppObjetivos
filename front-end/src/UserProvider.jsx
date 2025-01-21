@@ -4,8 +4,7 @@ import Cookies from 'js-cookie';
 import { getApiUrl } from "./config/configURL";
 const userContext = React.createContext();
 const userToggleContext = React.createContext();
-const trimestreContext = React.createContext(); // Contexto para el trimestre
-const trimestreToggleContext = React.createContext(); 
+
 
 export function useUserContext(){
     return useContext(userContext);
@@ -14,13 +13,7 @@ export function useUserContext(){
 export function useUserToggleContext(){
     return useContext(userToggleContext);
 }
-export function useTrimestreContext() {
-    return useContext(trimestreContext); // Acceso al trimestre
-}
 
-export function useTrimestreToggleContext() {
-    return useContext(trimestreToggleContext); // Acceso para modificar el trimestre
-}
 
 export function UserProvider(props){
     const apiUrl = getApiUrl();
@@ -56,9 +49,7 @@ export function UserProvider(props){
         setError('');
         Cookies.remove('user');
     };
-    const incrementarTrimestre = () => {
-        setTrimestre((prev) => prev + 1); // Incrementar el trimestre
-    };
+    
     useEffect(()=>{
         const savedUser = Cookies.get('user');
         if(savedUser){
@@ -68,12 +59,8 @@ export function UserProvider(props){
 
     return(
         <userContext.Provider value={{user,error}}>
-            <userToggleContext.Provider value={{login, logout}}>
-                <trimestreContext.Provider value={trimestre}>
-                    <trimestreToggleContext.Provider value={{incrementarTrimestre}}>
-                        {props.children}
-                    </trimestreToggleContext.Provider>
-                </trimestreContext.Provider>
+            <userToggleContext.Provider value={{login, logout}}>           
+                        {props.children} 
             </userToggleContext.Provider>
         </userContext.Provider>
     )

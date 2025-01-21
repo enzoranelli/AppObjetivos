@@ -103,7 +103,7 @@ function Feed(){
             )}
            
             <ul className="lista">
-            {user && user.rol === 'admin'  && puntuaciones && objetivos? (<>    
+            {user && user.rol === 'admin'  && puntuaciones && objetivos ? (<>    
                 <h3 style={{marginLeft:"17px"}}>Barra de peso de los objetivos:</h3>
                 
                 <div className="contenedor-barra">

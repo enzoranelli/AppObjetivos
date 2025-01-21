@@ -2,12 +2,17 @@ CREATE DATABASE objetivosDB;
 DROP DATABASE objetivosDB;
 USE objetivosDB;
 
+CREATE TABLE Areas(
+    nombre VARCHAR(50) NOT NULL,
+    PRIMARY KEY(nombre)
+);
 CREATE TABLE Empleado(
 	idEmpleado INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(100) NOT NULL,
     puesto VARCHAR(100) NOT NULL,
-    area VARCHAR(100) NOT NULL,
-    PRIMARY KEY(idEmpleado)
+    area VARCHAR(50) NOT NULL,
+    PRIMARY KEY(idEmpleado),
+    FOREIGN KEY(area) REFERENCES Areas(nombre) ON DELETE CASCADE
 );
 
 CREATE TABLE Usuario(
@@ -31,6 +36,9 @@ CREATE TABLE Objetivo(
     PRIMARY KEY(idObjetivo)
 );
 
+SELECT DISTINCT YEAR(fechaInicio) as anio 
+FROM Objetivo 
+ORDER BY anio;
 
 
 CREATE TABLE ObjetivoEmpleado(
@@ -55,6 +63,7 @@ CREATE TABLE Puntuacion(
     PRIMARY KEY(idPuntuacion),
     FOREIGN KEY(objetivo) REFERENCES ObjetivoEmpleado(idObjetivoEmpleado)  ON DELETE CASCADE
 );
+
 CREATE TABLE Archivos(
 	idArchivo INT NOT NULL AUTO_INCREMENT,
     puntuacion INT,
@@ -64,6 +73,7 @@ CREATE TABLE Archivos(
     PRIMARY KEY(idArchivo),
     FOREIGN KEY(puntuacion) REFERENCES Puntuacion(idPuntuacion)  ON DELETE CASCADE
 );
+SHOW TABLES;
 drop table ObjetivoEmpleado;
 drop table Puntuacion;
 drop table Objetivo;
@@ -92,7 +102,8 @@ SET email = "email@xd.cm", rol= "user"
 WHERE empleado = 3;
 SELECT oe.objetivo,o.titulo,o.peso,o.fechaInicio, o.fechaFinal, oe.fechaAsignacion FROM Objetivo o JOIN ObjetivoEmpleado oe ON o.idObjetivo= oe.objetivo WHERE oe.empleado = 2;
 
-INSERT INTO Objetivo VALUES(0,'Certificaciones','El objetivo sera completar 3 certificaciones este semestre',50,'2024-09-01','2024-10-10');
+INSERT INTO Objetivo VALUES(0,'Certificaciones','El objetivo sera completar 3 certificaciones este semestre',50,'2024-09-01','2024-10-10'); 
+ 
 SELECT * FROM Objetivo;
 DELETE FROM Objetivo;
 SELECT * FROM Objetivo ORDER BY idObjetivo DESC LIMIT 1;
@@ -151,6 +162,11 @@ WHERE e.idEmpleado = 2;
 SELECT SUM(peso) AS suma_peso_actual
 FROM ObjetivoEmpleado
 WHERE empleado = 1;
+SELECT idObjetivo, area FROM Objetivo o
+JOIN ObjetivoEmpleado oe on oe.objetivo = o.idObjetivo
+JOIN Empleado on idEmpleado = oe.empleado 
+WHERE area = 'Administracion'
+GROUP BY idObjetivo;
 
 SELECT oe.idObjetivoEmpleado, o.titulo, p.valor, o.peso, 
        (o.peso * p.valor / 100) AS despeno
@@ -190,3 +206,5 @@ GROUP BY
     oe.idObjetivoEmpleado, o.titulo, o.peso
 ORDER BY 
     oe.idObjetivoEmpleado;
+
+INSERT INTO Areas VALUES ('Operaciones');
