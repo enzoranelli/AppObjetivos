@@ -12,12 +12,12 @@ async function obtenerCertificaciones(req, res){
             });
         });
         const results = await new Promise((resolve, reject)=>{
-            connection.query('SELECT * FROM Certificacion', (err, results)=>{
+            connection.query('SELECT * FROM certificacion', (err, results)=>{
                 if(err) reject(err);
                 else resolve(results);
             });
         });
-
+        connection.release();
         res.status(200).json(results);
     }catch(error){
         res.status(500).send(error);

@@ -13,6 +13,9 @@
     border: 1px solid orange;
 
 }
+.botones-panel{
+    margin-top: 0px;
+}
 .contenedor-progreso{
     display: flex;
     align-items: center;
@@ -20,6 +23,7 @@
 }
 .cabecera-objetivo{
     display: flex;
+    align-items: center;
 }
 .titulo-del-objetivo{
     width: 40%;

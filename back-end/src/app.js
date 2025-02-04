@@ -41,7 +41,7 @@ app.use('/api/puntuacion',puntuacion);
 app.use('/api/login',login);
 app.use('/api/archivos',archivos);
 app.use('/api/filtros',filtros);
-app.use('/api/certificacion', certificacion);
+app.use('/api/certificaciones', certificacion);
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(express.static(path.join(__dirname, '../../front-end/dist')));
