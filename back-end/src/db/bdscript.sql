@@ -6,6 +6,20 @@ CREATE TABLE Areas(
     nombre VARCHAR(50) NOT NULL,
     PRIMARY KEY(nombre)
 );
+CREATE TABLE Marcas(
+	nombreMarca VARCHAR(100) NOT NULL,
+    PRIMARY KEY(nombreMarca)
+);
+CREATE TABLE Certificacion(
+	idCertificacion INT NOT NULL AUTO_INCREMENT,
+    nombreCertificacion VARCHAR(100) NOT NULL,
+    url VARCHAR(300) NOT NULL,
+    marca VARCHAR(100) NOT NULL,
+    anio INT NOT NULL,
+    PRIMARY KEY(idCertificacion),
+    FOREIGN KEY(marca) REFERENCES Marcas(nombreMarca) ON DELETE CASCADE
+);
+
 CREATE TABLE Empleado(
 	idEmpleado INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(100) NOT NULL,
@@ -24,6 +38,19 @@ CREATE TABLE Usuario(
     activo BOOLEAN NOT NULL,
     PRIMARY KEY(idUsuario),
     FOREIGN KEY(empleado) REFERENCES Empleado(idEmpleado) ON DELETE CASCADE
+);
+
+CREATE TABLE CertificacionEmpleado(
+	idCertificacionEmpleado INT NOT NULL AUTO_INCREMENT,
+	certificado INT NOT NULL,
+    empleado INT NOT NULL,
+    fechaLimite DATE,
+    fechaAsignada DATE, 
+    observaciones VARCHAR(400),
+    estado ENUM('aprobado','desaprobado'),
+    PRIMARY KEY(idCertificacionEmpleado),
+    FOREIGN KEY(empleado) REFERENCES Empleado(idEmpleado) ON DELETE CASCADE,
+	FOREIGN KEY(certificado) REFERENCES Certificacion(idCertificacion) ON DELETE CASCADE
 );
 
 CREATE TABLE Objetivo(
@@ -72,6 +99,16 @@ CREATE TABLE Archivos(
     fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(idArchivo),
     FOREIGN KEY(puntuacion) REFERENCES Puntuacion(idPuntuacion)  ON DELETE CASCADE
+);
+
+CREATE TABLE ArchivoCertificacion(
+	idArchivoCertificacion INT NOT NULL AUTO_INCREMENT,
+    certificacion INT,
+    nombre VARCHAR(255),
+    ruta VARCHAR(255),
+    fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(idArchivoCertificacion),
+    FOREIGN KEY(certificacion) REFERENCES CertificacionEmpleado(idCertificacionEmpleado)  ON DELETE CASCADE
 );
 SHOW TABLES;
 drop table ObjetivoEmpleado;

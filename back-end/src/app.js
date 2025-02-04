@@ -14,7 +14,7 @@ const puntuacion = require('./routes/puntuacion.js');
 const login = require('./routes/login.js');
 const archivos = require('./routes/archivos.js');
 const filtros = require('./routes/filtros.js');
-
+const certificacion = require('./routes/certificacion.js');
 
 
 //<--Middlewares-->//
@@ -41,6 +41,7 @@ app.use('/api/puntuacion',puntuacion);
 app.use('/api/login',login);
 app.use('/api/archivos',archivos);
 app.use('/api/filtros',filtros);
+app.use('/api/certificacion', certificacion);
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(express.static(path.join(__dirname, '../../front-end/dist')));
