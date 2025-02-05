@@ -1,5 +1,4 @@
 CREATE DATABASE objetivosDB;
-DROP DATABASE objetivosDB;
 USE objetivosDB;
 
 CREATE TABLE Areas(
@@ -36,6 +35,8 @@ CREATE TABLE Usuario(
     rol ENUM('user','admin') NOT NULL,
     empleado INT NOT NULL,
     activo BOOLEAN NOT NULL,
+    saldo_puntos_transferibles INT,
+    saldo_puntos_canjeables INT,
     PRIMARY KEY(idUsuario),
     FOREIGN KEY(empleado) REFERENCES Empleado(idEmpleado) ON DELETE CASCADE
 );
@@ -109,6 +110,38 @@ CREATE TABLE ArchivoCertificacion(
     fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(idArchivoCertificacion),
     FOREIGN KEY(certificacion) REFERENCES CertificacionEmpleado(idCertificacionEmpleado)  ON DELETE CASCADE
+);
+CREATE TABLE Transferencia(
+	transferencia_id INT NOT NULL AUTO_INCREMENT,
+    emisor_id INT NOT NULL,
+    receptor_id INT NOT NULL,
+    puntos INT NOT NULL,
+    mensaje VARCHAR(500),
+    fecha DATETIME,
+    FOREIGN KEY(emisor_id) REFERENCES Usuario(idUsuario),
+    FOREIGN KEY(receptor_id) REFERENCES Usuario(idUsuario),
+	PRIMARY KEY(transferencia_id)
+);
+
+CREATE TABLE Premio(
+	premio_id INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(200) NOT NULL,
+    descripcion VARCHAR(500) NOT NULL,
+    imagen_url VARCHAR(500) NOT NULL DEFAULT 'https://via.placeholder.com/300x200',
+    costo_puntos INT NOT NULL,
+    stock INT NOT NULL CHECK(stock>=0),
+    PRIMARY KEY(premio_id)
+);
+
+CREATE TABLE Canje(
+	canje_id INT NOT NULL AUTO_INCREMENT,
+    usuario_id INT NOT NULL,
+    premio_id INT NOT NULL,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('pendiente', 'aprobado', 'rechazado') DEFAULT 'pendiente',
+    PRIMARY KEY(canje_id),
+    FOREIGN KEY(usuario_id) REFERENCES Usuario(idUsuario),
+    FOREIGN KEY(premio_id) REFERENCES Premio(premio_id)
 );
 SHOW TABLES;
 drop table ObjetivoEmpleado;

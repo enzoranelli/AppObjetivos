@@ -32,9 +32,9 @@ function BarraDesempeno({ formateado, colores,hoveredIndex, onMouseEnter, onMous
                 border: `5px solid ${color}`,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius: '0 10px 10px 0',
+                borderRadius: index === formateado.length - 1 ?'0 10px 10px 0': '0px',
                 boxShadow: hoveredIndex === index ? `0px 1px 5px ${color}, 0px 1px 10px ${color}` : undefined,
-                marginLeft: index === 0 ? '0' : '-5px',
+                //marginLeft: index === 0 ? '0' : '-5px',
                 position: 'relative',
                 zIndex: formateado.length - index,
               }}

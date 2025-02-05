@@ -26,8 +26,8 @@ function BarraPeso({objetivos, colores,hoveredIndex, onMouseEnter, onMouseLeave}
                 boxShadow: hoveredIndex === index ? `0px 1px 5px ${color}, 0px 1px 10px ${color}` : undefined,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius:'0 10px 10px 0',
-                marginLeft: index === 0 ? '0' : '-5px', // Superponer ligeramente (ajusta el valor según lo desees)
+                borderRadius: index === objetivos.length - 1 ?'0 10px 10px 0': '0px',
+                //marginLeft: index === 0 ? '0' : '-5px', // Superponer ligeramente (ajusta el valor según lo desees)
                 position: 'relative',
                 zIndex: objetivos.length - index, // Asegura que el elemento esté por encima de otros
               }}
