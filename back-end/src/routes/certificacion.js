@@ -3,6 +3,7 @@ const router = express.Router();
 
 router.get('/',obtenerCertificaciones);
 router.post('/',agregarCertificacion);
+router.get('/marcas',obtenerMarcas);
 async function obtenerCertificaciones(req, res){
     try{
         const connection = await new Promise((resolve, reject)=>{
@@ -13,6 +14,26 @@ async function obtenerCertificaciones(req, res){
         });
         const results = await new Promise((resolve, reject)=>{
             connection.query('SELECT * FROM certificacion', (err, results)=>{
+                if(err) reject(err);
+                else resolve(results);
+            });
+        });
+        connection.release();
+        res.status(200).json(results);
+    }catch(error){
+        res.status(500).send(error);
+    }
+}
+async function obtenerMarcas(req,res){
+    try{
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err) reject(err);
+                else resolve(conn);
+            });
+        });
+        const results = await new Promise((resolve, reject)=>{
+            connection.query('SELECT * FROM Marcas', (err, results)=>{
                 if(err) reject(err);
                 else resolve(results);
             });

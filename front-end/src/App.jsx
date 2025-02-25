@@ -10,6 +10,7 @@ import Empleados from './pages/Empleados.jsx';
 import { ProtectedRoute } from './components/ProtectedRoute.jsx';
 import { useUserContext } from './UserProvider.jsx';
 import NuevoObjetivo from './pages/NuevoObjetivo.jsx';
+import NuevoItem from './pages/NuevoItem.jsx';
 import ActualizarDatos from './pages/ActualizarDatos.jsx';
 import ObjetivoEmpleado from './pages/ObjetivoEmpleado.jsx';
 import Redireccion from './components/Redireccion.jsx';
@@ -43,7 +44,7 @@ function App() {
             <Route path='/actualizar-puntuacion/:asignacion/:empleado/:objetivo/:trimestre' element={<ActualizarPuntuacion />} />        
             <Route path='/redireccion/:tipo/:aux?'element={<Redireccion />} />
             <Route path='/empleados' element={<Empleados />}/>
-            <Route path="/nuevo-objetivo" element={<NuevoObjetivo />}/>
+            <Route path="/nuevo-objetivo" element={<NuevoItem />}/>
             <Route path="/nuevoUsuario" element={<NuevoUsuario />}/>
             <Route path='/actualizar-usuario/:id' element={<ActualizarDatos />}/>
             <Route path='/asignar-objetivo/:id' element={<AsignarObjetivo />} />

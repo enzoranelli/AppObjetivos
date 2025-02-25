@@ -14,7 +14,7 @@ const Navegacion = () => {
           {
             (user && user.rol === 'admin') ? (
               <>
-              <li><Link to="/nuevo-objetivo">Crear nuevo objetivo</Link></li>
+              <li><Link to="/nuevo-objetivo">Crear nuevo Objetivo/Certificacion</Link></li>
               <li><Link to="/nuevoUsuario">Crear Usuario</Link></li>
               <li><Link to="/panel">Panel</Link></li>
               <li><Link to="/empleados">Empleados</Link></li>
