@@ -31,9 +31,10 @@ CREATE TABLE Empleado(
 CREATE TABLE Usuario(
 	idUsuario INT NOT NULL AUTO_INCREMENT,
     email VARCHAR(100) UNIQUE NOT NULL,
-    usuarioPassword VARCHAR(200) NOT NULL,
-    rol ENUM('user','admin') NOT NULL,
-    empleado INT NOT NULL,
+    password VARCHAR(200) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    rol ENUM('empleado','administrador') NOT NULL,
+    empleado INT,
     activo BOOLEAN NOT NULL,
     saldo_puntos_transferibles INT,
     saldo_puntos_canjeables INT,
@@ -63,11 +64,6 @@ CREATE TABLE Objetivo(
     fechaFinal DATE,
     PRIMARY KEY(idObjetivo)
 );
-
-SELECT DISTINCT YEAR(fechaInicio) as anio 
-FROM Objetivo 
-ORDER BY anio;
-
 
 CREATE TABLE ObjetivoEmpleado(
     idObjetivoEmpleado INT NOT NULL AUTO_INCREMENT,
