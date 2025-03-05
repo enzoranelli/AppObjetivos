@@ -37,6 +37,12 @@ function Redireccion(){
         if(tipo === 'puntuacion'){
             setTitulo('Puntuación actualizada con éxito');
         }
+        if(tipo === 'certificacion'){
+            setTitulo('Certificación agregada con éxito');
+        }
+        if(tipo === 'asignado-certificacion'){
+            setTitulo('Certificación asignada con éxito')
+        }
     },[]);
 
     return (
@@ -85,6 +91,17 @@ function Redireccion(){
                     )
                 }
                 {
+                    tipo === 'asignado-certificacion' ?(
+                        <>
+                            <li className='punto'>
+                                <Link to={`/asignar-certificacion/${aux}`} className='link-verde'>Asignar un nuevo empleado a esta certificacion.</Link>
+                            </li>  
+                        </>
+                    ):(
+                        <></>
+                    )
+                }
+                {
                     tipo === 'puntuacion' ? (
                         <>
 
@@ -95,6 +112,16 @@ function Redireccion(){
                     ) :(
                         <></>
                     )
+                }
+                {
+                    tipo === 'certificacion' ? (
+                        <>
+                
+                            <li className='punto'>
+                                <Link to={`/nuevo-objetivo`} className='link-verde'>Crear nueva certificacion</Link>
+                            </li> 
+                        </>
+                    ):(<></>)
                 }
                 <li className='punto'>
                     <Link to="/panel" className='link-verde'>Ir al panel.</Link>

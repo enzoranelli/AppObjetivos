@@ -9,7 +9,7 @@ import Empleados from './pages/Empleados.jsx';
 
 import { ProtectedRoute } from './components/ProtectedRoute.jsx';
 import { useUserContext } from './UserProvider.jsx';
-import NuevoObjetivo from './pages/NuevoObjetivo.jsx';
+
 import NuevoItem from './pages/NuevoItem.jsx';
 import ActualizarDatos from './pages/ActualizarDatos.jsx';
 import ObjetivoEmpleado from './pages/ObjetivoEmpleado.jsx';
@@ -18,6 +18,7 @@ import AsignarObjetivo from './pages/AsignarObjetivo.jsx';
 import ActualizarPuntuacion from './pages/ActualizarPuntuacion.jsx';
 import ActualizarObjetivo from './pages/ActualizarObjetivo.jsx';
 import CuentaDeshabilitada from './pages/CuentaDeshabilitada.jsx';
+import AsignarCertificacion from './pages/AsignarCertificacion.jsx';
 function App() {
 
   const {user} = useUserContext();
@@ -46,6 +47,7 @@ function App() {
             <Route path='/empleados' element={<Empleados />}/>
             <Route path="/nuevo-objetivo" element={<NuevoItem />}/>
             <Route path="/nuevoUsuario" element={<NuevoUsuario />}/>
+            <Route path="/asignar-certificacion/:id" element={<AsignarCertificacion />} />
             <Route path='/actualizar-usuario/:id' element={<ActualizarDatos />}/>
             <Route path='/asignar-objetivo/:id' element={<AsignarObjetivo />} />
             <Route path='actualizar-objetivo/:id' element={<ActualizarObjetivo />} />

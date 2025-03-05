@@ -17,8 +17,8 @@ function Certificacion({certificacion}){
                 <p className="fechas-objetivo">Marca: {certificacion.marca}</p>
                 <p className="fechas-objetivo">Año: {certificacion.anio}</p>
                 <div className="contenedor-botones-panel">
-                    <button className='botones-panel'>Asignar personas</button>
-                    <button className='botones-panel'>Modificar certificacion</button>
+                    <button className='botones-panel'  onClick={()=>handleClick('asignacion')} >Asignar personas</button>
+                    <button className='botones-panel' onClick={()=>handleClick('actualizar')}>Modificar certificacion</button>
                 </div>
             </div>
             <hr className="linea-objetivo"></hr>

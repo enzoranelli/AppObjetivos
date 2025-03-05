@@ -15,7 +15,7 @@ const login = require('./routes/login.js');
 const archivos = require('./routes/archivos.js');
 const filtros = require('./routes/filtros.js');
 const certificacion = require('./routes/certificacion.js');
-
+const certificacionasignacion = require('./routes/certificacionAsignado.js');
 
 //<--Middlewares-->//
 
@@ -42,6 +42,7 @@ app.use('/api/login',login);
 app.use('/api/archivos',archivos);
 app.use('/api/filtros',filtros);
 app.use('/api/certificaciones', certificacion);
+app.use('/api/certificacionasignacion', certificacionasignacion);
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(express.static(path.join(__dirname, '../../front-end/dist')));

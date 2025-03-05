@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/',obtenerCertificaciones);
+router.get('/:id',obtenerCertificacion);
 router.post('/',agregarCertificacion);
 router.get('/marcas',obtenerMarcas);
 async function obtenerCertificaciones(req, res){
@@ -20,6 +21,27 @@ async function obtenerCertificaciones(req, res){
         });
         connection.release();
         res.status(200).json(results);
+    }catch(error){
+        res.status(500).send(error);
+    }
+}
+
+async function obtenerCertificacion(req,res){
+    try{
+        const id = req.params.id;
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err,conn)=>{
+                if(err) reject(err);
+                else resolve(conn);
+            });
+        });
+        const results = await new Promise((resolve,reject)=>{
+            connection.query('SELECT * FROM certificacion WHERE idCertificacion = ?',[id],(err,results)=>{
+                if(err) reject(err);
+                else resolve(results);
+            })
+        })
+        res.send(results);
     }catch(error){
         res.status(500).send(error);
     }

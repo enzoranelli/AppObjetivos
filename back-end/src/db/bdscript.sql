@@ -1,4 +1,5 @@
 CREATE DATABASE objetivosDB;
+DROP DATABASE objetivosDB;
 USE objetivosDB;
 
 CREATE TABLE Areas(
@@ -31,13 +32,10 @@ CREATE TABLE Empleado(
 CREATE TABLE Usuario(
 	idUsuario INT NOT NULL AUTO_INCREMENT,
     email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(200) NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    rol ENUM('empleado','administrador') NOT NULL,
-    empleado INT,
+    usuarioPassword VARCHAR(200) NOT NULL,
+    rol ENUM('user','admin') NOT NULL,
+    empleado INT NOT NULL,
     activo BOOLEAN NOT NULL,
-    saldo_puntos_transferibles INT,
-    saldo_puntos_canjeables INT,
     PRIMARY KEY(idUsuario),
     FOREIGN KEY(empleado) REFERENCES Empleado(idEmpleado) ON DELETE CASCADE
 );
@@ -49,10 +47,11 @@ CREATE TABLE CertificacionEmpleado(
     fechaLimite DATE,
     fechaAsignada DATE, 
     observaciones VARCHAR(400),
-    estado ENUM('aprobado','desaprobado'),
+    estado ENUM('aprobado','desaprobado','pendiente') DEFAULT 'pendiente',
     PRIMARY KEY(idCertificacionEmpleado),
     FOREIGN KEY(empleado) REFERENCES Empleado(idEmpleado) ON DELETE CASCADE,
-	FOREIGN KEY(certificado) REFERENCES Certificacion(idCertificacion) ON DELETE CASCADE
+	FOREIGN KEY(certificado) REFERENCES Certificacion(idCertificacion) ON DELETE CASCADE,
+    UNIQUE(certificado, empleado)
 );
 
 CREATE TABLE Objetivo(
@@ -64,6 +63,11 @@ CREATE TABLE Objetivo(
     fechaFinal DATE,
     PRIMARY KEY(idObjetivo)
 );
+
+SELECT DISTINCT YEAR(fechaInicio) as anio 
+FROM Objetivo 
+ORDER BY anio;
+
 
 CREATE TABLE ObjetivoEmpleado(
     idObjetivoEmpleado INT NOT NULL AUTO_INCREMENT,
@@ -107,38 +111,6 @@ CREATE TABLE ArchivoCertificacion(
     PRIMARY KEY(idArchivoCertificacion),
     FOREIGN KEY(certificacion) REFERENCES CertificacionEmpleado(idCertificacionEmpleado)  ON DELETE CASCADE
 );
-CREATE TABLE Transferencia(
-	transferencia_id INT NOT NULL AUTO_INCREMENT,
-    emisor_id INT NOT NULL,
-    receptor_id INT NOT NULL,
-    puntos INT NOT NULL,
-    mensaje VARCHAR(500),
-    fecha DATETIME,
-    FOREIGN KEY(emisor_id) REFERENCES Usuario(idUsuario),
-    FOREIGN KEY(receptor_id) REFERENCES Usuario(idUsuario),
-	PRIMARY KEY(transferencia_id)
-);
-
-CREATE TABLE Premio(
-	premio_id INT NOT NULL AUTO_INCREMENT,
-    nombre VARCHAR(200) NOT NULL,
-    descripcion VARCHAR(500) NOT NULL,
-    imagen_url VARCHAR(500) NOT NULL DEFAULT 'https://via.placeholder.com/300x200',
-    costo_puntos INT NOT NULL,
-    stock INT NOT NULL CHECK(stock>=0),
-    PRIMARY KEY(premio_id)
-);
-
-CREATE TABLE Canje(
-	canje_id INT NOT NULL AUTO_INCREMENT,
-    usuario_id INT NOT NULL,
-    premio_id INT NOT NULL,
-    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-    estado ENUM('pendiente', 'aprobado', 'rechazado') DEFAULT 'pendiente',
-    PRIMARY KEY(canje_id),
-    FOREIGN KEY(usuario_id) REFERENCES Usuario(idUsuario),
-    FOREIGN KEY(premio_id) REFERENCES Premio(premio_id)
-);
 SHOW TABLES;
 drop table ObjetivoEmpleado;
 drop table Puntuacion;
@@ -178,7 +150,7 @@ SET descripcion = 'Actualizado papa de dio'
 WHERE idObjetivo = 1;
 SELECT * FROM Objetivo WHERE idObjetivo = 'sdfgsdfg';
 
-
+SELECT * FROM certificacion;
 
 INSERT INTO ObjetivoEmpleado VALUES(0,1,1,50);
 
@@ -274,3 +246,8 @@ ORDER BY
     oe.idObjetivoEmpleado;
 
 INSERT INTO Areas VALUES ('Operaciones');
+ALTER TABLE CertificacionEmpleado 
+MODIFY COLUMN estado ENUM('aprobado', 'desaprobado', 'pendiente') DEFAULT 'pendiente';
+
+ALTER TABLE certificacionempleado MODIFY COLUMN fechaAsignada DATE DEFAULT(CURRENT_DATE);
+ALTER TABLE certificacionempleado ADD CONSTRAINT unique_empleado_certificacion UNIQUE(empleado,certificado);

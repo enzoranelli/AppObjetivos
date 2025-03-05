@@ -20,7 +20,7 @@ function NuevaCertificacion(){
                 console.log(error);
             });
     },[]);
-    onsubmit = (e) =>{
+    const onsubmit = (e) =>{
         e.preventDefault();
         const data = {
             nombreCertificacion: nombreCertificacion,
@@ -40,7 +40,7 @@ function NuevaCertificacion(){
     }
     
     if(redirect){
-        return <Navigate to="/certificaciones"/>
+        return <Navigate to="/redireccion/certificacion"/>
     }
     return(
         <div className="objetivo-container">
