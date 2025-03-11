@@ -15,7 +15,7 @@ function DesempenoTotal({objetivos}){
   }, [objetivos]); 
     return(
         <>
-            <h3 style={{marginLeft:"17px"}}>Desempeño total: {total}%</h3>
+            <h3 style={{marginLeft:"17px"}}>Desempeño total: {total.toFixed(2)}%</h3>
            
         </>
     );

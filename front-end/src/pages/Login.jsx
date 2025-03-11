@@ -8,7 +8,7 @@ function Login(){
     const {login, logout} = useUserToggleContext();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    usePageTitle('Login | Medicion de objetos')
+    usePageTitle('Login | Medicion de objetivos')
 
     const handleSubmit = async(e) =>{
         e.preventDefault();

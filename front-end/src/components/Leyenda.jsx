@@ -14,7 +14,8 @@ function Leyenda({colores, objetivos,hoveredIndex, onMouseEnter, onMouseLeave, t
                         onMouseLeave={onMouseLeave} // Usar la función del padre
                         style={{boxShadow: hoveredIndex === index ? `0px 1px 5px ${colorDeObjetivo}, 0px 1px 10px ${colorDeObjetivo}` : undefined}}
                     >
-                        <span style={{color:colorDeObjetivo, fontSize:'15px'}}>⦿</span> {`${objetivo}:`}<b>{` ${porcentaje}%`}</b> 
+                        <span style={{color:colorDeObjetivo, fontSize:'15px'}}>⦿</span> 
+                        {`${objetivo}:`}<b>{ tituloLeyenda === 'Barra de desempeño' ? ` ${porcentaje.toFixed(2)}%`: ` ${porcentaje}%`}</b> 
                     </p>
                 )
          

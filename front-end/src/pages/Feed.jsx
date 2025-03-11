@@ -3,7 +3,6 @@ import axios from 'axios';
 import "../styles/Feed.css";
 import SinElementos from "../components/SinElementos";
 import { useUserContext} from "../UserProvider";
-import { useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import BarraPeso from "../components/BarraPeso";
 import { generarColorAleatorio } from "../components/generarColorAleatorio";
@@ -14,10 +13,10 @@ import BotonPdf from "../components/BotonPdf";
 import { getApiUrl } from "../config/configURL";
 import Leyenda from "../components/Leyenda.jsx";
 
-function Feed(){
+function Feed({id}){
     const url = getApiUrl();
     const {user} = useUserContext();
-    const {id} = useParams();
+    
     const [hoveredIndex, setHoveredIndex] = useState(null);
 
     const [objetivos, setObjetivos] = useState(null); 

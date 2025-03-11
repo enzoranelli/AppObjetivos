@@ -39,7 +39,7 @@ function BarraDesempeno({ formateado, colores,hoveredIndex, onMouseEnter, onMous
                 zIndex: formateado.length - index,
               }}
             >
-              {porcentajeTotal > 5 ? `${porcentajeTotal}%` : ''}
+              {porcentajeTotal > 5 ? `${porcentajeTotal.toFixed(2)}%` : ''}
             </div>
           );
         })}

@@ -33,11 +33,21 @@ function Empleados(){
     {
         name: "",
         cell:(row)=>(
-            <BotonLink ruta={row.activo === 0 ?  '/empleados':`/feed/${row.idEmpleado}`} style={{
+            <BotonLink ruta={row.activo === 0 ?  '/empleados':`/feed/objetivos/${row.idEmpleado}`} style={{
                 background: row.activo === 0 ? 'rgb(235, 235, 235)' : '',
                 color: row.activo === 0 ? 'gray' : '',
                 cursor: row.activo === 0 ? 'no-drop' : ''
               }}>Ver objetivos</BotonLink>
+        ),
+    },
+    {
+        name: "",
+        cell:(row)=>(
+            <BotonLink ruta={row.activo === 0 ? '/empleadoos': `/feed/certificaciones/${row.idEmpleado}`}style={{
+                background: row.activo === 0 ? 'rgb(235, 235, 235)' : '',
+                color: row.activo === 0 ? 'gray' : '',
+                cursor: row.activo === 0 ? 'no-drop' : ''
+              }}>Ver certificaciones</BotonLink>
         ),
     },
     {

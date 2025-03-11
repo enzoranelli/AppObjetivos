@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/',obtenerCertificaciones);
-router.get('/:id',obtenerCertificacion);
 router.post('/',agregarCertificacion);
 router.get('/marcas',obtenerMarcas);
+router.get('/:id',obtenerCertificacion);
+
+
 async function obtenerCertificaciones(req, res){
     try{
         const connection = await new Promise((resolve, reject)=>{
@@ -55,7 +57,7 @@ async function obtenerMarcas(req,res){
             });
         });
         const results = await new Promise((resolve, reject)=>{
-            connection.query('SELECT * FROM Marcas', (err, results)=>{
+            connection.query('SELECT * FROM marcas', (err, results)=>{
                 if(err) reject(err);
                 else resolve(results);
             });

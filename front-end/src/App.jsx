@@ -19,6 +19,8 @@ import ActualizarPuntuacion from './pages/ActualizarPuntuacion.jsx';
 import ActualizarObjetivo from './pages/ActualizarObjetivo.jsx';
 import CuentaDeshabilitada from './pages/CuentaDeshabilitada.jsx';
 import AsignarCertificacion from './pages/AsignarCertificacion.jsx';
+import ContenedorFeed from './components/contenedorFeed.jsx';
+import CertificacionEmpleado from './pages/CertificacionEmpleado.jsx';
 function App() {
 
   const {user} = useUserContext();
@@ -36,11 +38,12 @@ function App() {
           <Route path="/" element={<Login />}/>
           
           <Route element={<ProtectedRoute isAllowed={user}/>}>
-            <Route path='/feed/:id' element={<Feed />}/>    
+            <Route path='/feed/:tipo/:id' element={<ContenedorFeed />}/>    
             <Route path='/objetivo-empleado/:asignacion/:empleado/:objetivo' element={<ObjetivoEmpleado />}/>  
             <Route path='/cuenta-deshabilitada' element={<CuentaDeshabilitada />} />
           </Route>
           <Route element={<ProtectedRoute isAllowed={!!user && user.rol === 'admin'}/>}>
+            <Route path='certificacion-empleado/:asignacion/:empleado/:certificacion' element={<CertificacionEmpleado />} />
             <Route path='/panel' element={<Panel />} />
             <Route path='/actualizar-puntuacion/:asignacion/:empleado/:objetivo/:trimestre' element={<ActualizarPuntuacion />} />        
             <Route path='/redireccion/:tipo/:aux?'element={<Redireccion />} />

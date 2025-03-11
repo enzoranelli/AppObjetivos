@@ -106,7 +106,7 @@ function Redireccion(){
                         <>
 
                             <li className='punto'>
-                                <Link to={`/feed/${aux}`} className='link-verde'>Volver a la lista de objetivos del empleado</Link>
+                                <Link to={`/feed/objetivos/${aux}`} className='link-verde'>Volver a la lista de objetivos del empleado</Link>
                             </li> 
                         </>
                     ) :(

@@ -18,6 +18,7 @@ function ObjetivoEmpleado(){
     const url = getApiUrl();
     const [vuelta, setVuelta] = useState(false);
     const [actualizar, setActualizar] = useState(false);
+    const [error,setError] = useState(null);
     const cargarArchivos = async (puntuacion) => {
         try {
             const response = await axios.get(`${url}/api/archivos/${puntuacion}`);
@@ -97,7 +98,7 @@ function ObjetivoEmpleado(){
         setActualizar(true);
     }
     if(vuelta){
-        return <Navigate to={`/feed/${empleado}`}></Navigate>
+        return <Navigate to={`/feed/objetivos/${empleado}`}></Navigate>
     }
     if(actualizar){
         return <Navigate to={`/actualizar-puntuacion/${asignacion}/${empleado}/${objetivo}/${trimestre}`} ></Navigate>

@@ -45,7 +45,8 @@ CREATE TABLE CertificacionEmpleado(
 	certificado INT NOT NULL,
     empleado INT NOT NULL,
     fechaLimite DATE,
-    fechaAsignada DATE, 
+    fechaAsignada DATE,
+    nota FLOAT,
     observaciones VARCHAR(400),
     estado ENUM('aprobado','desaprobado','pendiente') DEFAULT 'pendiente',
     PRIMARY KEY(idCertificacionEmpleado),
@@ -248,6 +249,6 @@ ORDER BY
 INSERT INTO Areas VALUES ('Operaciones');
 ALTER TABLE CertificacionEmpleado 
 MODIFY COLUMN estado ENUM('aprobado', 'desaprobado', 'pendiente') DEFAULT 'pendiente';
-
+SELECT * FROM marcas;
 ALTER TABLE certificacionempleado MODIFY COLUMN fechaAsignada DATE DEFAULT(CURRENT_DATE);
 ALTER TABLE certificacionempleado ADD CONSTRAINT unique_empleado_certificacion UNIQUE(empleado,certificado);

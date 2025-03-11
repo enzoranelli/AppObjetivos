@@ -2,7 +2,30 @@ const express = require('express');
 const router = express.Router();
 const {format} = require('date-fns'); 
 router.post('/', agregarAsigancion);
+
 router.get('/:id', obtenerCertificacionesAsignadas);
+router.get('/certificado-empleado/:id', obtenerCertificacionEmpleado);
+async function obtenerCertificacionEmpleado(req,res){
+    try{
+        const id = req.params.id;
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err) reject(err);
+                else resolve(conn);
+            });
+        });
+        const query = `SELECT * FROM  certificacionempleado WHERE idCertificacionEmpleado = ?;`;
+        const results = await new Promise((resolve, reject)=>{
+            connection.query(query,[id],(err,results)=>{
+                if(err) reject(err);
+                else resolve(results);
+            })
+        })
+        res.send(results)
+    }catch(error){
+        res.send(error);
+    }
+}
 async function agregarAsigancion(req,res){
     try{
         const {certificado, empleado, fechaLimite, observaciones, estado} = req.body;
