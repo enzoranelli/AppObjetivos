@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const {format} = require('date-fns'); 
-router.post('/', agregarAsigancion);
+const {format} = require('date-fns');
 
+router.post('/', agregarAsigancion);
+router.delete('/:id', eliminarAsignacion);
 router.get('/:id', obtenerCertificacionesAsignadas);
+router.put('/:id', actualizarEstadoCertificacion);
 router.get('/certificado-empleado/:id', obtenerCertificacionEmpleado);
+
 async function obtenerCertificacionEmpleado(req,res){
     try{
         const id = req.params.id;
@@ -22,6 +25,68 @@ async function obtenerCertificacionEmpleado(req,res){
             })
         })
         res.send(results)
+    }catch(error){
+        res.send(error);
+    }
+}
+
+async function eliminarAsignacion(req,res){
+    try{
+        const id = req.params.id;
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err) reject(err);
+                else resolve(conn);
+            });
+        });
+        const query = 'DELETE FROM CertificacionEmpleado WHERE idCertificacionEmpleado = ?';
+
+         
+        const results = await new Promise((resolve, reject)=>{
+            connection.query(query,[id],(err,results)=>{
+                if(err){ 
+                    if(err.code === 'ER_DUP_ENTRY'){
+                        return res.status(409).send({message:'Esta certificacion ya ha sido asignada a este empleado. '})
+                    }
+                    reject(err);
+                }
+                else {
+                    resolve(results);
+                }
+            })
+        })
+        res.status(200).send(results);
+
+    }catch(error){
+        res.send(error);
+    }
+}
+
+async function actualizarEstadoCertificacion(req,res){
+    try{
+        const id = req.params.id;
+        const {estado, nota, observaciones, fechaLimite} = req.body;
+        if(!estado || !nota || !observaciones || !fechaLimite){
+            return res.status(400).json({message: "Todos los campos son obligatorios"});
+        }
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err) reject(err);
+                else resolve(conn);
+            });
+        });
+        const query = 'UPDATE CertificacionEmpleado SET estado = ?, nota = ?, observaciones = ?, fechaLimite = ? WHERE idCertificacionEmpleado = ?';
+        const results = await new Promise((resolve, reject)=>{
+            connection.query(query,[estado,nota,observaciones,fechaLimite,id],(err,results)=>{
+                if(err){ 
+                    reject(err);
+                }
+                else {
+                    resolve(results);
+                }
+            })
+        })
+        res.status(200).send(results);
     }catch(error){
         res.send(error);
     }

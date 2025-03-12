@@ -63,9 +63,7 @@ async function obtenerArchivos(req,res){
                 }
                 else resolve(conn);
             });
-        });
-
-        
+        });        
         const results = await new Promise((resolve, reject)=>{
             connection.query('SELECT nombre, idArchivo FROM Archivos WHERE puntuacion = ?',[puntuacion], (err, results)=>{
                 if(err){
@@ -80,11 +78,6 @@ async function obtenerArchivos(req,res){
             
             return res.status(200).json(results);
         }
-      
-        
-        
-       
-     
         res.json(results);
     }catch(error){
         res.status(500).json({ mensaje: error });;

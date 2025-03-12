@@ -6,6 +6,7 @@ const fs = require('fs'); // Módulo de Node.js para interactuar con el sistema 
 const path = require('path'); // Módulo para trabajar con rutas de archivos
 
 router.post('/', agregarAsignacion);
+router.get('/asignacion/:id', obtenrAsignacion);
 router.get('/:id',obtenerObjetivosAsignados);
 router.delete('/:id',eliminarAsignacion);
 
@@ -83,6 +84,29 @@ async function obtenerObjetivosAsignados(req, res) {
         const formateado = formatearFecha(results);
       
         res.status(202).send(formateado);
+    }catch(error){
+        res.status(500).send(error);
+    }
+}
+
+async function obtenrAsignacion(req,res){
+    try{
+        const connection = await new Promise((resolve, reject)=>{
+            req.getConnection((err, conn)=>{
+                if(err) reject(err);
+                else resolve(conn);
+            });
+        });
+        const asignacion = req.params.id;
+        const query = `SELECT * FROM objetivoempleado WHERE idObjetivoEmpleado = ?;`;
+
+        const results = await new Promise((resolve, reject)=>{
+            connection.query(query,[asignacion], (err, results)=>{
+                if(err) reject(err);
+                else resolve(results);
+            });
+        }); 
+        res.status(200).send(results[0]);
     }catch(error){
         res.status(500).send(error);
     }

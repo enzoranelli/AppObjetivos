@@ -20,6 +20,7 @@ import ActualizarObjetivo from './pages/ActualizarObjetivo.jsx';
 import CuentaDeshabilitada from './pages/CuentaDeshabilitada.jsx';
 import AsignarCertificacion from './pages/AsignarCertificacion.jsx';
 import ContenedorFeed from './components/contenedorFeed.jsx';
+import ActualizarEstadoCertificacion from './pages/ActualizarEstadoCertificacion.jsx'; 
 import CertificacionEmpleado from './pages/CertificacionEmpleado.jsx';
 function App() {
 
@@ -45,7 +46,8 @@ function App() {
           <Route element={<ProtectedRoute isAllowed={!!user && user.rol === 'admin'}/>}>
             <Route path='certificacion-empleado/:asignacion/:empleado/:certificacion' element={<CertificacionEmpleado />} />
             <Route path='/panel' element={<Panel />} />
-            <Route path='/actualizar-puntuacion/:asignacion/:empleado/:objetivo/:trimestre' element={<ActualizarPuntuacion />} />        
+            <Route path='/actualizar-puntuacion/:asignacion/:empleado/:objetivo/:trimestre' element={<ActualizarPuntuacion />} />  
+            <Route path='/actualizar-estado-certificacion/:asignacion/:empleado/:certificacion' element={<ActualizarEstadoCertificacion />} />
             <Route path='/redireccion/:tipo/:aux?'element={<Redireccion />} />
             <Route path='/empleados' element={<Empleados />}/>
             <Route path="/nuevo-objetivo" element={<NuevoItem />}/>

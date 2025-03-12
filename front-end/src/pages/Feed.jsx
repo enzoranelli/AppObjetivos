@@ -12,11 +12,11 @@ import DesempenoTotal from "../components/DesempenoTotal";
 import BotonPdf from "../components/BotonPdf";
 import { getApiUrl } from "../config/configURL";
 import Leyenda from "../components/Leyenda.jsx";
-
-function Feed({id}){
+import { useParams } from "react-router-dom";
+function Feed(){
     const url = getApiUrl();
     const {user} = useUserContext();
-    
+    const {id} = useParams();
     const [hoveredIndex, setHoveredIndex] = useState(null);
 
     const [objetivos, setObjetivos] = useState(null); 

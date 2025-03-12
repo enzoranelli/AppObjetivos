@@ -2,12 +2,12 @@ import { useParams } from "react-router-dom";
 import Feed from "../pages/Feed";
 import FeedCertificaciones from "../pages/FeedCertificaciones";
 function ContenedorFeed(){
-    const {tipo, id} = useParams();
+    const {tipo} = useParams();
     	
     return(
         <>
             {
-                tipo === 'objetivos' ? <Feed id={id} /> : <FeedCertificaciones id={id} />
+                tipo === 'objetivos' ? <Feed/> : <FeedCertificaciones />
             }
         </>
     );

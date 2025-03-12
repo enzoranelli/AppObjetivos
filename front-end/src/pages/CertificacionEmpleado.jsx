@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Confirmacion from '../components/Confirmacion.jsx';
 import { getApiUrl } from '../config/configURL.js';
+import { formatearISOtoFecha } from '../components/fechaHoy.js';
 function CertificacionEmpleado(){
     const url = getApiUrl();
     const [vuelta, setVuelta] = useState(false);
@@ -10,9 +11,13 @@ function CertificacionEmpleado(){
     const [getEmpleado, setGetEmpleado] = useState(null);
     const [getCertificacion, setGetCertificacion] = useState(null);
     const [getAsignacion, setGetAsignacion]= useState(null);
-
+    const [error, setError] = useState(null);
+    const [actualizar, setActualizar] = useState(false);
     const volver = () =>{
         setVuelta(true);
+    }
+    const actualizarEstado = () =>{
+        setActualizar(true);
     }
     useEffect(()=>{
         axios.get(`${url}/api/empleados/${empleado}`)
@@ -47,6 +52,9 @@ function CertificacionEmpleado(){
     if(vuelta){
         return <Navigate to={`/feed/certificaciones/${empleado}`}></Navigate>
     }
+    if(actualizar){
+        return <Navigate to={`/actualizar-estado-certificacion/${asignacion}/${empleado}/${certificacion}`}></Navigate>
+    }
     return(
         <div className="container-objetivo-empleado"> 
             <div className='cuadrado'>
@@ -57,15 +65,25 @@ function CertificacionEmpleado(){
                             <button onClick={volver}> Volver</button>
                     </div>
                     <hr className='linea'></hr>
-
                     <div className='contenedor-fecha-boton'>
-                        <h3>Fecha final de objetivo: {}</h3>
+                        <h3>Nota: {getAsignacion.nota ? getAsignacion.nota : 'Sin nota' }</h3>
+                        <h3>Estado: {getAsignacion.estado}</h3>
                         <div className='contenedor-botones'>
                             <div className='boton-rojo'>
-                                <Confirmacion idElemento={asignacion} idEmpleado={empleado} tipo={'asignacion'}/>
+                                <button onClick={actualizarEstado}>Actualizar estado</button>
                             </div>
                         </div>
                     </div>
+                    <div className='contenedor-fecha-boton'>
+                        <h3>Fecha Limite: {formatearISOtoFecha(getAsignacion.fechaLimite)}</h3>
+                        <h3>Fecha Asignada: {formatearISOtoFecha(getAsignacion.fechaAsignada)}</h3>
+                        <div className='contenedor-botones'>
+                            <div className='boton-rojo'>
+                                <Confirmacion idElemento={asignacion} idEmpleado={empleado} tipo={'asignacion certificacion'}/>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <h3>Observaciones:</h3>
                     <label>{getAsignacion.observaciones}</label>
                     </>): null    

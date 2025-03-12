@@ -1,8 +1,8 @@
 import '../styles/ActualizarPuntuacion.css'
 import axios from 'axios';
-import {Form, Navigate, useParams} from 'react-router-dom';
+import {Navigate, useParams} from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { obtenerFecha, fechaISO } from "../components/fechaHoy";
+import { fechaISO, formatearISOtoFecha } from "../components/fechaHoy";
 import { getApiUrl } from '../config/configURL';
 
 function ActualizarPuntuacion(){
@@ -11,9 +11,10 @@ function ActualizarPuntuacion(){
     const fecha = fechaISO();
     const [puntuacion, setPuntuacion] = useState(0);
     const [comentario, SetComentario] = useState('');
-    const fechaMostrar = obtenerFecha();
+
     const [getObjetivo, setGetObjetivo] = useState(null);
     const [getEmpleado, setGetEmpleado] = useState(null);
+    const [getAsignacion, SetGetAsignacion] = useState(null);
     const [redireccion, setRedireccion] = useState(null);
     
     const [error, setError] = useState('')
@@ -35,7 +36,14 @@ function ActualizarPuntuacion(){
             .catch( error => {
                 setError(error.message);
             });
-            
+        axios.get(`${url}/api/objetivoasignacion/asignacion/${asignacion}`)
+            .then( response => {
+                console.log(response)
+                SetGetAsignacion(response.data);
+            })
+            .catch( error => {
+                setError(error.message);
+            });
     },[empleado]);
 
     const handleSubmit = async (e) =>{
@@ -75,13 +83,13 @@ function ActualizarPuntuacion(){
     
     return (
         <div className="conetendor-puntuacion-actualizar">
-            { getEmpleado && getObjetivo ? (
+            { getEmpleado && getObjetivo && getAsignacion? (
                 <form className="contenedor-actualizar">
                     <h1 className="titulo-puntuacion">Actualizar puntuacion</h1>
                     
                     <h3>Objetivo: {getObjetivo.titulo}</h3>
                     <h3>Empleado: {getEmpleado.nombre} </h3>
-                    <h3>Fecha asignada: {fechaMostrar}</h3>
+                    <h3>Fecha asignada: {formatearISOtoFecha(getAsignacion.fechaAsignacion)}</h3>
                     <h3>Trimestre: {parseInt(trimestre)+1}°</h3>
                     <label className="descripcion-label" htmlFor="texto">Descripcion del objetivo: (Máximo de caracteres: {comentario.length}/{2500})</label>
                     <textarea

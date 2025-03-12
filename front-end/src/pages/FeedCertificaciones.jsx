@@ -4,8 +4,10 @@ import { getApiUrl } from "../config/configURL";
 import { useUserContext} from "../UserProvider";
 import CertificacionFeed from '../components/CertificacionFeed';
 import SinElementos from "../components/SinElementos";
-function FeedCertificaciones({id}){
+import { useParams } from "react-router-dom";
+function FeedCertificaciones(){
     const url = getApiUrl();
+    const {id} = useParams();
     const {user} = useUserContext();
     const [empleado, setEmpleado] = useState(null);
     const [certificaciones, setCertificaciones] = useState([]);

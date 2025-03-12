@@ -79,18 +79,33 @@ function Confirmacion({ idElemento, idEmpleado, tipo}) {
           Swal.fire('Error', error.message, 'error');
         }
       }
+      if(tipo === 'asignacion certificacion'){
+        const response = await fetch(`${url}/api/certificacionasignacion/${idElemento}`,{
+          method: 'DELETE',
+        });
+
+        if(response.ok){
+          Swal.fire('¡Eliminado!', 'Tu elemento ha sido eliminado.', 'success');
+          setRedireccion(true);
+        } else{
+          throw new Error('Error al eliminar el elemento');
+        }
+      }
     }
   };
 
   if(redireccion){
     if(tipo === 'asignacion'){
-      return <Navigate to={`/feed/${idEmpleado}`} />
+      return <Navigate to={`/feed/objetivos/${idEmpleado}`} />
     }
     if(tipo === 'empleado'){
       return <Navigate to={`/empleados`} />
     }
     if(tipo === 'objetivo'){
       return <Navigate to={`/panel`} />
+    }
+    if(tipo === 'asignacion certificacion'){
+      return <Navigate to={`/feed/certificaciones/${idEmpleado}`} />
     }
   }
   return (

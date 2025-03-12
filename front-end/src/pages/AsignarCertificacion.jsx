@@ -44,7 +44,8 @@ function AsignarCertificacion(){
                 fechaLimite: fechaLimite,
                 empleado: idEmpleado,
                 certificado: parseInt(id),
-                observaciones: observaciones
+                observaciones: observaciones,
+                estado: 'pendiente'
             }
             const response = await axios.post(`${url}/api/certificacionasignacion/`, data);
 

@@ -12,7 +12,11 @@ export const obtenerFecha = ()=>{
 
     return `${dia}/${mes}/${anio}`;
 };
-
+export const formatearISOtoFecha = (date)=>{
+    const fecha= date.split('T')[0]
+    const [anio, mes, dia] = fecha.split("-");
+    return `${dia}/${mes}/${anio}`;
+}
 export const formatearFechaToISO = (date)=>{
     const [dia, mes, anio] = date.split("/");
     return `${anio}-${mes}-${dia}`;
