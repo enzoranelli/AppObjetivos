@@ -54,6 +54,7 @@ CREATE TABLE CertificacionEmpleado(
 	FOREIGN KEY(certificado) REFERENCES Certificacion(idCertificacion) ON DELETE CASCADE,
     UNIQUE(certificado, empleado)
 );
+SELECT * FROM CertificacionEmpleado;
 
 CREATE TABLE Objetivo(
 	idObjetivo INT NOT NULL AUTO_INCREMENT,
