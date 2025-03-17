@@ -22,6 +22,7 @@ import AsignarCertificacion from './pages/AsignarCertificacion.jsx';
 import ContenedorFeed from './components/contenedorFeed.jsx';
 import ActualizarEstadoCertificacion from './pages/ActualizarEstadoCertificacion.jsx'; 
 import CertificacionEmpleado from './pages/CertificacionEmpleado.jsx';
+import ActualizarCertificacion from './pages/ActualizarCertificacion.jsx';
 function App() {
 
   const {user} = useUserContext();
@@ -56,6 +57,7 @@ function App() {
             <Route path='/actualizar-usuario/:id' element={<ActualizarDatos />}/>
             <Route path='/asignar-objetivo/:id' element={<AsignarObjetivo />} />
             <Route path='actualizar-objetivo/:id' element={<ActualizarObjetivo />} />
+            <Route path='actualizar-certificacion/:id' element={<ActualizarCertificacion/>} />
           </Route>
         </Routes>
       </div>

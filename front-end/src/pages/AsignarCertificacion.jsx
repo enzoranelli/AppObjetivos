@@ -19,7 +19,7 @@ function AsignarCertificacion(){
         axios.get(`${url}/api/certificaciones/${id}`)
             .then( response => {
                 console.log(response)
-                setCertificacion(response.data[0]);
+                setCertificacion(response.data);
             })
             .catch( error => {
                 setError(error.message);
@@ -34,8 +34,7 @@ function AsignarCertificacion(){
                 setError(error.message);
             });
             
-    },[id]);
-
+    },[])
     const onSubmit =  async (e)=>{
         e.preventDefault();
         try{
@@ -96,7 +95,7 @@ function AsignarCertificacion(){
                                 maxLength={400}    
                             />
                             <div className="contenedor-input">
-                                <label  className="descripcion-label" htmlFor="fechaInicio"> Fecha de inicio: </label>
+                                <label  className="descripcion-label" htmlFor="fechaInicio"> Fecha limite: </label>
                                 <input
                                     className="input-objetivo-nuevo"
                                     type="date"

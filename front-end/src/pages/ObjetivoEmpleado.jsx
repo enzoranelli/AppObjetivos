@@ -145,11 +145,11 @@ function ObjetivoEmpleado(){
                                             </div>
                         
                                             <div style={{display:'flex', flexDirection:'row'}}>
-                                                <SubirArchivos puntuacion={punto.idPuntuacion} onArchivoSubido={()=>handleArchivoSubido(punto.idPuntuacion)}/>
+                                                <SubirArchivos puntuacion={punto.idPuntuacion}  tipo={'archivos'} onArchivoSubido={()=>handleArchivoSubido(punto.idPuntuacion)}/>
                                             </div>
                                             
                                             </div> 
-                                            <ArchivoAdjuntados puntuacion={punto.idPuntuacion} archivos={archivos[punto.idPuntuacion]} onEliminarArchivo={handleEliminarArchivo} />
+                                            <ArchivoAdjuntados puntuacion={punto.idPuntuacion} archivos={archivos[punto.idPuntuacion]}  tipo={'archivos'} onEliminarArchivo={handleEliminarArchivo} />
                                                                               
                                         <hr className='linea'></hr>                                       
                                     </ul>

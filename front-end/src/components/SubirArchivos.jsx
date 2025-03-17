@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { getApiUrl } from '../config/configURL.js';
 
-function SubirArchivos({ puntuacion, onArchivoSubido }) {
+function SubirArchivos({ puntuacion, onArchivoSubido, tipo }) {
     const [archivos, setArchivos] = useState([]);
     const url = getApiUrl();
 
@@ -18,7 +18,7 @@ function SubirArchivos({ puntuacion, onArchivoSubido }) {
         });
 
         try {
-            const response = await axios.post(`${url}/api/archivos/${puntuacion}`, formData, {
+            const response = await axios.post(`${url}/api/${tipo}/${puntuacion}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

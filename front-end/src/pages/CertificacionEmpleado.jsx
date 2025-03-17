@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import Confirmacion from '../components/Confirmacion.jsx';
 import { getApiUrl } from '../config/configURL.js';
 import { formatearISOtoFecha } from '../components/fechaHoy.js';
+import ArchivoAdjuntados from '../components/ArchivosAdjuntados.jsx';
+import SubirArchivos from '../components/SubirArchivos.jsx';
 function CertificacionEmpleado(){
     const url = getApiUrl();
     const [vuelta, setVuelta] = useState(false);
@@ -13,12 +15,22 @@ function CertificacionEmpleado(){
     const [getAsignacion, setGetAsignacion]= useState(null);
     const [error, setError] = useState(null);
     const [actualizar, setActualizar] = useState(false);
+    const [archivos, setArchivos] = useState([]);
     const volver = () =>{
         setVuelta(true);
     }
     const actualizarEstado = () =>{
         setActualizar(true);
     }
+    const actualizarArchivos = () => {
+        axios.get(`${url}/api/archivosCertificacion/${asignacion}`)
+            .then(response => {
+                setArchivos(response.data);
+            })
+            .catch(error => {
+                setError(error.message);
+            });
+    };
     useEffect(()=>{
         axios.get(`${url}/api/empleados/${empleado}`)
             .then( response => {
@@ -32,7 +44,7 @@ function CertificacionEmpleado(){
         axios.get(`${url}/api/certificaciones/${certificacion}`)
             .then( response => {
                 console.log(response)
-                setGetCertificacion(response.data[0]);
+                setGetCertificacion(response.data);
         
             })
             .catch( error => {
@@ -46,6 +58,15 @@ function CertificacionEmpleado(){
             })
             .catch( error => {
                 setError(error.message);     
+            });
+        axios.get(`${url}/api/archivosCertificacion/${asignacion}`)
+            .then( response => {
+                console.log(response)
+                setArchivos(response.data);
+        
+            })
+            .catch( error => {
+                setError(error.message);
             });
     },[]);
 
@@ -85,10 +106,13 @@ function CertificacionEmpleado(){
                     </div>
                     
                     <h3>Observaciones:</h3>
-                    <label>{getAsignacion.observaciones}</label>
+                    <label>{getAsignacion.observaciones ? getAsignacion.observaciones : 'No hay observaciones.' }</label>
                     </>): null    
                 }
-                
+                <h3>Archivos adjuntados:</h3>
+
+                <ArchivoAdjuntados archivos={archivos} tipo={'archivosCertificacion'} puntuacion={asignacion}/>
+                <SubirArchivos puntuacion={asignacion} tipo={'archivosCertificacion'} onArchivoSubido={actualizarArchivos}/>
             </div>
         </div>
     );

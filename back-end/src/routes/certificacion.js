@@ -5,7 +5,8 @@ router.get('/',obtenerCertificaciones);
 router.post('/',agregarCertificacion);
 router.get('/marcas',obtenerMarcas);
 router.get('/:id',obtenerCertificacion);
-
+router.put('/:id',actualizarCertificacion);
+router.delete('/:id',eliminarCertificacion);
 
 async function obtenerCertificaciones(req, res){
     try{
@@ -27,7 +28,39 @@ async function obtenerCertificaciones(req, res){
         res.status(500).send(error);
     }
 }
+async function actualizarCertificacion(req, res) {
+    try {
+        const connection = await new Promise((resolve, reject) => {
+            req.getConnection((err, conn) => {
+                if (err) reject(err);
+                else resolve(conn);
+            });
+        });
 
+        const { id } = req.params;
+        const { nombreCertificacion, marca, url, anio } = req.body;
+
+        const result = await new Promise((resolve, reject) => {
+            connection.query(
+                'UPDATE certificacion SET nombreCertificacion = ?, marca = ?, url = ?, anio = ? WHERE idCertificacion = ?',
+                [nombreCertificacion, marca, url, anio, id],
+                (err, result) => {
+                    if (err) reject(err);
+                    else resolve(result);
+                }
+            );
+        });
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Certificación no encontrada" });
+        }
+
+        res.status(200).json({ message: "Certificación actualizada correctamente" });
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
 async function obtenerCertificacion(req,res){
     try{
         const id = req.params.id;
@@ -43,8 +76,40 @@ async function obtenerCertificacion(req,res){
                 else resolve(results);
             })
         })
-        res.send(results);
+        res.send(results[0]);
     }catch(error){
+        res.status(500).send(error);
+    }
+}
+async function eliminarCertificacion(req, res) {
+    try {
+        const connection = await new Promise((resolve, reject) => {
+            req.getConnection((err, conn) => {
+                if (err) reject(err);
+                else resolve(conn);
+            });
+        });
+
+        const { id } = req.params;
+
+        const result = await new Promise((resolve, reject) => {
+            connection.query(
+                'DELETE FROM certificacion WHERE idCertificacion = ?',
+                [id],
+                (err, result) => {
+                    if (err) reject(err);
+                    else resolve(result);
+                }
+            );
+        });
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Certificación no encontrada" });
+        }
+
+        res.status(200).json({ message: "Certificación eliminada correctamente" });
+
+    } catch (error) {
         res.status(500).send(error);
     }
 }

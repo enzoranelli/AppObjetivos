@@ -36,7 +36,7 @@ function FeedCertificaciones(){
         <>
             <h1 className="titulo">Certificaciones asignadas de {empleado?.nombre}</h1>
             <hr className="linea"></hr>
-            {certificaciones && certificaciones.length !== 0 ?  (
+            {empleado && certificaciones && certificaciones.length !== 0 ?  (
                 <>
                     
                     <ul className="lista">

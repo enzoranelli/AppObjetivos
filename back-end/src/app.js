@@ -16,7 +16,7 @@ const archivos = require('./routes/archivos.js');
 const filtros = require('./routes/filtros.js');
 const certificacion = require('./routes/certificacion.js');
 const certificacionasignacion = require('./routes/certificacionAsignado.js');
-
+const archivosCertificacion = require('./routes/archivoCertificacion.js');
 //<--Middlewares-->//
 
 
@@ -40,6 +40,7 @@ app.use('/api/objetivoasignacion',objetivoasignacion);
 app.use('/api/puntuacion',puntuacion);
 app.use('/api/login',login);
 app.use('/api/archivos',archivos);
+app.use('/api/archivosCertificacion',archivosCertificacion);
 app.use('/api/filtros',filtros);
 app.use('/api/certificaciones', certificacion);
 app.use('/api/certificacionasignacion', certificacionasignacion);
