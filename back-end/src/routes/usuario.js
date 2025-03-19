@@ -99,11 +99,11 @@ async function agregarUsuario(req,res){
         });
 
         const activo = true;
-        const {email, usuarioPassword, rol, empleado} = req.body
+        const {email, usuarioPassword, rol, empleado, nombre} = req.body
         const contraEncriptada = await encriptarContrasena(usuarioPassword);
-        const query = 'INSERT INTO Usuario (email, usuarioPassword, rol, empleado, activo) VALUES (?,?,?,?,?)';
+        const query = 'INSERT INTO Usuario (email, usuarioPassword, rol, empleado, activo, nombre) VALUES (?,?,?,?,?,?)';
         const results = await new Promise((resolve, reject)=>{
-            connection.query(query,[email, contraEncriptada, rol, empleado, activo], (err, results)=>{
+            connection.query(query,[email, contraEncriptada, rol, empleado, activo, nombre], (err, results)=>{
                 if(err) reject(err);
                 else resolve(results);
             });
@@ -119,8 +119,9 @@ async function agregarUsuario(req,res){
 }
 async function actualizarUsuario(req,res){
     try {
-        const {  email, rol, empleado } = req.body;
+        const {  email, rol, empleado,nombre } = req.body;
         console.log("Entre en actualizar ususarop")
+        console.log(req.body)
         // Verificar que todos los datos necesarios estén presentes
         if (!email || !rol ||!empleado) {
         return res.status(400).send("Faltan datos necesarios papa de dio");
@@ -135,12 +136,12 @@ async function actualizarUsuario(req,res){
 
         const query = `
         UPDATE Usuario 
-        SET email = ?, rol= ?
+        SET email = ?, rol= ?,nombre = ?
         WHERE empleado = ?
         `;
         console.log(email)
         const results = await new Promise((resolve, reject)=>{
-            connection.query(query,[email, rol, empleado], (err, results)=>{
+            connection.query(query,[email, rol,nombre,empleado], (err, results)=>{
                 if (err) {
                     console.error('Error en la consulta SQL:', err); // Muestra el error específico
                     reject(err);

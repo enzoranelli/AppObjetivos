@@ -173,6 +173,7 @@ async function agregarEmpleado(req, res) {
             email: req.body.email,
             usuarioPassword : req.body.usuarioPassword,
             rol: req.body.rol ? 'admin' : 'user',
+            nombre: req.body.nombre+' '+req.body.apellido,
             empleado: claveForanea[0].idEmpleado,
         }
 
