@@ -147,7 +147,9 @@ function ActualizarDatos() {
           email: usuarioData.email,
           rol: usuarioData.rol,
           empleado : id,
+          nombre: empleado.nombre,
         }
+        alert(dataUsuario)
         const response = await axios.put(`${url}/api/empleados/`, data);
         const response2 = await axios.put(`${url}/api/usuarios/`,dataUsuario);
         if(response.status === 200 && response2.status === 200){
