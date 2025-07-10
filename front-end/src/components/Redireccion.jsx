@@ -1,8 +1,8 @@
 import {Link, useParams} from 'react-router-dom'
-import '../styles/Redireccion.css'
+import '../old_styles/Redireccion.css'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { getApiUrl } from '../config/configURL.js';
+import { getApiUrl } from '../context/configURL.js';
 function Redireccion(){
     const url = getApiUrl();
     const [objetivo, setObjetivo] = useState(null);

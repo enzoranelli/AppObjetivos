@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import "../styles/ObjetivoNuevos.css";
+//import "../old_styles/ObjetivoNuevos.css";
 import { Navigate, useParams } from "react-router-dom";
-import { getApiUrl } from "../config/configURL";
+import { getApiUrl } from "../context/configURL";
 import axios from "axios";
 import Confirmacion from "../components/Confirmacion";
 function ActualizarCertificacion() {

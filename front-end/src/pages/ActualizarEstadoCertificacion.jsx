@@ -1,8 +1,8 @@
-import { getApiUrl } from '../config/configURL';
+import { getApiUrl } from '../context/configURL.js';
 import { Navigate, useParams} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { formatearISOtoFecha } from '../components/fechaHoy.js';
+import { formatearISOtoFecha } from '../utils/fechaHoy.js';
 
 function ActualizarEstadoCertificacion() {
     const url = getApiUrl();

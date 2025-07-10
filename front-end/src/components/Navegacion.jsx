@@ -1,7 +1,7 @@
 import React from 'react';
-import '../styles/Header.css'; // 
+//import '../old_styles/Header.css'; // 
 import { Link } from 'react-router-dom';
-import { useUserContext, useUserToggleContext } from "../UserProvider.jsx";
+import { useUserContext, useUserToggleContext } from "../context/UserProvider.jsx";
 
 const Navegacion = () => {
   const {user} = useUserContext();

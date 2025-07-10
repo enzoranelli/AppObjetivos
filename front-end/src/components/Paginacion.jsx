@@ -1,4 +1,4 @@
-import '../styles/Paginacion.css';
+//import '../old_styles/Paginacion.css';
 function Paginacion({setCurrentPage, currentPage, nPages}){
     const next = ()=>{
         if(currentPage !== nPages) setCurrentPage(currentPage + 1)

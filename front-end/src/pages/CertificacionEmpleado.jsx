@@ -2,8 +2,8 @@ import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Confirmacion from '../components/Confirmacion.jsx';
-import { getApiUrl } from '../config/configURL.js';
-import { formatearISOtoFecha } from '../components/fechaHoy.js';
+import { getApiUrl } from '../context/configURL.js';
+import { formatearISOtoFecha } from '../utils/fechaHoy.js';
 import ArchivoAdjuntados from '../components/ArchivosAdjuntados.jsx';
 import SubirArchivos from '../components/SubirArchivos.jsx';
 function CertificacionEmpleado(){

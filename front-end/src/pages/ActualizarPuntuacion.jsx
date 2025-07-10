@@ -1,9 +1,9 @@
-import '../styles/ActualizarPuntuacion.css'
+//import '../old_styles/ActualizarPuntuacion.css'
 import axios from 'axios';
 import {Navigate, useParams} from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { fechaISO, formatearISOtoFecha } from "../components/fechaHoy";
-import { getApiUrl } from '../config/configURL';
+import { fechaISO, formatearISOtoFecha } from "../utils/fechaHoy";
+import { getApiUrl } from '../context/configURL';
 
 function ActualizarPuntuacion(){
     const url = getApiUrl();

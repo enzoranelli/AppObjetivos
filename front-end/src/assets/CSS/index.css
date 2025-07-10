@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+    
+    --color-custom-orange: #fbb003;
+    --color-custom-dark-orange: #ff8000;
+    
+}
+
+@layer base {
+    @font-face {
+        font-family: "Josefin Sans";
+        font-style: normal;
+        src: url('../fonts/JosefinSans-VariableFont_wght.ttf') format('truetype');
+    }
+
+    .JosefinSans {
+        font-family: "Josefin Sans", sans-serif;
+    }
+}
+
+@layer components {
+    .input-custom {
+        @apply h-10 mb-2 border border-custom-orange rounded-xl text-center  focus:outline-none focus:border-custom-dark-orange
+    }
+    .orange-button {
+        @apply h-10 rounded-xl mt-2 bg-[#fbb003] text-white transition-colors duration-500 hover:bg-custom-dark-orange
+    }
+}

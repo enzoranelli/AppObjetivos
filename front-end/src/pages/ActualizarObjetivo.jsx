@@ -2,11 +2,11 @@ import axios from "axios";
 import { Navigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import '../styles/ActualizarObjetivo.css';
-import { formatearFechaToISO } from "../components/fechaHoy.js";
+//import '../old_styles/ActualizarObjetivo.css';
+import { formatearFechaToISO } from "../utils/fechaHoy.js";
 import MensajeConfirmacion from '../components/MensajeConfirmacion.jsx';
 import Confirmacion from '../components/Confirmacion.jsx';
-import { getApiUrl } from '../config/configURL.js';
+import { getApiUrl } from '../context/configURL.js';
 
 function ActualizarObjetivo(){
     const url = getApiUrl();

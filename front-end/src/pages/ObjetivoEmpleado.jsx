@@ -1,9 +1,9 @@
-import '../styles/ObjetivoEmpleado.css';
+//import '../old_styles/ObjetivoEmpleado.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import Confirmacion from '../components/Confirmacion.jsx';
-import { getApiUrl } from '../config/configURL.js';
+import { getApiUrl } from '../context/configURL.js';
 import ArchivoAdjuntados from '../components/ArchivosAdjuntados.jsx';
 import SubirArchivos from '../components/SubirArchivos.jsx';
 

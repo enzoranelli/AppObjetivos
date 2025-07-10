@@ -1,8 +1,8 @@
 import React,{ useState} from "react";
-import { usePageTitle } from "../components/nombrePag";
-import '../styles/Login.css'
-import { useUserContext, useUserToggleContext } from "../UserProvider";
+import { usePageTitle } from "../utils/nombrePag";
+import { useUserContext, useUserToggleContext } from "../context/UserProvider";
 import { Navigate } from "react-router-dom";
+import logo from '../assets/images/logo.png'
 function Login(){
     const {user, error} = useUserContext();
     const {login, logout} = useUserToggleContext();
@@ -33,31 +33,36 @@ function Login(){
     }
 
     return(
-        <div className="login-container">
-            <img className="logo" src="https://americagroupit.com/wp-content/uploads/2024/06/cropped-Logo_AG_Color_VF2024-01.png"
-                alt="Logo AG"/>
-            <form className="form-login" onSubmit={handleSubmit}>
+        <div className="flex flex-col items-center h-screen bg-white gap-10 JosefinSans">
+            <img className="w-xl" src={logo} alt="Logo de objetivos"/>
+            <form className="flex w-100 flex-col text-xl p-5 border-2 border-custom-orange rounded-2xl shadow-2xl" onSubmit={handleSubmit}>
+                <h1 className="text-center">Iniciar sesión</h1>
+                {error && <p className="text-red-500 text-center">{error}</p>}
+                <label  htmlFor="username">Usuario:</label>
+                <input 
+                    className="input-custom"
+                    type="text" 
+                    id="username"
+                    value={username}
+                    onChange={(e)=> setUsername(e.target.value)} 
+                    required
+                />
+                <label htmlFor="password">Contraseña:</label>
+                <input 
+                    className="input-custom"
+                    type="password" 
+                    id="password" 
+                    value={password}
+                    onChange={(e)=>setPassword(e.target.value)}
+                    required
+                />
                 
-                <h2 className="titulo-login">Iniciar sesión</h2>
-                    {error && <p className="error-message">{error}</p>}
-                    <label  htmlFor="username">Usuario:</label>
-                    <input 
-                        type="text" 
-                        id="username"
-                        value={username}
-                        onChange={(e)=> setUsername(e.target.value)} 
-                        required
-                    />
-                    <label htmlFor="password">Contraseña:</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        value={password}
-                        onChange={(e)=>setPassword(e.target.value)}
-                        required
-                    />
-                
-                <button type="submit">Entrar</button>
+                <button 
+                    className="orange-button"
+                    type="submit"
+                >
+                    Entrar
+                </button>
             </form>
         </div>
     );

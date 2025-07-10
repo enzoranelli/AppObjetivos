@@ -1,5 +1,5 @@
 .login-container{
-    padding-top: 5%;
+    
     display: flex;
     
     align-items: center;
@@ -25,7 +25,7 @@
 }
 .titulo-login{
     text-align: center;
-}
+}/*
 input{
     width: 400px;
     height: 40px;
@@ -40,7 +40,8 @@ input{
 input:focus{
     border-color: #ff8000;
     outline: none;
-}
+}*/
+/*
 button{
     width: 400px;
     height: 40px;
@@ -54,4 +55,4 @@ button{
 }
 button:hover{
     background-color: #ff8000;
-}
+}*/

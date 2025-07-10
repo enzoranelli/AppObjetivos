@@ -1,7 +1,7 @@
 import { useState, useEffect} from "react";
-import "../styles/ObjetivoNuevos.css";
+//import "../old_styles/ObjetivoNuevos.css";
 import { Navigate } from "react-router-dom";
-import { getApiUrl } from "../config/configURL";
+import { getApiUrl } from "../context/configURL";
 import axios from "axios";
 function NuevaCertificacion(){
     const [marcas, setMarcas] = useState([]);

@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from "react";
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { getApiUrl } from "./config/configURL";
+import { getApiUrl } from "./configURL";
 const userContext = React.createContext();
 const userToggleContext = React.createContext();
 

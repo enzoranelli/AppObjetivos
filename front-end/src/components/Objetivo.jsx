@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from "react";
-import "../styles/Objetivo.css"
-import { useUserContext} from "../UserProvider.jsx";
+//import "../old_styles/Objetivo.css"
+import { useUserContext} from "../context/UserProvider.jsx";
 import { Navigate } from "react-router-dom";
 
 function Objetivo(props){

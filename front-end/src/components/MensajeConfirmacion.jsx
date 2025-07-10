@@ -1,4 +1,4 @@
-import '../styles/Mensaje.css';
+//import '../old_styles/Mensaje.css';
 
 function MensajeConfirmacion({titulo, tipo}) {
     console.log(titulo);

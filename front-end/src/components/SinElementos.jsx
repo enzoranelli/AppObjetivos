@@ -1,4 +1,4 @@
-import '../styles/SinElementos.css';
+//import '../old_styles/SinElementos.css';
 
 function SinElementos({elemento, estilo}){
     

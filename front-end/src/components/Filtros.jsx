@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
-import { getApiUrl } from '../config/configURL';
-import '../styles/Filtros.css';
+import { getApiUrl } from '../context/configURL';
+//import '../old_styles/Filtros.css';
 import { parse, getYear, set } from 'date-fns';
 function Filtros({manejarLista, lista}){
     const url = getApiUrl();

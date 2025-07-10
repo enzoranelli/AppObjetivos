@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { getApiUrl } from '../config/configURL.js';
+import { getApiUrl } from '../context/configURL.js';
 
 function SubirArchivos({ puntuacion, onArchivoSubido, tipo }) {
     const [archivos, setArchivos] = useState([]);

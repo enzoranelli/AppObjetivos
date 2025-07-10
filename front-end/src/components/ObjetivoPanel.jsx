@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/Objetivo.css"
+//import "../old_styles/Objetivo.css"
 import { useNavigate } from "react-router-dom";
 
 function ObjetivoPanel(props){

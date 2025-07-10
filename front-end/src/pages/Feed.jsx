@@ -1,16 +1,16 @@
-import Objetivo from "../components/Objetivo";
+import Objetivo from "../components/Objetivo.jsx";
 import axios from 'axios';
-import "../styles/Feed.css";
-import SinElementos from "../components/SinElementos";
-import { useUserContext} from "../UserProvider";
+//import "../old_styles/Feed.css";
+import SinElementos from "../components/SinElementos.jsx";
+import { useUserContext} from "../context/UserProvider.jsx";
 import { useState, useEffect } from "react";
-import BarraPeso from "../components/BarraPeso";
-import { generarColorAleatorio } from "../components/generarColorAleatorio";
-import BarraDesempeno from "../components/BarraDesempeno";
-import { formateo } from "../components/formateo";
-import DesempenoTotal from "../components/DesempenoTotal";
-import BotonPdf from "../components/BotonPdf";
-import { getApiUrl } from "../config/configURL";
+import BarraPeso from "../components/BarraPeso.jsx";
+import { generarColorAleatorio } from "../utils/generarColorAleatorio.js";
+import BarraDesempeno from "../components/BarraDesempeno.jsx";
+import { formateo } from "../utils/formateo.js";
+import DesempenoTotal from "../components/DesempenoTotal.jsx";
+import BotonPdf from "../components/BotonPdf.jsx";
+import { getApiUrl } from "../context/configURL.js";
 import Leyenda from "../components/Leyenda.jsx";
 import { useParams } from "react-router-dom";
 function Feed(){

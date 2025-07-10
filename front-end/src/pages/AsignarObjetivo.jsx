@@ -1,9 +1,9 @@
 import { useParams, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { obtenerFecha, fechaISO } from "../components/fechaHoy";
-import '../styles/AsignarObjetivo.css';
-import { getApiUrl } from "../config/configURL";
+import { obtenerFecha, fechaISO } from "../utils/fechaHoy";
+//import '../old_styles/AsignarObjetivo.css';
+import { getApiUrl } from "../context/configURL";
 function AsignarObjetivo(){
     const url = getApiUrl();
     const [objetivo, setObjetivo] = useState(null);

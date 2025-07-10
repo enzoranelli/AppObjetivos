@@ -1,4 +1,4 @@
-import { useUserContext} from "../UserProvider.jsx";
+import { useUserContext} from "../context/UserProvider.jsx";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 function CertificacionFeed({certificacion,empleado,certificacionAsignacion}){

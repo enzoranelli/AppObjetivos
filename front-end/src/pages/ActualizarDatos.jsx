@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Navigate} from 'react-router-dom';
-import '../styles/ActualizarDatos.css';
+//import '../old_styles/ActualizarDatos.css';
 import axios from 'axios';
 import MensajeConfirmacion from '../components/MensajeConfirmacion.jsx';
-import Confirmacion from '../components/Confirmacion';
-import { getApiUrl } from '../config/configURL';
+import Confirmacion from '../components/Confirmacion.jsx';
+import { getApiUrl } from '../context/configURL.js';
 
 function ActualizarDatos() {
   const url = getApiUrl();

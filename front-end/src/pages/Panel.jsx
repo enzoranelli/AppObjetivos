@@ -3,10 +3,10 @@ import Certificacion from "../components/Certificacion"
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import SinElementos from "../components/SinElementos";
-import { getApiUrl } from "../config/configURL";
+import { getApiUrl } from "../context/configURL";
 import Paginacion from "../components/Paginacion";
 import Filtros from "../components/Filtros";
-import '../styles/Panel.css'
+//import '../old_styles/Panel.css'
 
 function Panel(){
     const [objetivos, setObjetivos] = useState(null);
@@ -75,7 +75,7 @@ function Panel(){
                         <div className={`toggle-lista ${tipoDeLista === "certificaciones" ? "seleccionado" : "no-seleccionado"}`}>Certificaciones</div>
                     </div>
                     
-                    <h1 className="titulo">Lista de {tipoDeLista}</h1>
+                    <h1 className="JosefinSans">Lista de {tipoDeLista}</h1>
                     <hr className="linea"></hr>
                     <Filtros manejarLista={handleListaFiltrada} lista={objetivos} />
                     

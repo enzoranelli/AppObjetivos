@@ -1,9 +1,9 @@
 import { useParams, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { obtenerFecha } from "../components/fechaHoy";
+import { obtenerFecha } from "../utils/fechaHoy";
 import axios from "axios";
-import '../styles/AsignarObjetivo.css';
-import { getApiUrl } from "../config/configURL";
+//import '../old_styles/AsignarObjetivo.css';
+import { getApiUrl } from "../context/configURL";
 function AsignarCertificacion(){
     const url = getApiUrl();
     const {id} = useParams();

@@ -2,8 +2,8 @@ import { Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {useForm} from 'react-hook-form';
-import '../styles/FormUsuario.css';
-import { getApiUrl } from "../config/configURL";
+//import '../old_styles/FormUsuario.css';
+import { getApiUrl } from "../context/configURL";
 import MensajeConfirmacion from "../components/MensajeConfirmacion";
 function NuevoUsuario(){
     const {register, handleSubmit} = useForm();

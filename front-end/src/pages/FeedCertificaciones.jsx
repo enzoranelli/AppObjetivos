@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
-import { getApiUrl } from "../config/configURL";
-import { useUserContext} from "../UserProvider";
+import { getApiUrl } from "../context/configURL";
+import { useUserContext} from "../context/UserProvider";
 import CertificacionFeed from '../components/CertificacionFeed';
 import SinElementos from "../components/SinElementos";
 import { useParams } from "react-router-dom";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SinElementos from './SinElementos.jsx';
-import { getApiUrl } from '../config/configURL.js';
+import { getApiUrl } from '../context/configURL.js';
 
 function ArchivoAdjuntados({ archivos ,puntuacion, onEliminarArchivo, tipo}){
     const url = getApiUrl()

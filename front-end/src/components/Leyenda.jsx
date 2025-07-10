@@ -1,4 +1,4 @@
-import '../styles/Leyenda.css';
+import '../old_styles/Leyenda.css';
 function Leyenda({colores, objetivos,hoveredIndex, onMouseEnter, onMouseLeave, tituloLeyenda}){
     return(
         <div className="contenedor-leyenda">

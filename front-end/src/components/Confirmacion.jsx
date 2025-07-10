@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { Navigate } from 'react-router-dom';
-import { getApiUrl } from '../config/configURL.js';
+import { getApiUrl } from '../context/configURL.js';
 
 
 function Confirmacion({ idElemento, idEmpleado, tipo}) {

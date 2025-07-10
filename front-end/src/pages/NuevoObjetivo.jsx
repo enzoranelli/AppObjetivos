@@ -1,8 +1,8 @@
-import { usePageTitle } from "../components/nombrePag";
+import { usePageTitle } from "../utils/nombrePag.js";
 import { useState } from "react";
-import "../styles/ObjetivoNuevos.css";
+//import "../old_styles/ObjetivoNuevos.css";
 import { Navigate } from "react-router-dom";
-import { getApiUrl } from "../config/configURL";
+import { getApiUrl } from "../context/configURL";
 function NuevoObjetivo(){
     usePageTitle('Home | Medicion de objetos')
     const url = getApiUrl();

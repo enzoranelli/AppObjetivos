@@ -2,9 +2,9 @@ import DataTable from "react-data-table-component";
 import SinElementos from "../components/SinElementos";
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import '../styles/Empleados.css';
+//import '../old_styles/Empleados.css';
 import BotonLink from "../components/BotonLink";
-import { getApiUrl } from "../config/configURL";
+import { getApiUrl } from "../context/configURL";
 function Empleados(){
     const url = getApiUrl();
     const [empleados, setEmpleados] = useState(null);

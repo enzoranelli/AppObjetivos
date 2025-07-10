@@ -1,4 +1,4 @@
-import '../styles/BotonPdf.css';
+//import '../old_styles/BotonPdf.css';
 import html2pdf from 'html2pdf.js';
 function BotonPdf({nombreEmpleado}){
     const generarPdf = () =>{
