@@ -1,5 +1,4 @@
 import React from 'react';
-//import '../old_styles/Header.css'; // 
 import { Link } from 'react-router-dom';
 import { useUserContext, useUserToggleContext } from "../context/UserProvider.jsx";
 
@@ -8,16 +7,16 @@ const Navegacion = () => {
   const {logout} = useUserToggleContext();
 
   return (
-    <header className="header">
+    <header className="fixed top-0 left-0 w-full z-50 bg-custom-orange px-5 py-2 shadow-md text-white rounded-bl-xl JosefinSans">
       <nav>
-        <ul className="nav-links">
+        <ul className="flex justify-around list-none m-0 p-0">
           {
             (user && user.rol === 'admin') ? (
               <>
-              <li><Link to="/nuevo-objetivo">Crear nuevo Objetivo/Certificacion</Link></li>
-              <li><Link to="/nuevoUsuario">Crear Usuario</Link></li>
-              <li><Link to="/panel">Panel</Link></li>
-              <li><Link to="/empleados">Empleados</Link></li>
+              <li><Link to="/nuevo-objetivo" className='nav-links'>Crear nuevo Objetivo/Certificacion</Link></li>
+              <li><Link to="/nuevoUsuario" className='nav-links'>Crear Usuario</Link></li>
+              <li><Link to="/panel" className='nav-links'>Panel</Link></li>
+              <li><Link to="/empleados" className='nav-links'>Empleados</Link></li>
               </>
             ):(
               <></>
@@ -26,9 +25,9 @@ const Navegacion = () => {
           
           {
             user ? (
-              <li onClick={logout} className='cerrar-sesion'><a> Cerrar sesión</a></li>
+              <li onClick={logout} ><a className='cursor-pointer nav-links'> Cerrar sesión</a></li>
             ) : (
-              <li><Link to="/">Login</Link></li>   
+              <li><Link to="/" className='nav-links'>Login</Link></li>   
             )
           }
         </ul>

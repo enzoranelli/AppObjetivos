@@ -34,8 +34,10 @@ function Login(){
 
     return(
         <div className="flex flex-col items-center h-screen bg-white gap-10 JosefinSans">
-            <img className="w-xl" src={logo} alt="Logo de objetivos"/>
-            <form className="flex w-100 flex-col text-xl p-5 border-2 border-custom-orange rounded-2xl shadow-2xl" onSubmit={handleSubmit}>
+            <img className="w-xl animate-fade-in-up animation-delay-400" src={logo} alt="Logo de objetivos"/>
+            <form 
+                className="flex w-100 flex-col text-xl p-5 border-2 border-custom-orange rounded-2xl shadow-2xl animate-fade-in-up animation-delay-400"
+                onSubmit={handleSubmit}>
                 <h1 className="text-center">Iniciar sesión</h1>
                 {error && <p className="text-red-500 text-center">{error}</p>}
                 <label  htmlFor="username">Usuario:</label>

@@ -60,7 +60,7 @@ export function UserProvider(props){
     return(
         <userContext.Provider value={{user,error}}>
             <userToggleContext.Provider value={{login, logout}}>           
-                        {props.children} 
+                {props.children} 
             </userToggleContext.Provider>
         </userContext.Provider>
     )

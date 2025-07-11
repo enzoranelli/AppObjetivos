@@ -4,7 +4,20 @@
     
     --color-custom-orange: #fbb003;
     --color-custom-dark-orange: #ff8000;
-    
+
+    --animate-fade-in-up: fadeInUp 0.8s ease-out forwards;
+
+   
+    @keyframes fadeInUp{
+        0%{
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100%{
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 }
 
 @layer base {
@@ -17,13 +30,26 @@
     .JosefinSans {
         font-family: "Josefin Sans", sans-serif;
     }
+
 }
 
 @layer components {
+    .animation-delay-200 {
+        animation-delay: 0.2s ;
+    }
+    .animation-delay-400 {
+        animation-delay: 0.4s ;
+    }
     .input-custom {
         @apply h-10 mb-2 border border-custom-orange rounded-xl text-center  focus:outline-none focus:border-custom-dark-orange
     }
     .orange-button {
-        @apply h-10 rounded-xl mt-2 bg-[#fbb003] text-white transition-colors duration-500 hover:bg-custom-dark-orange
+        @apply h-10 rounded-xl mt-2 bg-custom-orange text-white transition-colors duration-500 hover:bg-custom-dark-orange
+    }
+    .nav-links {
+        @apply no-underline px-4 py-2 rounded hover:bg-custom-dark-orange transition-colors duration-500
+    }
+    .seleccionado{
+        @apply bg-custom-orange text-white font-bold;
     }
 }

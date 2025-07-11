@@ -64,15 +64,15 @@ function Panel(){
     }
 
     return (
-        <div>
+        <div className="mt-12 JosefinSans">
             {error && <p>Error : {error}</p>}
             {isLoading ? (
                 <p>Cargando ...</p>
             ): (
-                <>
-                    <div className='container-tipo-lista' onClick={cambiarTipoDeLista}>
-                        <div className={`toggle-lista ${tipoDeLista === "objetivos" ? "seleccionado" : "no-seleccionado"}`}>Objetivos</div>
-                        <div className={`toggle-lista ${tipoDeLista === "certificaciones" ? "seleccionado" : "no-seleccionado"}`}>Certificaciones</div>
+                <> 
+                    <div className='flex rounded-md border-2 border-custom-orange w-fit justify-self-end mt-2.5 mr-2.5 cursor-pointer text-center' onClick={cambiarTipoDeLista}>
+                        <div className={`flex-1 px-3 py-1 ${tipoDeLista === "objetivos" ? "seleccionado" : "no-seleccionado"}`}>Objetivos</div>
+                        <div className={`flex-1 px-3 py-1 ${tipoDeLista === "certificaciones" ? "seleccionado" : "no-seleccionado"}`}>Certificaciones</div>
                     </div>
                     
                     <h1 className="JosefinSans">Lista de {tipoDeLista}</h1>
