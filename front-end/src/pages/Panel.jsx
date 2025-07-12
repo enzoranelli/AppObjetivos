@@ -64,19 +64,23 @@ function Panel(){
     }
 
     return (
-        <div className="mt-12 JosefinSans">
+        <div className="mt-12 JosefinSans ">
             {error && <p>Error : {error}</p>}
             {isLoading ? (
                 <p>Cargando ...</p>
             ): (
                 <> 
-                    <div className='flex rounded-md border-2 border-custom-orange w-fit justify-self-end mt-2.5 mr-2.5 cursor-pointer text-center' onClick={cambiarTipoDeLista}>
-                        <div className={`flex-1 px-3 py-1 ${tipoDeLista === "objetivos" ? "seleccionado" : "no-seleccionado"}`}>Objetivos</div>
-                        <div className={`flex-1 px-3 py-1 ${tipoDeLista === "certificaciones" ? "seleccionado" : "no-seleccionado"}`}>Certificaciones</div>
+                    <div className='relative flex items-center w-full p-4'>
+                        <h1 className="JosefinSans text-4xl font-bold text-center w-full">Lista de {tipoDeLista}</h1>
+                        <div className='absolute right-4'>
+                            <div className='flex rounded-md border-2 border-custom-orange w-fit cursor-pointer text-center' onClick={cambiarTipoDeLista}>
+                                <div className={`flex-1 px-3 py-1 ${tipoDeLista === "objetivos" ? "seleccionado" : "no-seleccionado"}`}>Objetivos</div>
+                                <div className={`flex-1 px-3 py-1 ${tipoDeLista === "certificaciones" ? "seleccionado" : "no-seleccionado"}`}>Certificaciones</div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <h1 className="JosefinSans">Lista de {tipoDeLista}</h1>
-                    <hr className="linea"></hr>
+                    <div className="linea mx-auto"></div>
                     <Filtros manejarLista={handleListaFiltrada} lista={objetivos} />
                     
                     {(nObjetivos || []).length !== 0  ?  (
