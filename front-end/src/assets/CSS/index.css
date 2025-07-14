@@ -5,6 +5,12 @@
     --color-custom-orange: #fbb003;
     --color-custom-dark-orange: #ff8000;
 
+    /* Dark mode colors */
+    --color-dark-bg: #1a1a1a;
+    --color-dark-surface: #2d2d2d;
+    --color-dark-text: #ffffff;
+    --color-dark-text-secondary: #a1a1aa;
+
     --animate-fade-in-up: fadeInUp 0.8s ease-out forwards;
 
    
@@ -41,19 +47,19 @@
         animation-delay: 0.4s ;
     }
     .input-custom {
-        @apply h-10 mb-2 border border-custom-orange rounded-xl text-center  focus:outline-none focus:border-custom-dark-orange
+        @apply h-10 mb-2 border border-custom-orange rounded-xl text-center focus:outline-none focus:border-custom-dark-orange bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:focus:border-custom-orange;
     }
     .orange-button {
-        @apply h-10 rounded-xl mt-2 bg-custom-orange text-white transition-colors duration-500 hover:bg-custom-dark-orange
+        @apply h-10 rounded-xl mt-2 bg-custom-orange text-white transition-colors duration-500 hover:bg-custom-dark-orange dark:bg-custom-dark-orange dark:hover:bg-custom-orange;
     }
     .nav-links {
-        @apply no-underline px-4 py-2 rounded hover:bg-custom-dark-orange transition-colors duration-500
+        @apply no-underline px-4 py-2 rounded hover:bg-custom-dark-orange transition-colors duration-500 text-gray-900 dark:text-gray-100 dark:hover:bg-custom-orange;
     }
     .seleccionado{
-        @apply bg-custom-orange text-white font-bold;
+        @apply bg-custom-orange text-white font-bold dark:bg-custom-dark-orange;
     }
     .linea{
-        @apply border border-custom-orange w-[95%]
+        @apply border border-custom-orange w-[95%] dark:border-custom-dark-orange;
     }
     
 }

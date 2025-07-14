@@ -6,6 +6,7 @@ import SinElementos from "../components/SinElementos";
 import { getApiUrl } from "../context/configURL";
 import Paginacion from "../components/Paginacion";
 import Filtros from "../components/Filtros";
+import MenuDesplegable from "../components/MenuDesplegable";
 //import '../old_styles/Panel.css'
 
 function Panel(){
@@ -70,6 +71,7 @@ function Panel(){
                 <p>Cargando ...</p>
             ): (
                 <> 
+                    
                     <div className='relative flex items-center w-full p-4'>
                         <h1 className="JosefinSans text-4xl font-bold text-center w-full">Lista de {tipoDeLista}</h1>
                         <div className='absolute right-4'>
@@ -81,6 +83,7 @@ function Panel(){
                     </div>
                     
                     <div className="linea mx-auto"></div>
+                    <MenuDesplegable />
                     <Filtros manejarLista={handleListaFiltrada} lista={objetivos} />
                     
                     {(nObjetivos || []).length !== 0  ?  (
