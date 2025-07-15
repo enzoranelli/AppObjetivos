@@ -13,6 +13,12 @@ export const useTheme = () => {
 export const ThemeProvider = ({ children }) => {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
+    // Force remove dark class initially to override system preference
+    useEffect(() => {
+        document.documentElement.classList.remove('dark');
+        console.log('Forced removal of dark class on mount');
+    }, []);
+
     // Check for saved theme preference or default to light mode
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme');
@@ -23,6 +29,7 @@ export const ThemeProvider = ({ children }) => {
         } else {
             // Default to light mode initially
             setIsDarkMode(false);
+            localStorage.setItem('theme', 'light');
             console.log('No saved theme, defaulting to light mode');
         }
     }, []);
@@ -32,18 +39,21 @@ export const ThemeProvider = ({ children }) => {
         console.log('Applying theme, isDarkMode:', isDarkMode);
         const htmlElement = document.documentElement;
         
+        // Always remove the class first
+        htmlElement.classList.remove('dark');
+        
         if (isDarkMode) {
             htmlElement.classList.add('dark');
             localStorage.setItem('theme', 'dark');
             console.log('Added dark class to html element');
         } else {
-            htmlElement.classList.remove('dark');
             localStorage.setItem('theme', 'light');
             console.log('Removed dark class from html element');
         }
         
         // Log current classes
         console.log('Current html classes:', htmlElement.className);
+        console.log('Dark class present:', htmlElement.classList.contains('dark'));
     }, [isDarkMode]);
 
     const toggleTheme = () => {

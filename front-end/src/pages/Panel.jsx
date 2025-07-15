@@ -6,7 +6,7 @@ import SinElementos from "../components/SinElementos";
 import { getApiUrl } from "../context/configURL";
 import Paginacion from "../components/Paginacion";
 import Filtros from "../components/Filtros";
-import MenuDesplegable from "../components/MenuDesplegable";
+
 //import '../old_styles/Panel.css'
 
 function Panel(){
@@ -75,7 +75,7 @@ function Panel(){
                     <div className='relative flex items-center w-full p-4'>
                         <h1 className="JosefinSans text-4xl font-bold text-center w-full">Lista de {tipoDeLista}</h1>
                         <div className='absolute right-4'>
-                            <div className='flex rounded-md border-2 border-custom-orange w-fit cursor-pointer text-center' onClick={cambiarTipoDeLista}>
+                            <div className='flex rounded-md border-2 border-custom-orange w-fit cursor-pointer text-center dark:border-custom-dark-orange' onClick={cambiarTipoDeLista}>
                                 <div className={`flex-1 px-3 py-1 ${tipoDeLista === "objetivos" ? "seleccionado" : "no-seleccionado"}`}>Objetivos</div>
                                 <div className={`flex-1 px-3 py-1 ${tipoDeLista === "certificaciones" ? "seleccionado" : "no-seleccionado"}`}>Certificaciones</div>
                             </div>
@@ -83,7 +83,7 @@ function Panel(){
                     </div>
                     
                     <div className="linea mx-auto"></div>
-                    <MenuDesplegable />
+                   
                     <Filtros manejarLista={handleListaFiltrada} lista={objetivos} />
                     
                     {(nObjetivos || []).length !== 0  ?  (

@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
+/* Override system dark mode preference */
+@custom-variant dark (&:where(.dark, .dark *));
 @theme {
+    /* Force class-based dark mode */
+    --tw-dark-mode: class;
     
     --color-custom-orange: #fbb003;
     --color-custom-dark-orange: #ff8000;
@@ -37,6 +41,21 @@
         font-family: "Josefin Sans", sans-serif;
     }
 
+    /* Apply dark mode to body */
+    body {
+        @apply bg-white dark:bg-gray-800 text-black dark:text-white transition-colors duration-300;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    #root {
+        min-height: 100vh;
+    }
 }
 
 @layer components {
@@ -53,7 +72,7 @@
         @apply h-10 rounded-xl mt-2 bg-custom-orange text-white transition-colors duration-500 hover:bg-custom-dark-orange dark:bg-custom-dark-orange dark:hover:bg-custom-orange;
     }
     .nav-links {
-        @apply no-underline px-4 py-2 rounded hover:bg-custom-dark-orange transition-colors duration-500 text-gray-900 dark:text-gray-100 dark:hover:bg-custom-orange;
+        @apply no-underline px-4 py-2 rounded hover:bg-custom-dark-orange transition-colors duration-500 text-gray-100 dark:hover:bg-custom-orange;
     }
     .seleccionado{
         @apply bg-custom-orange text-white font-bold dark:bg-custom-dark-orange;

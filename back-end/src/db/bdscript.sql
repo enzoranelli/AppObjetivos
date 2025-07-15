@@ -1,5 +1,4 @@
 CREATE DATABASE objetivosDB;
-DROP DATABASE objetivosDB;
 USE objetivosDB;
 
 CREATE TABLE Areas(
@@ -54,7 +53,7 @@ CREATE TABLE CertificacionEmpleado(
 	FOREIGN KEY(certificado) REFERENCES Certificacion(idCertificacion) ON DELETE CASCADE,
     UNIQUE(certificado, empleado)
 );
-SELECT * FROM CertificacionEmpleado;
+
 
 CREATE TABLE Objetivo(
 	idObjetivo INT NOT NULL AUTO_INCREMENT,
@@ -65,11 +64,6 @@ CREATE TABLE Objetivo(
     fechaFinal DATE,
     PRIMARY KEY(idObjetivo)
 );
-
-SELECT DISTINCT YEAR(fechaInicio) as anio 
-FROM Objetivo 
-ORDER BY anio;
-
 
 CREATE TABLE ObjetivoEmpleado(
     idObjetivoEmpleado INT NOT NULL AUTO_INCREMENT,
@@ -113,14 +107,8 @@ CREATE TABLE ArchivoCertificacion(
     PRIMARY KEY(idArchivoCertificacion),
     FOREIGN KEY(certificacion) REFERENCES CertificacionEmpleado(idCertificacionEmpleado)  ON DELETE CASCADE
 );
-SHOW TABLES;
-drop table ObjetivoEmpleado;
-drop table Puntuacion;
-drop table Objetivo;
-drop table Usuario;
-drop table Empleado;
-drop table Archivos;
-/*datos prueba*/
+
+/*datos prueba
 SELECT * FROM Archivos;
 SELECT ruta FROM Archivos WHERE idArchivo = 1;
 SELECT ruta FROM Archivos WHERE objetivoAsignado = 14;
@@ -253,3 +241,5 @@ MODIFY COLUMN estado ENUM('aprobado', 'desaprobado', 'pendiente') DEFAULT 'pendi
 SELECT * FROM marcas;
 ALTER TABLE certificacionempleado MODIFY COLUMN fechaAsignada DATE DEFAULT(CURRENT_DATE);
 ALTER TABLE certificacionempleado ADD CONSTRAINT unique_empleado_certificacion UNIQUE(empleado,certificado);
+
+*/

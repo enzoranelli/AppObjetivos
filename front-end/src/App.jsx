@@ -8,7 +8,7 @@ function App() {
 
   return (
     <Router>
-      <div className="">
+      <div className="min-h-screen bg-white dark:bg-gray-800 text-black dark:text-white transition-colors duration-300">
         {user && <Navegacion />}
         <AppRoutes user={user} />
       </div>

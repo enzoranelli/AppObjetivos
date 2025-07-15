@@ -8,9 +8,6 @@ function BotonTema(){
 
     return (
         <div className="flex items-center gap-2">
-            <div className="w-full h-screen flex items-center justify-center bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
-                <p className="text-xl font-bold">Tema: {isDarkMode ? 'Oscuro' : 'Claro'}</p>
-            </div>
             <SunIcon
                 className={`w-6 h-6 transition-opacity duration-300 ${
                     !isDarkMode ? 'opacity-100 text-yellow-400' : 'opacity-30 text-white'

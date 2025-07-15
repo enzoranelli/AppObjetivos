@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useUserContext, useUserToggleContext } from "../context/UserProvider.jsx";
-
+import MenuDesplegable from "../components/MenuDesplegable";
 const Navegacion = () => {
   const {user} = useUserContext();
   const {logout} = useUserToggleContext();
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-custom-orange px-5 py-2 shadow-md text-white rounded-bl-xl JosefinSans">
+    <header className="fixed top-0 left-0 w-full z-50 bg-custom-orange px-5 py-2 shadow-md text-white rounded-bl-xl JosefinSans dark:bg-custom-dark-orange dark:text-gray-100 transition-colors duration-300">
       <nav>
         <ul className="flex justify-around list-none m-0 p-0">
           {
@@ -24,8 +24,8 @@ const Navegacion = () => {
           }
           
           {
-            user ? (
-              <li onClick={logout} ><a className='cursor-pointer nav-links'> Cerrar sesión</a></li>
+            user ? (      
+                <MenuDesplegable />
             ) : (
               <li><Link to="/" className='nav-links'>Login</Link></li>   
             )

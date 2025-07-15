@@ -15,7 +15,7 @@ function ObjetivoPanel(props){
     }
     return (
 
-        <div className="contenedor-objetivo bg-orange-100 rounded-xl border-1 border-custom-dark-orange p-2.5 m-2.5 animate-fade-in-up animation-delay-400">
+        <div className="contenedor-objetivo bg-orange-100 rounded-xl border-1 border-custom-dark-orange p-2.5 m-2.5 animate-fade-in-up animation-delay-400 dark:bg-gray-900">
             <div className="flex items-center pb-2">
                 <h2 className="w-[40%] text-2xl font-black">{props.objetivo.titulo}</h2>
                 <p className="w-[33%]">Fecha de inicio: {props.objetivo.fechaInicio}</p>
@@ -34,7 +34,7 @@ function ObjetivoPanel(props){
                 <p >Peso: </p>
                 <div className="relative w-full h-4 bg-gray-200 rounded-full overflow-hidden">
                 <div
-                    className="absolute top-0 left-0 h-full bg-custom-orange transition-all duration-300"
+                    className="absolute top-0 left-0 h-full bg-custom-orange transition-all duration-300 dark:bg-custom-dark-orange"
                     style={{ width: `${props.objetivo.peso}%` }}
                     ></div>
                 </div>
