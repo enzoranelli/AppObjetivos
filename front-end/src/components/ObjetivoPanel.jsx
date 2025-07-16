@@ -36,7 +36,7 @@ function ObjetivoPanel(props){
                 <div
                     className="absolute top-0 left-0 h-full bg-custom-orange transition-all duration-300 dark:bg-custom-dark-orange"
                     style={{ width: `${props.objetivo.peso}%` }}
-                    ></div>
+                ></div>
                 </div>
                 <span className="min-w-[40px] text-right">{props.objetivo.peso}%</span>
             </div>

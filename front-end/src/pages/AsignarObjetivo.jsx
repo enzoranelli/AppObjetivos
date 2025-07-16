@@ -1,4 +1,4 @@
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { obtenerFecha, fechaISO } from "../utils/fechaHoy";
@@ -6,6 +6,7 @@ import '../old_styles/AsignarObjetivo.css';
 import { getApiUrl } from "../context/configURL";
 function AsignarObjetivo(){
     const url = getApiUrl();
+    const navigate = useNavigate();
     const [objetivo, setObjetivo] = useState(null);
     const [error, setError]  =useState(null);
     const { id } = useParams();
@@ -43,8 +44,6 @@ function AsignarObjetivo(){
     const onSubmit =  async (e)=>{
         e.preventDefault();
         try{
-           
-
             const data = {
                 fecha: fecha,
                 idEmpleado: idEmpleado,
@@ -66,8 +65,6 @@ function AsignarObjetivo(){
         }
     }
 
-    
-
     useEffect(()=>{
         console.log(empleados)
     },empleados);
@@ -77,25 +74,41 @@ function AsignarObjetivo(){
     }
 
     return (
-        <div>
+        <div className="relative min-h-screen">
+            <button 
+                type="button" 
+                onClick={() => navigate(-1)}
+                className="absolute top-20 left-4 flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors z-10"
+                >
+                    ← Volver
+            </button>
         {objetivo && empleados ? (
-            <div className="objetivo-container">
+            <div className="flex justify-center items-center h-screen JosefinSans">
                 
-                <form className="form-asignar-objetivo" onSubmit={onSubmit}>
-                    <h1>Objetivo: {objetivo.titulo}</h1>
-                    {error && <div style={{color:"red"}}>{error}</div>}
-                    <h4>Descripcion:</h4>
-                    <label>{objetivo.descripcion}</label>
-                    <h4>Peso:</h4>
-                    <div className="contenedor-barra-asignar">
-                        <progress id="progreso" className='barra-asignar' value={objetivo.peso} max="100"></progress>
-                        <label htmlFor="progreso">  {objetivo.peso}%</label>
+                <form className="flex flex-col w-md gap-1.5" onSubmit={onSubmit}>
+                    <div className="flex items-center gap-4 mb-4">
+                        
+                        <h1 className="text-2xl font-black">Objetivo: {objetivo.titulo}</h1>
                     </div>
-                    <h4>Fecha de asignación de hoy: {fechaMostrar}</h4>
-                    <h4>Asignar a</h4>
+                    {error && <div style={{color:"red"}}>{error}</div>}
+                    <h4 className="font-black">Descripcion:</h4>
+                    <label>{objetivo.descripcion}</label>
+                    <h4 className="font-black">Peso:</h4>
+                   
+                    <div className="flex items-center gap-2 w-full">   
+                       <div className="relative w-full h-4 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                                className="absolute top-0 left-0 h-full bg-custom-orange transition-all duration-300 dark:bg-custom-dark-orange"
+                                style={{ width: `${objetivo.peso}%` }}
+                            ></div>
+                        </div>
+                        <span className="min-w-[40px] text-right">{objetivo.peso}%</span>
+                    </div> 
+                    <h4 className="font-black">Fecha de asignación de hoy: {fechaMostrar}</h4>
+                    <h4 className="font-black">Asignar a</h4>
                     <label>Empleado:</label>
                     
-                    <select className='select-form asignar' value={idEmpleado} onChange={(e)=>setIdEmpleado(e.target.value)} required>
+                    <select className='w-full h-10 text-xl rounded-xl  my-1.5 bg-amber-50 dark:text-black' value={idEmpleado} onChange={(e)=>setIdEmpleado(e.target.value)} required>
                         <option value="" >Elige un empleado</option>
                         {empleados.map(empleado =>(
                             <option key={empleado.idEmpleado} value={empleado.idEmpleado}>
@@ -104,7 +117,7 @@ function AsignarObjetivo(){
                         ))}
                     </select>
                     
-                    <button type="submit" className='boton-asignar-objetivo'>Asignar</button>
+                    <button type="submit" className='orange-button'>Asignar</button>
                 </form>
             </div>
         ):(
