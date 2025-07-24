@@ -11,49 +11,45 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        // Initialize state from localStorage to prevent flash
+        const savedTheme = localStorage.getItem('theme');
+        return savedTheme === 'dark';
+    });
 
-    // Force remove dark class initially to override system preference
-    useEffect(() => {
-        document.documentElement.classList.remove('dark');
-        console.log('Forced removal of dark class on mount');
-    }, []);
-
-    // Check for saved theme preference or default to light mode
+    // Initialize theme on mount
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            const isDark = savedTheme === 'dark';
-            setIsDarkMode(isDark);
-            console.log('Loaded saved theme:', savedTheme, 'isDark:', isDark);
+        const htmlElement = document.documentElement;
+        
+        // Remove any existing dark class first
+        htmlElement.classList.remove('dark');
+        
+        if (savedTheme === 'dark') {
+            setIsDarkMode(true);
+            htmlElement.classList.add('dark');
+            console.log('Loaded saved dark theme');
         } else {
-            // Default to light mode initially
             setIsDarkMode(false);
             localStorage.setItem('theme', 'light');
-            console.log('No saved theme, defaulting to light mode');
+            console.log('Loaded light theme (default or saved)');
         }
     }, []);
 
-    // Apply theme to document
+    // Apply theme changes when toggling
     useEffect(() => {
-        console.log('Applying theme, isDarkMode:', isDarkMode);
         const htmlElement = document.documentElement;
         
-        // Always remove the class first
         htmlElement.classList.remove('dark');
         
         if (isDarkMode) {
             htmlElement.classList.add('dark');
             localStorage.setItem('theme', 'dark');
-            console.log('Added dark class to html element');
+            console.log('Applied dark theme');
         } else {
             localStorage.setItem('theme', 'light');
-            console.log('Removed dark class from html element');
+            console.log('Applied light theme');
         }
-        
-        // Log current classes
-        console.log('Current html classes:', htmlElement.className);
-        console.log('Dark class present:', htmlElement.classList.contains('dark'));
     }, [isDarkMode]);
 
     const toggleTheme = () => {

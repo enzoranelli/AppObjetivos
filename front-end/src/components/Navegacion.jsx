@@ -7,7 +7,7 @@ const Navegacion = () => {
   const {logout} = useUserToggleContext();
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-custom-orange px-5 py-2 shadow-md text-white rounded-bl-xl JosefinSans dark:bg-custom-dark-orange dark:text-gray-100 transition-colors duration-300">
+    <header className="fixed top-0 left-0 w-full z-50 bg-custom-orange px-5 py-2 shadow-md text-white rounded-b-2xl JosefinSans dark:bg-custom-dark-orange dark:text-gray-100 transition-colors duration-300">
       <nav>
         <ul className="flex justify-around list-none m-0 p-0">
           {

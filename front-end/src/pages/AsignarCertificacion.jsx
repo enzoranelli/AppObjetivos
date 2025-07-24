@@ -2,7 +2,8 @@ import { useParams, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { obtenerFecha } from "../utils/fechaHoy";
 import axios from "axios";
-//import '../old_styles/AsignarObjetivo.css';
+import BotonAtras from "../components/BotonAtras";
+import '../old_styles/AsignarObjetivo.css';
 import { getApiUrl } from "../context/configURL";
 function AsignarCertificacion(){
     const url = getApiUrl();
@@ -65,31 +66,34 @@ function AsignarCertificacion(){
         return <Navigate to={`/redireccion/asignado-certificacion/${id}`} />;
     }
     return(
-        <div>
+        <div className="relative min-h-screen">
+            <BotonAtras />
             {
                 certificacion && empleados ? (
-                    <div className="objetivo-container">
-                        <form className="form-asignar-objetivo" onSubmit={onSubmit}>
-                            <h1>Certificación: {certificacion.nombreCertificacion}</h1>
+                    <div className="flex justify-center items-center h-screen JosefinSans">
+                        <form className="flex flex-col w-md gap-1.5" onSubmit={onSubmit}>
+                            <div className="flex items-center gap-4 mb-4">
+                                <h1 className="text-2xl font-black">Certificación: {certificacion.nombreCertificacion}</h1>
+                            </div>
                             {error && <div style={{color:"red"}}>{error}</div>}
-                            <div style={{display:"flex", gap:"4px"}}>
+                            <div className="flex gap-2">
                                 <label><b>Link de examen:</b></label>
                                 <a href={certificacion.url} target="_blank" rel="noopener noreferrer">Abrir</a>
                             </div>
-                            <div style={{display:"flex", gap:"4px",marginTop:"15px"}}>
+                            <div className="flex gap-2 mt-4">
                                 <label><b>Marca:</b></label>
                                 <label>{certificacion.marca}</label>
                             </div>
-                            <div style={{display:"flex", gap:"4px",marginTop:"15px"}}>
+                            <div className="flex gap-2 mt-4">
                                 <label><b>Año:</b></label>
                                 <label>{certificacion.anio}</label>
                             </div>
-                            <h4>Fecha de asignación de hoy: {fechaMostrar}</h4>
+                            <h4 className="font-black">Fecha de asignación de hoy: {fechaMostrar}</h4>
                             <label className="descripcion-label" htmlFor="texto">Observaciones: (Máximo de caracteres: {observaciones.length}/{400})</label>
                             <textarea
                                 type="text"
                                 id="texto"
-                                className="text-area"
+                                className='resize-none w-full h-20 text-[17px] border-2 border-custom-orange rounded-xl dark:border-custom-dark-orange  '
                                 value={observaciones}
                                 onChange={(e) => setObservaciones(e.target.value)}
                                 maxLength={400}    
@@ -97,7 +101,7 @@ function AsignarCertificacion(){
                             <div className="contenedor-input">
                                 <label  className="descripcion-label" htmlFor="fechaInicio"> Fecha limite: </label>
                                 <input
-                                    className="input-objetivo-nuevo"
+                                    className="input-custom"
                                     type="date"
                                     id="fechaInicio"
                                     name="fechaInicio"
@@ -108,7 +112,7 @@ function AsignarCertificacion(){
                             </div>
                             <label>Empleado:</label>
                     
-                            <select className='select-form asignar' value={idEmpleado} onChange={(e)=>setIdEmpleado(e.target.value)} required>
+                            <select className='w-full h-10 text-xl rounded-xl  my-1.5 bg-amber-50 dark:text-black' value={idEmpleado} onChange={(e)=>setIdEmpleado(e.target.value)} required>
                                 <option value="" >Elige un empleado</option>
                                     {empleados.map(empleado =>(
                                         <option key={empleado.idEmpleado} value={empleado.idEmpleado}>
@@ -116,7 +120,7 @@ function AsignarCertificacion(){
                                         </option>
                                     ))}
                             </select>
-                            <button type="submit" className='boton-asignar-objetivo'>Asignar</button>
+                            <button type="submit" className='orange-button'>Asignar</button>
                         </form>
                     </div>
                 ):(

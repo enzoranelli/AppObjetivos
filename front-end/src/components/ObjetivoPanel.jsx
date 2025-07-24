@@ -15,7 +15,7 @@ function ObjetivoPanel(props){
     }
     return (
 
-        <div className="contenedor-objetivo bg-orange-100 rounded-xl border-1 border-custom-dark-orange p-2.5 m-2.5 animate-fade-in-up animation-delay-400 dark:bg-gray-900">
+        <div className="bg-orange-100 rounded-xl border-1 border-custom-dark-orange p-2.5 m-2.5 animate-fade-in-up animation-delay-400 dark:bg-gray-900">
             <div className="flex items-center pb-2">
                 <h2 className="w-[40%] text-2xl font-black">{props.objetivo.titulo}</h2>
                 <p className="w-[33%]">Fecha de inicio: {props.objetivo.fechaInicio}</p>

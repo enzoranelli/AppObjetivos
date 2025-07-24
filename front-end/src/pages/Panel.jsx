@@ -56,7 +56,10 @@ function Panel(){
     }, [lista, currentPage, cantidadObjetivos]); 
 
     const cambiarTipoDeLista = ()=>{
-        setIsLoading(true)
+        setIsLoading(true);
+        setNObjetivos([]);
+        setNPages(0);
+        setCurrentPage(1);
         if(tipoDeLista === 'objetivos'){
             setTipoDelista('certificaciones')
         }else{
@@ -82,9 +85,9 @@ function Panel(){
                         </div>
                     </div>
                     
-                    <div className="linea mx-auto"></div>
+                    <div className="linea mx-auto mb-1"></div>
                    
-                    <Filtros manejarLista={handleListaFiltrada} lista={objetivos} />
+                    {/*<Filtros manejarLista={handleListaFiltrada} lista={objetivos} />*/}
                     
                     {(nObjetivos || []).length !== 0  ?  (
                         <>
