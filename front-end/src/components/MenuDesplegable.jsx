@@ -34,21 +34,21 @@ function MenuDesplegable(){
             </button>
             {
                 abierto && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white text-black dark:bg-dark-bg dark:text-white shadow-lg rounded-lg p-4 animate-fade-in-up animation-delay-400">
+                    <div className="absolute -right-4 mt-2 w-48 bg-white text-black dark:bg-dark-bg dark:text-white shadow-lg rounded-lg p-4 animate-fade-in-up animation-delay-400">
             
-                        <ul className="space-y-2">
+                        <ul className="space-y-2 flex flex-col items-center">
                             <li>
                                 <button 
                                 onClick={logout} 
                                 
-                                className="w-full text-left p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors duration-200 text-gray-900 dark:text-gray-100">
+                                className="w-full text-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors duration-200 text-gray-900 dark:text-gray-100">
                                     Cerrar Sesión
                                 </button>
                             </li>
                             <li>
                                 <button 
                                 
-                                className="w-full text-left p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors duration-200 text-gray-900 dark:text-gray-100">
+                                className="w-full text-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors duration-200 text-gray-900 dark:text-gray-100">
                                     Configuración
                                 </button>
                             </li>

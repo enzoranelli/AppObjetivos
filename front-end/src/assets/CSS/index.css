@@ -93,5 +93,15 @@
     .linea{
         @apply border border-custom-orange w-[95%] dark:border-custom-dark-orange;
     }
-    
+    .custom-scroll::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .custom-scroll::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .custom-scroll {
+        scrollbar-color: #ff8000 transparent;
+    }
 }
