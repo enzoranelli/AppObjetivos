@@ -130,7 +130,10 @@ function Confirmacion({ idElemento, idEmpleado, tipo}) {
     }
   }
   return (
-    <button type="button" onClick={manejarEliminar} style={{ backgroundColor: 'red', color: 'white', width:'100%'}}>
+    <button type="button" onClick={manejarEliminar} 
+      
+      className='bg-red-700 text-white w-full h-10 rounded-xl hover:bg-red-600 transition-colors duration-500'
+      >
       Eliminar de forma permanente {tipo}
     </button>
   );

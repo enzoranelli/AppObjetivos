@@ -2,7 +2,6 @@ import axios from "axios";
 import { Navigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import '../old_styles/ActualizarObjetivo.css';
 import { formatearFechaToISO } from "../utils/fechaHoy.js";
 import MensajeConfirmacion from '../components/MensajeConfirmacion.jsx';
 import Confirmacion from '../components/Confirmacion.jsx';
@@ -182,7 +181,7 @@ function ActualizarObjetivo(){
                                 name="peso"
                             />
                         </div>
-                        <button className='button-datos' type="submit">Guardar</button>
+                        <button className='orange-button' type="submit">Guardar</button>
                         <Confirmacion idElemento={id} tipo={'objetivo'}/>
                     </form>    
                 ):(
